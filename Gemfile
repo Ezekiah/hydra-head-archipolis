@@ -56,3 +56,8 @@ end
 
 group :development, :test do
 end
+
+
+gem 'wicked'
+
+gem 'hydra-editor'

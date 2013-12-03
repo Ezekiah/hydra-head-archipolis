@@ -1,3 +1,5 @@
+require 'datastreams/document_metadata'
+
 class Document < ActiveFedora::Base
   has_metadata 'descMetadata', type: DocumentMetadata
 

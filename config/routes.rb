@@ -1,7 +1,10 @@
 HydraHead::Application.routes.draw do
   get "create_study/index"
+  get "create_study/show"
   resources :studies
-
+  
+  mount HydraEditor::Engine => '/'
+  
   root :to => "catalog#index"
   Blacklight.add_routes(self)
   HydraHead.add_routes(self)
