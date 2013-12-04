@@ -23,7 +23,7 @@ describe StudiesController do
   # This should return the minimal set of attributes required to create a valid
   # Study. As you add validations to Study, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "title" => "MyString" } }
+  let(:valid_attributes) { {  } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -85,14 +85,14 @@ describe StudiesController do
       it "assigns a newly created but unsaved study as @study" do
         # Trigger the behavior that occurs when invalid params are submitted
         Study.any_instance.stub(:save).and_return(false)
-        post :create, {:study => { "title" => "invalid value" }}, valid_session
+        post :create, {:study => {  }}, valid_session
         assigns(:study).should be_a_new(Study)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Study.any_instance.stub(:save).and_return(false)
-        post :create, {:study => { "title" => "invalid value" }}, valid_session
+        post :create, {:study => {  }}, valid_session
         response.should render_template("new")
       end
     end
@@ -106,8 +106,8 @@ describe StudiesController do
         # specifies that the Study created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Study.any_instance.should_receive(:update).with({ "title" => "MyString" })
-        put :update, {:id => study.to_param, :study => { "title" => "MyString" }}, valid_session
+        Study.any_instance.should_receive(:update).with({ "these" => "params" })
+        put :update, {:id => study.to_param, :study => { "these" => "params" }}, valid_session
       end
 
       it "assigns the requested study as @study" do
@@ -128,7 +128,7 @@ describe StudiesController do
         study = Study.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Study.any_instance.stub(:save).and_return(false)
-        put :update, {:id => study.to_param, :study => { "title" => "invalid value" }}, valid_session
+        put :update, {:id => study.to_param, :study => {  }}, valid_session
         assigns(:study).should eq(study)
       end
 
@@ -136,7 +136,7 @@ describe StudiesController do
         study = Study.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Study.any_instance.stub(:save).and_return(false)
-        put :update, {:id => study.to_param, :study => { "title" => "invalid value" }}, valid_session
+        put :update, {:id => study.to_param, :study => {  }}, valid_session
         response.should render_template("edit")
       end
     end

@@ -10,15 +10,14 @@
       </ul>
     </div>
   <% end %>
+  
+  
+  <% @hash['metadatas']['metadata'].each do |k| %>
+	 <%= label_tag(k['name'], k['name']) %>
+	  <%= text_field_tag(k['name']) %>
+	 
+  <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :author %><br>
-    <%= f.text_field :author %>
-  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

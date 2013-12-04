@@ -1,8 +1,8 @@
 HydraHead::Application.routes.draw do
-  get "create_study/index"
-  get "create_study/show"
   resources :studies
-  
+
+  get "create_study/index"
+  get "create_study/show"  
   mount HydraEditor::Engine => '/'
   
   root :to => "catalog#index"

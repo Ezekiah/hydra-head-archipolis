@@ -1,3 +1,5 @@
+require 'datastreams/study_metadata'
+
 class StudiesController < ApplicationController
   before_action :set_study, only: [:show, :edit, :update, :destroy]
 
@@ -15,6 +17,18 @@ class StudiesController < ApplicationController
   # GET /studies/new
   def new
     @study = Study.new
+    
+    #Get datastream field
+    require 'datastreams/study_metadata'
+    
+    
+    
+    @studyMetaXML = StudyMetadata.xml_template.to_s
+    
+    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", "")) 
+        
+    
+    
   end
 
   # GET /studies/1/edit
@@ -69,6 +83,6 @@ class StudiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def study_params
-      params.require(:study).permit(:title, :author)
+      params[:study]
     end
 end

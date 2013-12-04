@@ -61,3 +61,5 @@ end
 gem 'wicked'
 
 gem 'hydra-editor'
+
+gem 'jquery-rails'
