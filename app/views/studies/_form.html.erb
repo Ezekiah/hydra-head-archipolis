@@ -47,46 +47,34 @@
     
   </ul>
   <div id="step-1">  
-      <h2 class="StepTitle1">
+      <h2 class="StepTitle1"></h2>
       	
-      	<% @hash['metadatas']['metadata'].slice(0,10).each_with_index do |k, index| %>
-		  	<% if index < 20 %>
-		  	<% end %>
-		  	
-		  	
-			<%= label_tag(k['name'], k['name']) %>
-			<%= text_field_tag('study['+k['name']+']', k['name']) %>
-			 
-		  <% end %></h2>
+      	<% @hash['metadatas'].keys.slice(0,10).each do |k, v| %>
+              <%= label_tag(k, k) %>
+              <%= text_field_tag('study['+k+']', k) %>
+
+        <% end %>
        <!-- step content -->
   </div>
   <div id="step-2">
       <h2 class="StepTitle2">
+      	<% @hash['metadatas'].keys.slice(11,20).each do |k, v| %>
+              <%= label_tag(k, k) %>
+              <%= text_field_tag('study['+k+']', k) %>
+
+        <% end %>
       	
-      	<% @hash['metadatas']['metadata'].slice(11,20).each_with_index do |k, index| %>
-		  	<% if index < 20 %>
-		  	<% end %>
-		  	
-		  	
-			<%= label_tag(k['name'], k['name']) %>
-			<%= text_field_tag('study['+k['name']+']', k['name']) %>
-			 
-		  <% end %>
     	</h2>
        <!-- step content -->
   </div>                     
   <div id="step-3">
       <h2 class="StepTitle3">
-      	
-      	<% @hash['metadatas']['metadata'].slice(21,30).each_with_index do |k, index| %>
-		  	<% if index < 20 %>
-		  	<% end %>
-		  	
-		  	
-			<%= label_tag(k['name'], k['name']) %>
-			<%= text_field_tag('study['+k['name']+']', k['name']) %>
-			 
-		  <% end %>
+      	<% @hash['metadatas'].keys.slice(21,30).each do |k, v| %>
+              <%= label_tag(k, k) %>
+              <%= text_field_tag('study['+k+']', k) %>
+
+        <% end %>
+      
     	</h2>  
        <!-- step content -->
   </div>
