@@ -1,4 +1,6 @@
 HydraHead::Application.routes.draw do
+  resources :documents
+
   resources :studies
 
   get "create_study/index"

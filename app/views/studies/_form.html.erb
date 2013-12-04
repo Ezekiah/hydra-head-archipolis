@@ -1,3 +1,11 @@
+<style>
+	#wizard .input-error{
+		background:#FB3500;
+		opacity:1
+	}
+</style>
+
+
 <%= form_for(@study) do |f| %>
   <% if @study.errors.any? %>
     <div id="error_explanation">
@@ -11,14 +19,222 @@
     </div>
   <% end %>
   
-  
-  <% @hash['metadatas']['metadata'].each do |k| %>
-	 <%= label_tag(k['name'], k['name']) %>
-	  <%= text_field_tag(k['name']) %>
-	 
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+    
+    
+    <div id="wizard" class="swMain">
+  <ul>
+    <li><a href="#step-1">
+          <label class="stepNumber">1</label>
+          <span class="stepDesc">
+             Step 1<br />
+             <small>Etape 1 </small>
+          </span>
+      </a></li>
+    <li><a href="#step-2">
+          <label class="stepNumber">2</label>
+          <span class="stepDesc">
+             Step 2<br />
+             <small>Etape 2</small>
+          </span>
+      </a></li>
+    <li><a href="#step-3">
+          <label class="stepNumber">3</label>
+          <span class="stepDesc">
+             Step 3<br />
+             <small>Etape 3</small>
+          </span>                  
+       </a></li>
+    
+  </ul>
+  <div id="step-1">  
+      <h2 class="StepTitle1">
+      	
+      	<% @hash['metadatas']['metadata'].slice(0,10).each_with_index do |k, index| %>
+		  	<% if index < 20 %>
+		  	<% end %>
+		  	
+		  	
+			<%= label_tag(k['name'], k['name']) %>
+			<%= text_field_tag('study['+k['name']+']', k['name']) %>
+			 
+		  <% end %></h2>
+       <!-- step content -->
   </div>
+  <div id="step-2">
+      <h2 class="StepTitle2">
+      	
+      	<% @hash['metadatas']['metadata'].slice(11,20).each_with_index do |k, index| %>
+		  	<% if index < 20 %>
+		  	<% end %>
+		  	
+		  	
+			<%= label_tag(k['name'], k['name']) %>
+			<%= text_field_tag('study['+k['name']+']', k['name']) %>
+			 
+		  <% end %>
+    	</h2>
+       <!-- step content -->
+  </div>                     
+  <div id="step-3">
+      <h2 class="StepTitle3">
+      	
+      	<% @hash['metadatas']['metadata'].slice(21,30).each_with_index do |k, index| %>
+		  	<% if index < 20 %>
+		  	<% end %>
+		  	
+		  	
+			<%= label_tag(k['name'], k['name']) %>
+			<%= text_field_tag('study['+k['name']+']', k['name']) %>
+			 
+		  <% end %>
+    	</h2>  
+       <!-- step content -->
+  </div>
+
+</div>
+
+    
+  
+  <script>
+  	
+  	$('#wizard').smartWizard({
+  		transitionEffect:'slideleft',
+  		onLeaveStep:leaveAStepCallback,
+  		onFinish:onFinishCallback,
+  		enableFinishButton:true,
+  	});
+	  
+	  function onFinishCallback() {
+	  	
+	  	
+	  }
+	  
+      function leaveAStepCallback(obj){
+        var step_num= obj.attr('rel');
+        return validateSteps(step_num);
+      }
+      
+      function onFinishCallback(){
+       if(validateAllSteps()){
+        $('form').submit();
+       }
+      }
+		
+	   
+    function validateAllSteps(){
+       var isStepValid = true;
+       
+       if(validateStep1() == false){
+         isStepValid = false;
+         $('#wizard').smartWizard('setError',{stepnum:1,iserror:true});         
+       }else{
+         $('#wizard').smartWizard('setError',{stepnum:1,iserror:false});
+       }
+       
+       if(validateStep3() == false){
+         isStepValid = false;
+         $('#wizard').smartWizard('setError',{stepnum:3,iserror:true});         
+       }else{
+         $('#wizard').smartWizard('setError',{stepnum:3,iserror:false});
+       }
+       
+       if(!isStepValid){
+          $('#wizard').smartWizard('showMessage','Please correct the errors in the steps and continue');
+       }
+              
+       return isStepValid;
+    } 	
+		
+		
+	function validateSteps(step){
+		var isStepValid = true;
+	  	// validate step 1
+	  	if(step == 1){
+	    	if(validateStep1() == false ){
+	      		isStepValid = false; 
+	     		$('#wizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
+	  			$('#wizard').smartWizard('setError',{stepnum:step,iserror:true});         
+			}else{
+			  $('#wizard').smartWizard('setError',{stepnum:step,iserror:false});
+			        }
+	      }
+	  
+	      // validate step3
+		if(step == 2){
+			if(validateStep2() == false ){
+				isStepValid = false; 
+		        $('#wizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
+		  		$('#wizard').smartWizard('setError',{stepnum:step,iserror:true});         
+			}else{
+		  		$('#wizard').smartWizard('setError',{stepnum:step,iserror:false});
+		    }
+		}
+	  
+	  
+	  // validate step3
+	  if(step == 3){
+	    if(validateStep3() == false ){
+	      isStepValid = false; 
+	      $('#wizard').smartWizard('showMessage','Please correct the errors in step'+step+ ' and click next.');
+	  $('#wizard').smartWizard('setError',{stepnum:step,iserror:true});         
+	}else{
+	  $('#wizard').smartWizard('setError',{stepnum:step,iserror:false});
+	        }
+	      }
+	  
+	 	  return isStepValid;
+		}
+		
+	function validateStep1(){
+       
+		var empty = $(".StepTitle1 input").filter(function() {
+		    return this.value === "";
+		});
+		if(empty.length) {
+			
+			empty.addClass('input-error');
+		   return false
+		} else {
+			return true
+			
+		}
+
+    }
+    
+	function validateStep2(){
+		var empty = $(".StepTitle2 input").filter(function() {
+		    return this.value === "";
+		});
+		if(empty.length) {
+			
+			empty.addClass('input-error');
+		   return false
+		} else {
+			return true
+			
+		}
+	}
+    
+    
+    function validateStep3(){
+      var empty = $(".StepTitle3 input").filter(function() {
+		        return this.value === "";
+		    });
+		    if(empty.length) {
+		    	
+		    	empty.addClass('input-error');
+		       return false
+		    } else {
+		    	return true
+		    	
+		    }
+    }
+    
+    // Email Validation
+    function isValidEmailAddress(emailAddress) {
+      var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      return pattern.test(emailAddress);
+    } 
+	
+  </script>
 <% end %>

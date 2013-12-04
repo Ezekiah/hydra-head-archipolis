@@ -19,4 +19,4 @@
 //= require_tree .
 //= require hydra-editor/hydra-editor
 
-//= require jquery.steps
+//= require jquery.smartWizard-2.0.js

@@ -11,4 +11,6 @@
  *= require_self
  *= require_tree .
  *= require hydra-editor/hydra-editor
+ *= require smart_wizard.css
+ *= require smart_wizard_vertical.css
  */
