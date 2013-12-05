@@ -7,5 +7,7 @@ class Document < ActiveFedora::Base
   has_attributes :author, datastream: 'descMetadata', multiple: false
   has_attributes :researchPhase, datastream: 'descMetadata', multiple: false
   
+  has_file_datastream "documentContent"
+  
   belongs_to :study, :property=> :is_part_of
 end
