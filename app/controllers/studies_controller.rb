@@ -17,12 +17,8 @@ class StudiesController < ApplicationController
   # GET /studies/new
   def new
     @study = Study.new
-    
     #Get datastream field
     require 'datastreams/study_metadata'
-    
-    
-    
     @studyMetaXML = StudyMetadata.xml_template.to_s
     
     @hash = Hash.from_xml(@studyMetaXML.gsub("\n", "")) 
@@ -33,6 +29,10 @@ class StudiesController < ApplicationController
 
   # GET /studies/1/edit
   def edit
+    require 'datastreams/study_metadata'
+    @studyMetaXML = StudyMetadata.xml_template.to_s
+    
+    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", "")) 
   end
 
   # POST /studies
