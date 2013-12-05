@@ -60,6 +60,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
 
   def self.xml_template
     
+    
     builder = Nokogiri::XML::Builder.new do |xml|
     
     xml.metadatas {
