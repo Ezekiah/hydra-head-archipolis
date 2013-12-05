@@ -63,3 +63,8 @@ gem 'wicked'
 gem 'hydra-editor'
 
 gem 'jquery-rails'
+
+gem 'rack-webconsole-pry', :require => 'rack-webconsole'
+gem 'pry-rails', :group => :development
+
+gem 'debugger'

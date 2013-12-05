@@ -24,8 +24,10 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
+    
+    debugger
     @document = Document.new(document_params)
-
+    
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
