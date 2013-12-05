@@ -11,7 +11,7 @@ class DocumentMetadata < ActiveFedora::OmDatastream
   
 
   def self.xml_template
-    builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new do |xml|
     
       xml.metadatas {
          xml.title
@@ -19,9 +19,14 @@ class DocumentMetadata < ActiveFedora::OmDatastream
          xml.researchPhase
          xml.tree_path
       }
-      
-      builder.doc
+  
+  
     end
+    
+    return builder.doc
+    
+    
+    
     
     
   end
