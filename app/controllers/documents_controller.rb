@@ -32,10 +32,10 @@ class DocumentsController < ApplicationController
     @document = Document.new(document_params)
     
     if params.key?('documentContent')
-      @document.add_file(params['documentContent'].tempfile, params['documentContent'].content_type , params['documentContent'].original_filename)
+      @document.add_file(File.open(params['documentContent'].path), 'content', params['documentContent'].original_filename)
     end
     
-    
+    #debugger
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
