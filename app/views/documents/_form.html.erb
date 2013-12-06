@@ -21,15 +21,24 @@
   </div>
   
   <div class="field">
-    <%= f.label :researchPhase %><br>
-    <%= f.text_field :researchPhase %>
+    <%= f.label :research_phase %><br>
+    <%= f.text_field :research_phase %>
   </div>
   
-	<div class="field">
-		<%= file_field_tag 'document[documentContent]'  %>
-	</div>
   
+  <div class="field">
+  	<%= f.label :study %><br>
+    <%= select(:document, :study, options_from_collection_for_select(Study.all, :id, :title)) %>
+
+  </div>
+  
+  
+	<div class="field">
+		<%= f.label 'Upload document' %><br>
+		<%= file_field_tag 'documentContent'  %>
+	</div>
+	<br/></br/>  
   <div class="actions">
-    <%= f.submit %>
+   <p> <%= f.submit %></p>
   </div>
 <% end %>

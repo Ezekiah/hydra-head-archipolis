@@ -5,7 +5,7 @@ class Document < ActiveFedora::Base
 
   has_attributes :title, datastream: 'descMetadata', multiple: false
   has_attributes :author, datastream: 'descMetadata', multiple: false
-  has_attributes :researchPhase, datastream: 'descMetadata', multiple: false
+  has_attributes :research_phase, datastream: 'descMetadata', multiple: false
   has_attributes :tree_path, datastream: 'descMetadata', multiple: false
   
   has_file_datastream "documentContent"

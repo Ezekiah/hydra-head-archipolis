@@ -4,7 +4,7 @@ class DocumentMetadata < ActiveFedora::OmDatastream
     t.root(path: "metadatas")
     t.title(index_as: :stored_searchable)
     t.author(index_as: :stored_searchable)
-    t.researchPhase(index_as: :stored_searchable)
+    t.research_phase(index_as: :stored_searchable)
     t.tree_path(index_as: :stored_searchable)
   end
   
@@ -16,7 +16,7 @@ class DocumentMetadata < ActiveFedora::OmDatastream
       xml.metadatas {
          xml.title
          xml.author
-         xml.researchPhase
+         xml.research_phase
          xml.tree_path
       }
   
