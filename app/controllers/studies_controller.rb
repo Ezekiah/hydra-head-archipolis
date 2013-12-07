@@ -31,7 +31,7 @@ class StudiesController < ApplicationController
   # show study file tree 
   def files
      @study = Study.find(params[:study_id])
-     documents = @study.documents 
+     @documents = @study.documents 
     
   end
   

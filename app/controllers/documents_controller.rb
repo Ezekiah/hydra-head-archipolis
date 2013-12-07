@@ -7,7 +7,14 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    
+    if(params.has_key?(:study_id))
+      study = Study.find(params[:study_id])
+      @documents = study.documents
+    else
+      @documents = Document.all
+    end
+    
   end
 
   # GET /documents/1
@@ -28,8 +35,8 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    
-    @document = Document.new(document_params)
+    #debugger
+    @document = Document.new(params[:document])
     
     if params.key?('documentContent')
       @document.add_file(File.open(params['documentContent'].path), 'content', params['documentContent'].original_filename)

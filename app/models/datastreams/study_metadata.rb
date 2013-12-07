@@ -115,21 +115,14 @@ class StudyMetadata < ActiveFedora::OmDatastream
        xml.fundag
        xml.latestedition
        xml.software
+       
+       xml.xml_tree
     }
     end
     
     return builder.doc
     
   end
-  
-  
-  
-  def self.generate_form
-    xml = self.xml_template
-    metadatas   = xml.xpath("//metadata")
-    
-  end
-  
   
   
   

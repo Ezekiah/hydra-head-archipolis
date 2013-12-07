@@ -2,7 +2,7 @@ HydraHead::Application.routes.draw do
   resources :documents
 
   resources :studies do
-    get 'files'
+    resources :documents
   end
   
 

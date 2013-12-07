@@ -73,3 +73,5 @@ gem 'dynatree-rails'
 
 gem 'jquery-ui-rails'
 
+gem 'jquery-cookie-rails'
+

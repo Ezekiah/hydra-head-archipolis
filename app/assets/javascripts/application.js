@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.cookie
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require turbolinks

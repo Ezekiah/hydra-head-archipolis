@@ -5,6 +5,7 @@ class DocumentMetadata < ActiveFedora::OmDatastream
     t.title(index_as: :stored_searchable)
     t.author(index_as: :stored_searchable)
     t.research_phase(index_as: :stored_searchable)
+    t.study
     t.tree_path(index_as: :stored_searchable)
   end
   
@@ -18,6 +19,7 @@ class DocumentMetadata < ActiveFedora::OmDatastream
          xml.author
          xml.research_phase
          xml.tree_path
+         xml.study
       }
   
   
