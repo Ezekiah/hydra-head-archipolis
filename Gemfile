@@ -68,3 +68,8 @@ gem 'rack-webconsole-pry', :require => 'rack-webconsole'
 gem 'pry-rails', :group => :development
 
 gem 'debugger'
+
+gem 'dynatree-rails'
+
+gem 'jquery-ui-rails'
+

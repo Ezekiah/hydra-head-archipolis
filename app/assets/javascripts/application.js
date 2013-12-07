@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.ui.all
 //= require jquery_ujs
 //= require turbolinks
 //
@@ -20,3 +21,5 @@
 //= require hydra-editor/hydra-editor
 
 //= require jquery.smartWizard-2.0.js
+//= require dynatree/jquery.dynatree
+

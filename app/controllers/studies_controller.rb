@@ -26,7 +26,17 @@ class StudiesController < ApplicationController
     
     
   end
-
+  
+  # GET /studies/1/files
+  # show study file tree 
+  def files
+     @study = Study.find(params[:study_id])
+     documents = @study.documents 
+    
+  end
+  
+  
+  
   # GET /studies/1/edit
   def edit
     require 'datastreams/study_metadata'

@@ -1,7 +1,10 @@
 HydraHead::Application.routes.draw do
   resources :documents
 
-  resources :studies
+  resources :studies do
+    get 'files'
+  end
+  
 
   get "create_study/index"
   get "create_study/show"  
