@@ -11,6 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require 'blacklight_advanced_search'
+
+
 //= require jquery.cookie
 //= require jquery.ui.all
 //= require jquery_ujs

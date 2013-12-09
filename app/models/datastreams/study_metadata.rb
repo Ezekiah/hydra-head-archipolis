@@ -116,7 +116,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
        xml.latestedition
        xml.software
        
-       xml.xml_tree
+       xml.tree
     }
     end
     

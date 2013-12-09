@@ -13,7 +13,6 @@
     <% @studies.each do |study| %>
       <tr>
       	<td><%= study.title %></td>
-        <td><%= study.author %></td>
         <td><%= link_to 'Show', study %></td>
         <td><%= link_to 'Edit', edit_study_path(study) %></td>
         <td><%= link_to 'Destroy', study, method: :delete, data: { confirm: 'Are you sure?' } %></td>

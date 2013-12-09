@@ -71,7 +71,13 @@ gem 'debugger'
 
 gem 'dynatree-rails'
 
-gem 'jquery-ui-rails'
-
 gem 'jquery-cookie-rails'
 
+gem 'jquery-ui-sass-rails'
+
+gem 'formtastic'
+
+gem 'activesupport'
+
+
+gem "blacklight_advanced_search"

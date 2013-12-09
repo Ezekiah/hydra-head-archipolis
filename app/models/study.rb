@@ -5,7 +5,7 @@ class Study < ActiveFedora::Base
   has_metadata 'descMetadata', type:StudyMetadata
   has_metadata 'utilsMetadata', type:TreeMetadata
   
-  has_attributes :xml_tree, datastream: 'utilsMetadata', multiple: false
+  has_attributes :tree, datastream: 'utilsMetadata', multiple: false
   
   
   has_attributes :title, datastream: 'descMetadata', multiple: false

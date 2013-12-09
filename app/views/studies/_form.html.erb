@@ -46,21 +46,23 @@
        </a></li>
     
   </ul>
+
   <div id="step-1">  
       <h2 class="StepTitle1"></h2>
       	
-      	<% @hash['metadatas'].keys.slice(0,10).each do |k, v| %>
+      	<% @hash['metadatas'].to_a.slice(0,10).each do |k, v| %>
+      		
               <%= label_tag(k, k) %>
-              <%= text_field_tag('study['+k+']', k) %>
+              <%= text_field_tag('study['+k+']', v ) %>
 
         <% end %>
        <!-- step content -->
   </div>
   <div id="step-2">
       <h2 class="StepTitle2">
-      	<% @hash['metadatas'].keys.slice(11,20).each do |k, v| %>
+      	<% @hash['metadatas'].to_a.slice(11,20).each do |k, v| %>
               <%= label_tag(k, k) %>
-              <%= text_field_tag('study['+k+']', k) %>
+              <%= text_field_tag('study['+k+']', v) %>
 
         <% end %>
       	
@@ -69,9 +71,10 @@
   </div>                     
   <div id="step-3">
       <h2 class="StepTitle3">
-      	<% @hash['metadatas'].keys.slice(21,31).each do |k, v| %>
+      	<% @hash['metadatas'].to_a.slice(21,31).each do |k, v| %>
+             
               <%= label_tag(k, k) %>
-              <%= text_field_tag('study['+k+']', k) %>
+              <%= text_field_tag('study['+k+']', v) %>
 
         <% end %>
       
