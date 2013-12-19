@@ -1,10 +1,20 @@
+include Hydra::ModelMethods
+
 class DocumentsController < ApplicationController
   before_action :set_document, only: [:show, :edit, :update, :destroy]
+  before_action :find_study, only: [:create]
 
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    
+    if(params.has_key?(:study_id))
+      study = Study.find(params[:study_id])
+      @documents = study.documents
+    else
+      @documents = Document.all
+    end
+    
   end
 
   # GET /documents/1
@@ -14,6 +24,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/new
   def new
+    @studies = Study.all
     @document = Document.new
   end
 
@@ -24,8 +35,14 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(document_params)
-
+    #debugger
+    @document = Document.new(params[:document])
+    
+    if params.key?('documentContent')
+      @document.add_file(File.open(params['documentContent'].path), 'content', params['documentContent'].original_filename)
+    end
+    
+    #debugger
     respond_to do |format|
       if @document.save
         format.html { redirect_to @document, notice: 'Document was successfully created.' }
@@ -60,15 +77,22 @@ class DocumentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+ 
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_document
       @document = Document.find(params[:id])
     end
+    
+    def find_study  
+      if params['document'].key?('study')
+        params['document']['study'] = Study.find(document_params['study'])
+      end
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:title, :author)
+      params.require(:document).permit(:title, :author, :research_phase, :study, :documentContent)
     end
 end

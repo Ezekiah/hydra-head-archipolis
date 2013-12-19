@@ -44,7 +44,7 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'hydra', '6.1.0'
+gem 'hydra'
 
 gem "bootstrap-sass"
 gem "devise"
@@ -63,3 +63,21 @@ gem 'wicked'
 gem 'hydra-editor'
 
 gem 'jquery-rails'
+
+gem 'rack-webconsole-pry', :require => 'rack-webconsole'
+gem 'pry-rails', :group => :development
+
+gem 'debugger'
+
+gem 'dynatree-rails'
+
+gem 'jquery-cookie-rails'
+
+gem 'jquery-ui-sass-rails'
+
+gem 'formtastic'
+
+gem 'activesupport'
+
+
+gem "blacklight_advanced_search"

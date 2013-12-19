@@ -1,4 +1,29 @@
 <p id="notice"><%= notice %></p>
 
+<h2>Study Metadatas</h2>
+
+<br/>
+
+<%=render 'form'%>
+
+
+
+
+<div style="clear:both">
+	<br/>
+	<h2>Files tree</h2>
+	<%=render 'documents/dynatree'%>
+</div>
+
+<br/>
+<p>
+	<a href="/documents/new">Add file to the study</a>
+</p>
+
+<% render 'documents/form'%>
+
+
+
+
 <%= link_to 'Edit', edit_study_path(@study) %> |
 <%= link_to 'Back', studies_path %>

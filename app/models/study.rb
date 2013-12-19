@@ -1,7 +1,13 @@
 require 'datastreams/study_metadata'
+require 'datastreams/tree_metadata'
 
 class Study < ActiveFedora::Base
   has_metadata 'descMetadata', type:StudyMetadata
+  has_metadata 'utilsMetadata', type:TreeMetadata
+  
+  has_attributes :tree, datastream: 'utilsMetadata', multiple: false
+  
+  
   has_attributes :title, datastream: 'descMetadata', multiple: false
   has_attributes :author, datastream: 'descMetadata', multiple: false
   has_attributes :langdoc, datastream: 'descMetadata', multiple: false
@@ -53,6 +59,8 @@ class Study < ActiveFedora::Base
   has_attributes :fundag, datastream: 'descMetadata', multiple: false
   has_attributes :latestedition, datastream: 'descMetadata', multiple: false
   has_attributes :software, datastream: 'descMetadata', multiple: false
+  
+  
   has_many :documents, :property=> :is_part_of
   
 end

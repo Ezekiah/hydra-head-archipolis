@@ -12,17 +12,20 @@ class StudiesController < ApplicationController
   # GET /studies/1
   # GET /studies/1.json
   def show
+    
+    @study = Study.find(params[:id])
+    @documents = @study.documents
+    @document = Document.new
+    
+    @studyMetaXML = Study.find(params[:id]).descMetadata.to_xml
+    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
+    
   end
 
   # GET /studies/new
   def new
     @study = Study.new
-    
     #Get datastream field
-    require 'datastreams/study_metadata'
-    
-    
-    
     @studyMetaXML = StudyMetadata.xml_template.to_s
     
     @hash = Hash.from_xml(@studyMetaXML.gsub("\n", "")) 
@@ -30,9 +33,21 @@ class StudiesController < ApplicationController
     
     
   end
-
+  
+  # GET /studies/1/files
+  # show study file tree 
+  def files
+     @study = Study.find(params[:study_id])
+     @documents = @study.documents 
+    
+  end
+  
+  
+  
   # GET /studies/1/edit
   def edit
+    @studyMetaXML = Study.find(params[:id]).descMetadata.to_xml
+    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
   end
 
   # POST /studies

@@ -11,6 +11,11 @@
 // about supported directives.
 //
 //= require jquery
+//= require 'blacklight_advanced_search'
+
+
+//= require jquery.cookie
+//= require jquery.ui.all
 //= require jquery_ujs
 //= require turbolinks
 //
@@ -20,3 +25,5 @@
 //= require hydra-editor/hydra-editor
 
 //= require jquery.smartWizard-2.0.js
+//= require dynatree/jquery.dynatree
+

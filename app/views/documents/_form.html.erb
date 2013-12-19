@@ -1,4 +1,4 @@
-<%= form_for(@document) do |f| %>
+<%= form_for @document,:html => { :multipart => true } do |f| %>
   <% if @document.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
@@ -19,7 +19,26 @@
     <%= f.label :author %><br>
     <%= f.text_field :author %>
   </div>
+  
+  <div class="field">
+    <%= f.label :research_phase %><br>
+    <%= f.text_field :research_phase %>
+  </div>
+  
+  
+  <div class="field">
+  	<%= f.label :study %><br>
+    <%= select(:document, :study, options_from_collection_for_select(Study.all, :id, :title)) %>
+
+  </div>
+  
+  
+	<div class="field">
+		<%= f.label 'Upload document' %><br>
+		<%= file_field_tag 'documentContent'  %>
+	</div>
+	<br/></br/>  
   <div class="actions">
-    <%= f.submit %>
+   <p> <%= f.submit %></p>
   </div>
 <% end %>
