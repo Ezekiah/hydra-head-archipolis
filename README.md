@@ -1,7 +1,7 @@
 hydra-head-archipolis
 =====================
 
-Repository for researcher based on hydra project
+Repository for researcher based on <a href="https://github.com/projecthydra">the project hydra</a>
 
 
 This project will be for researchers, we want to provide a repository where they will be able to archive and publish their studies.
