@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:tesla="http://www.exmaralda.org" xmlns:tei="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title />
+         </titleStmt>
+         <publicationStmt>
+            <p />
+         </publicationStmt>
+         <sourceDesc>
+            <recordingStmt>
+               <recording type="video" url="" />
+            </recordingStmt>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <particDesc>
+            <person xml:id="SPK0" sex="1">
+               <persName>
+                  <abbr>cdsp_bequali_sp3_investig1</abbr>
+               </persName>
+            </person>
+            <person xml:id="SPK1" sex="1">
+               <persName>
+                  <abbr>cdsp_bequali_sp3_spk27</abbr>
+               </persName>
+            </person>
+         </particDesc>
+      </profileDesc>
+      <revisionDesc>
+         <change when="2012-11-13T18:42:41.921+01:00">Created by XSL transformation from an EXMARaLDA segmented transcription</change>
+      </revisionDesc>
+   </teiHeader>
+   <text>
+      <timeline unit="s" origin="#T0">
+         <when xml:id="T0" />
+         <when xml:id="T1" />
+         <when xml:id="T2" />
+         <when xml:id="T3" />
+         <when xml:id="T4" />
+         <when xml:id="T5" />
+         <when xml:id="T6" />
+         <when xml:id="T7" />
+         <when xml:id="T8" />
+      </timeline>
+      <body><div><u who="#SPK0"><anchor synch="#T0" /><seg function="utterance" type="not_classified"><w>La</w><w>Délégation</w></seg><anchor synch="#T1" /></u></div><div><u who="#SPK1"><anchor synch="#T1" /><seg function="utterance" type="declarative"><w>La</w><w>Délégation</w><w>travaille</w><w>de</w><w>façon</w><w>consensuelle</w></seg><seg function="utterance" type="declarative"><incident><desc>note du transcriptaur:le reste de l'Assemblée nationale</desc></incident><w>Ils</w><w>ont</w><w>une</w><w>condescendance</w><c>,</c><w>pour</w><w>ne</w><w>pas</w><w>dire</w><w>un</w><w>mépris</w><w>pour</w><w>nos</w><w>conclusions</w></seg><anchor synch="#T2" /></u></div><div><u who="#SPK0"><anchor synch="#T2" /><seg function="utterance" type="not_classified"><w>L'Assemblée</w><w>nationale</w><w>et</w><w>l'Europe</w></seg><anchor synch="#T3" /></u></div><div><u who="#SPK1"><anchor synch="#T3" /><seg function="utterance" type="declarative"><w>En</w><w>dehors</w><w>d'un</w><w>grand</w><w>enjeu</w><c>,</c><w>d'un</w><w>grand</w><w>vote</w><c>,</c><w>les</w><w>parlementaires</w><w>s'intéressent</w><w>très</w><w>peu</w><w>à</w><w>l'Europe</w></seg><seg function="utterance" type="declarative"><w>Ceux</w><w>qui</w><w>s'expriment</w><w>sont</w><w>soient</w><w>des</w><w>spécialistes</w><w>soit</w><w>les</w><w>gens</w><w>qui</w><w>expriment</w><w>des</w><w>états</w><w>d'âme</w><c>,</c><w>qui</w><w>sont</w><w>inquiets</w><c>,</c><w>qui</w><w>voient</w><w>l'Europe</w><w>sous</w><w>une</w><w>forme</w><w>défensive</w><w>et</w><w>pas</w><w>offensive</w></seg><anchor synch="#T4" /></u></div><div><u who="#SPK0"><anchor synch="#T4" /><seg function="utterance" type="not_classified"><w>Son</w><w>engagement</w><w>européen</w></seg><anchor synch="#T5" /></u></div><div><u who="#SPK1"><anchor synch="#T5" /><seg function="utterance" type="declarative"><w>Mon</w><w>engagement</w><w>européen</w><w>est</w><w>fondamental</w></seg><seg function="utterance" type="declarative"><w>Il</w><w>est</w><w>issu</w><w>de</w><w>ma</w><w>jeunesse</w><c>,</c><w>en</w><w>1950</w><c>,</c><w>au</w><w>lendemain</w><w>de</w><w>la</w><w>guerre</w></seg><seg function="utterance" type="declarative"><w>Pour</w><w>nous</w><w>la</w><w>déclaration</w><w>Schuman</w><w>a</w><w>été</w><w>comme</w><w>un</w><w>coup</w><w>de</w><w>tonnerre</w></seg><seg function="utterance" type="declarative"><w>L'Europe</w><c>,</c><w>c'est</w><w>d'abord</w><w>la</w><w>paix</w><w>entre</w><w>la</w><w>France</w><w>et</w><w>l'Allemagne</w></seg><seg function="utterance" type="declarative"><w>L'Europe</w><w>ne</w><w>doit</w><w>pas</w><w>être</w><w>un</w><w>compromis</w><w>mais</w><w>une</w><w>volonté</w></seg><seg function="utterance" type="declarative"><w>La</w><w>meilleure</w><w>façon</w><w>de</w><w>répondre</w><w>aux</w><w>souverainistes</w><c>,</c><w>c'est</w><w>d'avoir</w><w>une</w><w>Constitution</w><w>européenne</w><w>pour</w><w>qu'on</w><w>sache</w><w>clairement</w><w>qui</w><w>fait</w><w>quoi</w></seg><seg function="utterance" type="declarative"><w>Et</w><w>aussi</w><w>de</w><w>donner</w><w>un</w><w>rôle</w><w>aux</w><w>parlements</w><w>nationaux</w><w>en</w><w>Europe</w><c>:</c><w>c'est</w><w>une</w><w>façon</w><w>pour</w><w>nous</w><w>de</w><w>leur</w><w>donner</w><w>satisfaction</w><w>en</w><w>faisant</w><w>exister</w><w>l'Europe</w></seg><seg function="utterance" type="declarative"><w>Parce</w><w>qu'ils</w><w>sentent</w><w>bien</w><w>qu'il</w><w>faut</w><w>une</w><w>Europe</w><w>mais</w><w>ils</w><w>ont</w><w>peur</w></seg><seg function="utterance" type="declarative"><w>Alors</w><w>il</w><w>faut</w><w>éloigner</w><w>les</w><w>peurs</w><w>en</w><w>créant</w><w>des</w><w>mécanismes</w></seg><anchor synch="#T6" /></u></div><div><u who="#SPK0"><anchor synch="#T6" /><seg function="utterance" type="not_classified"><w>Les</w><w>clivages</w><w>européens</w></seg><anchor synch="#T7" /></u></div><div><u who="#SPK1"><anchor synch="#T7" /><seg function="utterance" type="declarative"><w>Les</w><w>votes</w><w>n'ont</w><w>aucun</w><w>rapport</w><w>avec</w><w>la</w><w>droite</w><w>et</w><w>la</w><w>gauche</w></seg><seg function="utterance" type="declarative"><w>Ces</w><w>clivages</w><w>ont</w><w>toujours</w><w>existé</w><c>,</c><w>c'est</w><w>depuis</w><w>Robert</w><w>Schuman</w></seg><seg function="utterance" type="declarative"><w>Ça</w><w>traverse</w><w>tous</w><w>les</w><w>groupes</w><w>sauf</w><w>l'UDF</w></seg><seg function="utterance" type="declarative"><w>C'est</w><w>le</w><w>parti</w><w>européen</w></seg><seg function="utterance" type="declarative"><w>Sur</w><w>l'institutionnel</w><c>,</c><w>en</w><w>gros</w><c>,</c><w>la</w><w>droite</w><w>et</w><w>la</w><w>gauche</w><w>sont</w><w>d'accord</w><w>mais</w><w>le</w><w>contenu</w><w>économique</w><w>et</w><w>social</w><w>n'est</w><w>pas</w><w>le</w><w>même</w></seg><seg function="utterance" type="declarative"><w>On</w><w>a</w><w>eu</w><w>un</w><w>débat</w><w>par</w><w>exemple</w><w>à</w><w>la</w><w>Délégation</w><w>où</w><w>la</w><w>droite</w><w>s'est</w><w>opposée</w><w>à</w><w>ce</w><w>qu'il</w><w>y</w><w>ait</w><w>des</w><w>objectifs</w><w>chiffrés</w><w>en</w><w>matière</w><w>de</w><w>lutte</w><w>contre</w><w>l'emploi</w></seg><anchor synch="#T8" /></u></div></body>
+   </text>
+</TEI>

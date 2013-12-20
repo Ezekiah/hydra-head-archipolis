@@ -1,0 +1,71 @@
+id;pseudo;type;description;sexe;groupe
+descr;nom dans le site enquête;/protagonist /investigator /speaker (seuls les speaker seront affichés dans le site enquête);;;
+cdsp_bequali_sp3_investig1;Olivier Rozenberg;investigator;enquêteur;H;
+cdsp_bequali_sp3_spk1;Pierre Albertini;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk2;René André;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk3;Marie-Hélène Aubert;speaker;enquêté;F;député
+cdsp_bequali_sp3_spk4;Alain Barrau;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk5;Christian Bataille;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk6;Jean-Marie Bockel;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk7;Didier Boulaud;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk8;Jean-Pierre Brard;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk9;Jean-Christophe Cambadélis;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk10;Nicole Catala;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk11;Gérard Charasse;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk12;Charles de Courson;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk13;Jean-Claude Daniel;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk14;Yves Dauge;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk15;Bernard Derosier;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk16;Laurence Dumont;speaker;enquêté;F;député
+cdsp_bequali_sp3_spk17;Laurence Fuchs;speaker;enquêteur;H;député
+cdsp_bequali_sp3_spk18;Jean Le Garrec;speaker;enquêté;H;député
+cdsp_bequali_sp3_protag18;assistante;protagonist;assistante du député;F;
+cdsp_bequali_sp3_spk19;Jacques Godfrain;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk20;Gaëtan Gorce;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk21;Jean-Jacques Guillet;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk22;Michel Hunault;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk23;André Lajoinie;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk24;Jean-Claude Lefort;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk25;Pierre Lellouche;speaker;enquêté;H;député
+cdsp_bequali_sp3_protag25;assistant ;protagonist;assistant du député;H;
+cdsp_bequali_sp3_spk26;Pierre Lequiller;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk27;Maurice Ligot;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk28;François Loncle;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk29;Thierry Mariani;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk30;Alain Marleix;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk31;Jacques Myard;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk32;Henri Nallet;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk33;Robert Pandraud;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk34;Daniel Paul;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk35;Vincent Peillon;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk36;Christian Philip;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk37;Etienne Pinte;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk38;Paul Quilès;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk39;Jean-Bernard Raimond;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk40;Yvette Roudy;speaker;enquêté;F;député
+cdsp_bequali_sp3_spk41;Jean-Claude Sandrier;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk42;Henri Sicre;speaker;enquêté;H;député
+cdsp_bequali_sp3_spk71;Denis Badré;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk72;Robert Del Picchia;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk73;Hubert Durand-Chastel;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk74;Pierre Fauchon;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk75;Jean François-Poncet;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk76;Yann Gaillard;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk77;Daniel Hoeffel;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk78;Lucien Lanier;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk79;Christian de La Malène;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk80;Aymeri de Montesquiou;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk81;Claude Saunier;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk82;Jean-Marie Valerenberghe;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_spk83;Xavier de Villepin;speaker;enquêté;H;sénateur
+cdsp_bequali_sp3_protag83;Administrateur du Sénat;protagonist;administrateur du sénat;H;
+cdsp_bequali_sp3_spk89;Elisabeth Guigou;speaker;enquêteur;F;ministre
+cdsp_bequali_sp3_spk90;Paulette Guinchard;speaker;enquêté;F;ministre
+cdsp_bequali_sp3_spk91;François Huwart;speaker;enquêté;H;ministre
+cdsp_bequali_sp3_spk92;Pierre Moscovici;speaker;enquêté;H;ministre
+cdsp_bequali_sp3_spk93;Christian Paul;speaker;enquêté;H;ministre
+cdsp_bequali_sp3_spk94;Christian Pierret;speaker;enquêté;H;ministre
+cdsp_bequali_sp3_spk95;Jean-Jack Queyranne;speaker;enquêté;H;ministre
+cdsp_bequali_sp3_spk111;Pervenche Berès;speaker;enquêteur;F;MEP
+cdsp_bequali_sp3_spk112;Jean-Louis Bourlanges;speaker;enquêteur;H;MEP
+cdsp_bequali_sp3_spk113;Alain Lamassoure;speaker;enquêteur;H;MEP

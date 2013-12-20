@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xmlns:tesla="http://www.exmaralda.org" xmlns:tei="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title />
+         </titleStmt>
+         <publicationStmt>
+            <p />
+         </publicationStmt>
+         <sourceDesc>
+            <recordingStmt>
+               <recording type="video" url="" />
+            </recordingStmt>
+         </sourceDesc>
+      </fileDesc>
+      <profileDesc>
+         <particDesc>
+            <person xml:id="SPK0" sex="1">
+               <persName>
+                  <abbr>cdsp_bequali_sp3_investig1</abbr>
+               </persName>
+            </person>
+            <person xml:id="SPK1" sex="1">
+               <persName>
+                  <abbr>cdsp_bequali_sp3_spk23</abbr>
+               </persName>
+            </person>
+         </particDesc>
+      </profileDesc>
+      <revisionDesc>
+         <change when="2012-11-13T18:36:56.375+01:00">Created by XSL transformation from an EXMARaLDA segmented transcription</change>
+      </revisionDesc>
+   </teiHeader>
+   <text>
+      <timeline unit="s" origin="#T0">
+         <when xml:id="T0" />
+         <when xml:id="T1" />
+         <when xml:id="T2" />
+         <when xml:id="T3" />
+         <when xml:id="T4" />
+      </timeline>
+      <body><div><u who="#SPK0"><anchor synch="#T0" /><seg function="utterance" type="not_classified"><w>Sur</w><w>Maastricht </w><c>:</c></seg><anchor synch="#T1" /></u></div><div><u who="#SPK1"><anchor synch="#T1" /><seg function="utterance" type="declarative"><incident><desc>Paragraphe:1</desc></incident><w>Si</w><w>je</w><w>refaisais</w><w>mon</w><w>discours</w><c>,</c><w>j’accentuerais</w><w>encore</w><w>sur</w><w>l’aspect</w><w>antilibéral</w><w>du</w><w>Traité</w><w>de</w><w>Maastricht</w></seg><seg function="utterance" type="declarative"><w> </w><anchor synch="T2" /><incident><desc>Paragraphe:2</desc></incident><w>S’il</w><w>fallait</w><w>revenir</w><w>là</w><c>-</c><w>dessus</w><c>,</c><w>je</w><w>lierais</w><w>plus</w><w>l’aspect</w><w>souverainiste</w><w>à</w><w>l’aspect</w><w>démocratique</w></seg><anchor synch="T3" /><seg function="utterance" type="declarative"><incident><desc>Paragraphe:3</desc></incident><w> Nous</w><w>sommes</w><w>plus</w><w>ouverts</w><w>sur</w><w>des</w><w>transferts</w><w>de</w><w>compétence</w><w>à</w><w>condition</w><w>qu’on</w><w>aille</w><w>vers</w><w>une</w><w>politique</w><w>nouvelle</w><c>,</c><w>de</w><w>progrès</w></seg><anchor synch="#T4" /></u></div></body>
+   </text>
+</TEI>

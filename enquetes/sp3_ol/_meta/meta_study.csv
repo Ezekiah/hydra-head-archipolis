@@ -1,0 +1,70 @@
+field;fieldlabel;fieldcat;fieldcatlabel;description;value
+descr;nom du champ dans le site;;pour le classement par grandes parties dans le site;ce que ce représente si le nom n'est pas clair;valeur pour cette enquête
+idno;DDI Id;general;Général;ddi id (important if you didnt included ese audio files);cdsp_bequali_sp1
+titl;Nom;general;Général;nom de l'enquête;Quand des Français, des Anglais et des Belges (francophones) parlent d’Europe
+description;Description;general;Général;html qui apparaît en dessous de la liste de metadonnees dans Overview;Enquête par entretiens collectifs sur la politisation et la polarisation des réactions à l’égard de l’intégration européenne
+abstract;Résumé;general;Général;petite description dans liste des enquetes;
+discipline;Discipline;general;Général;discipline au sens académique du terme;science politique
+keywords;Mots clefs;general;Général;mots clefs libres;politisation, Europe, indifférence
+topicclassification;Classification;general;Général;Classification en sous-discipline;sociologie politique, études européennes
+nation;Pays;general;Général;;France
+nation;Pays;general;Général;;Belgique
+nation;Pays;general;Général;;Royaume-Uni
+timeperiodcovered;Période couverte;general;Général;;Années 2000
+authenty;Auteur(s);actor;Acteur(s);auteur;Sophie Duchesne
+authenty;Auteur(s);actor;Acteur(s);auteur;Elizabeth Frazer
+authenty;Auteur(s);actor;Acteur(s);auteur;Guillaume Garcia
+authenty;Auteur(s);actor;Acteur(s);auteur;André-Paul Frognier
+authenty;Auteur(s);actor;Acteur(s);auteur;Florence Haegel 
+authenty;Auteur(s);actor;Acteur(s);auteur;Virginie Van Ingelgom
+affiliation;Affiliation;actor;Acteur(s);affiliation institutionnelle (labo ou département) au moment de l'enquête;CEVIPOF
+affiliation;Affiliation;actor;Acteur(s);affiliation institutionnelle (labo ou département) au moment de l'enquête;Department of Politics and International Relations 
+affiliation;Affiliation;actor;Acteur(s);affiliation institutionnelle (labo ou département) au moment de l'enquête;CEVIPOF
+affiliation;Affiliation;actor;Acteur(s);affiliation institutionnelle (labo ou département) au moment de l'enquête;Centre de Sciences Politiques et Politique Comparée 
+affiliation;Affiliation;actor;Acteur(s);affiliation institutionnelle (labo ou département) au moment de l'enquête;CEVIPOF
+affiliation;Affiliation;actor;Acteur(s);affiliation institutionnelle (labo ou département) au moment de l'enquête;Centre de Sciences Politiques et Politique Comparée 
+distrbtr;Distributeur;actor;Acteur(s);institution / labo qui diffuse l'enquête;CDSP 
+fundag;Agence de financement;actor;Acteur(s);institution (labo, université, agence de financement...) qui finance la recherche;MESR 
+fundag;Agence de financement;actor;Acteur(s);institution (labo, université, agence de financement...) qui finance la recherche;F.R.S.-FNR 
+fundag;Agence de financement;actor;Acteur(s);institution (labo, université, agence de financement...) qui finance la recherche;Leverhulme Trust 
+fundag;Agence de financement;actor;Acteur(s);institution (labo, université, agence de financement...) qui finance la recherche;Nuffield college
+fundag;Agence de financement;actor;Acteur(s);institution (labo, université, agence de financement...) qui finance la recherche;Partenariat Hubert Curien (FNRS, MAEE, MESR)
+fundag;Agence de financement;actor;Acteur(s);institution (labo, université, agence de financement...) qui finance la recherche;Centre d'études européennes de Sciences Po
+grantno;Bourse;actor;Acteur(s);précision sur le type de financement (bourse, etc.);ACI
+grantno;Bourse;actor;Acteur(s);précision sur le type de financement (bourse, etc.);bourse mandat d'aspirant
+grantno;Bourse;actor;Acteur(s);précision sur le type de financement (bourse, etc.);Leverhulme Trust small grant 
+grantno;Bourse;actor;Acteur(s);précision sur le type de financement (bourse, etc.);Nuffield college, Politics research fund 
+grantno;Bourse;actor;Acteur(s);précision sur le type de financement (bourse, etc.);Programme franco-belge Tournesol d’aide à la mobilité 
+grantno;Bourse;actor;Acteur(s);précision sur le type de financement (bourse, etc.);bourse du Centre d'études européennes
+locationofunitsofobservation;Niveau de comparatisme;universe;Univers;;international
+geogcover;Couverture géographique;universe;Univers;;nationale (France, Belgique, Royaume-Uni)
+spatialunits;Unités spatialisées;universe;Univers;;Paris, Bruxelles, Oxford
+observunits;Unités d'observation;universe;Univers;;groupes de discussion, individus
+targetgroups;Groupes de population ciblés;universe;Univers;;citoyens ordinaires
+studydates;Dates de l'enquête;universe;Univers;bornes temporelles de l'enquête;2005-2012
+colldate;Dates de récolte des données;method;Méthode;;2005-2006
+timedimension ;Périodicité;method;Méthode;;unique
+modedatacollection;Accès aux observations;method;Méthode;;recrutement par petites annonces, affichage, tractage, sollicitation directe
+sampprocedure;Echantillonnage ;method;Méthode;;Quatre catégories : ouvriers, employés, cadres, militants
+weighting;Segmentation;method;Méthode;;Deux groupes de discussion par catégorie
+methodofdatacollection;Technique de collection;method;Méthode;;entretiens collectifs
+numberoffiles;Nombre de documents;corpus;Corpus;;299
+datakind;Types de documents;corpus;Corpus;;documents textuels, enregistrements vidéo, photos, fichiers tableurs
+numberofunits;Nombre d'observations;corpus;Corpus;;24
+collsitu;Durée des observations;corpus;Corpus;;3 heures environ
+transcription;Transcription;analysis;Analyse;préciser ici s'il s'agit d'une transcription purement verbale (éventuellement sténographique ou complète), ou intégrant le niveau paraverbal, voire des conventions plus poussées (par exemple les conventions de l'analyse conversationnelle);Conventions simplifiées de l'analyse conversationnelle
+anonymization;Anonymisation;analysis;Analyse;;complète (à l'exception des enregistrements vidéo)
+analysis;Analyse;analysis;Analyse;;analyse interprétative simple, analyse lexicométrique, analyse par codification (CAQDAS) 
+langdata;Language données;analysis;Analyse;;français, anglais
+langdoc;Langage documentation;analysis;Analyse;;français
+accessconditions;Conditions d'accès;edition;Edition;;Après autorisation
+locarch;Localisation archives;edition;Edition;institution où sont conservées les archives originales;CDSP, ISP Nanterre 
+contact;Contact;edition;Edition;personne à contacter pour avoir accès aux archives d'origine ou à l'enquête en ligne);Sophie Duchesne, CDSP
+latestedition ;Dernière version;edition;Edition;dernière version de l'édition (quand il y en a plusieurs mettre la plus récente);2013
+copyright;copyright;edition;Edition;copyright pour la diffusion de l'enquête;CDSP 
+software;Logiciel;edition;Edition;logiciels utilisés pour traiter l'enquête en vue de sa diffusion;PowerGREP, Exmaralda
+editor;Edition;edition;Edition;personnes ayant participé au travail d'édition de l'enquête (réalisation de l'enquête sur l'enquête, numérisation, océrisation, formatage en TEI, classement, renommage, autre travail de documentation);Guillaume Garcia
+editor;Edition;edition;Edition;personnes ayant participé au travail d'édition de l'enquête (réalisation de l'enquête sur l'enquête, numérisation, océrisation, formatage en TEI, classement, autre travail de documentation);Anne Both
+editor;Edition;edition;Edition;personnes ayant participé au travail d'édition de l'enquête (réalisation de l'enquête sur l'enquête, numérisation, océrisation, formatage en TEI, classement, autre travail de documentation);Pierre Jullian de la Fuente
+editor;Edition;edition;Edition;personnes ayant participé au travail d'édition de l'enquête (réalisation de l'enquête sur l'enquête, numérisation, océrisation, formatage en TEI, classement, autre travail de documentation);Lucie Bergeyron
+editor;Edition;edition;Edition;personnes ayant participé au travail d'édition de l'enquête (réalisation de l'enquête sur l'enquête, numérisation, océrisation, formatage en TEI, classement, autre travail de documentation);Anne Cornilleau

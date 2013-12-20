@@ -1,0 +1,16 @@
+id;label;type;hiat;description;source;source_info
+descr;;voir glossaire sur le site;;;;
+c000;silence;inline;•;silence < 5s;;
+c001;laugh;inline;((laugh));rire bruyant;;
+c002;inaudible;inline;((inaudible));inaudible sur la cassette;;
+c003;hesitation;inline;((hesitation));hésitation du locuteur;;
+c004;interruption;inline;((interruption));un locuteur coupe la parole à un autre;;
+c005;body;inline_content;((body :_));fait corporel, mouvement, action (avec explications);;
+c006;question;inline_content;((question :_));question de l'enquêteur;;
+c007;directed;inline_content;((directed :_));si le discours est destiné à qq en particulier;;
+c008;comment;outline_content;((comment :_));commentaire du chercheur;;
+c009;break;outline_content;((break :_));interruption, avec explication;;
+c010;time;outline_content;((time :_));temps en minutes;;
+c011;uncertain;inword;((uncertain :_));incertitude lors de la transcription d'un mot ou passage;;
+c012;sic;inword;((sic :_));mot ou passage dit tel quel;;
+c013;strong;inword;((strong :_));mot ou passage appuyé;;
