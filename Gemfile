@@ -81,3 +81,5 @@ gem 'activesupport'
 
 
 gem "blacklight_advanced_search"
+
+gem 'carrierwave'

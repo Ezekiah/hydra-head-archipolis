@@ -173,100 +173,16 @@
 		});
 	});
 </script>
+	
+	
+	
+	<div id="tree">
+	<% cache do %>
+		<%= display_study_tree @study%>
+	<%end%>
+ 	</div>
+ 	
 
-
- 
-    <div id="tree">
-		<ul>
-			
-			<li id="id3" class="folder">prep
-				
-				<ul>
-				<% @documents.each do |document| %>
-					<% if document.research_phase == 'prep' %>
-					<li id="id3.1"><%=document.title%></li>
-					<%end%>
-				 <% end %>
-				 </ul>
-			</li>
-			
-			
-			<li id="id3" class="folder">col
-				
-				<ul>
-				<% @documents.each do |document| %>
-					<% if document.research_phase == 'col' %>
-					<li id="id3.1"><%=document.title%></li>
-					<%end%>
-				 <% end %>
-				 </ul>
-				
-				
-			</li>
-			
-			<li id="id3" class="folder">analyse<ul>
-				<% @documents.each do |document| %>
-					<% if document.research_phase == 'analyse' %>
-					<li id="id3.1"><%=document.title%></li>
-					<%end%>
-				 <% end %>
-				 </ul>
-				
-			</li>
-			
-		</ul>
-	</div>
-	
-	
-	
-	<!--
-	<ul id="menu">
-		<li class="ui-state-disabled"><a href="#">Aberdeen</a></li>
-		<li><a href="#">Ada</a></li>
-		<li><a href="#">Adamsville</a></li>
-		<li><a href="#">Addyston</a></li>
-		<li>
-			<a href="#">Delphi</a>
-			<ul>
-				<li class="ui-state-disabled"><a href="#">Ada</a></li>
-				<li><a href="#">Saarland</a></li>
-				<li><a href="#">Salzburg</a></li>
-			</ul>	
-		</li>
-		<li><a href="#">Saarland</a></li>
-			<li>
-				<a href="#">Salzburg</a>
-				<ul>
-					<li>
-						<a href="#">Delphi</a>
-						<ul>
-							<li><a href="#">Ada</a></li>
-							<li><a href="#">Saarland</a></li>
-							<li><a href="#">Salzburg</a></li>
-						</ul>
-					</li>
-					<li>
-						<a href="#">Delphi</a>
-						<ul>
-							<li><a href="#">Ada</a></li>
-							<li><a href="#">Saarland</a></li>
-							<li><a href="#">Salzburg</a></li>
-						</ul>
-					</li>
-					<li><a href="#">Perch</a></li>
-				</ul>
-			</li>
-			<li class="ui-state-disabled"><a href="#">Amesville</a></li>
-	</ul>
-	-->  
-	
-	
-	
-	
-	
-	
-	
-	
 	<div>Active node: <span id="echoActive">-</span></div>
 	<div>Focused node: <span id="echoFocused">-</span></div>
 	<p>

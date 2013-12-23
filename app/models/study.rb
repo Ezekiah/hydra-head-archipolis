@@ -65,4 +65,10 @@ class Study < ActiveFedora::Base
   
   has_many :collections, :property => :is_part_of
   
+  has_many :ressources, :property => :is_part_of
+  
 end
+
+
+
+

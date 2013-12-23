@@ -1,82 +1,83 @@
-
-class ParseFolderToFedora
+ ##IMPORT A FILE STRUCTURE IN FEDORA
+ 
+class ParseFolderStudyToFedora
   
-  def self.list_dir_content(dir='', collection='')
+  #contructor
+  def initialize(folder_path)
+    @folder_path = folder_path
+    Dir.chdir(@folder_path)
+    
+    @study = Study.create(:title=>File.basename(Dir.pwd))
+    @base_collection = Collection.create(:name => File.basename(folder_path), :type => 'bequali', :study=>@study)
+    @study.collections << @base_collection
+
+    parse_folder('.', @base_collection)
+    
+  end
+  
   
 
-    Dir.glob(dir+'/*').each do |item|
+  #Traverse recursively the folders, there is only one level of relationship : 
+  
+  def parse_folder(dir, current_collection)
+   
+      Dir.glob(dir+'/*').each do |item|
       
-      if File.directory?(item)
+      if File.directory?(item)        
+        puts(item)
+        #For each folder found, I create a collection object
+        sub_collection = Collection.create(:name => File.basename(item), :type => 'bequali', :study=>@study)
+        current_collection.collections << sub_collection
         
+        #Also add the collection to the study
+        #@study.collections << sub_collection
         
-        #Create collection
-        
-        if collection != ''
-        
-          col = Collection.create(:name => File.basename(item), :type => 'bequali')
-          
-          collection.collections << col
-        end
-        
-        list_dir_content(item, col)
+        #The item is a directory so we launch parse_folder on it
+        parse_folder(item, sub_collection)
         
         
       elsif File.file?(item)
-        
-        res = Ressource.create(:name => File.basename(item), :type => 'bequali')
-        collection.ressources << res
-        
-        
-        $count = $count + 1
-        puts item
-        
+        puts(item)
+        res = Ressource.create(:name => File.basename(item), :type => 'bequali', :study=>@study)
+        current_collection.ressources << res
+        #@study.ressources << res
         
       end
       
     end
+    
+    
+  
+  end
   
 end
-  
-  
+
+
+
+
+
+
+
+#parse = ParseFolderStudyToFedora.new('enquetes/sp3_ol')
+
+#get study
+
+col = Collection.find('changeme:1219')
+
+def traverse_collections(col)
+
+  col.collections.each do |sub_col|
+    
+    puts sub_col.name
+    
+    traverse_collections
+    
+    
+  end
+
 end
 
 
-
-##IMPORT DIRECTORY STRUCT IN FEDORA
-
-Dir.chdir('enquetes/sp3_ol')
-
-$count = 0
-
-
-study = Study.new
-
-
-
-ParseFolderToFedora::list_dir_content('.', study)
-
-
-
-
-
-
-
-
-
-
-##TEST COLLECTIONS##
-
-#
-
-#Create collection
-#col = Collection.new(:name => "col", :type => 'bequali')
-
-#study.collections << col
-
-#Create subCollection
-
-#subCollection = Collection.create(:name => "trans", :type => 'bequali')
-#col.collections << subCollection
 
 
 

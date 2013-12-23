@@ -17,6 +17,8 @@ class StudiesController < ApplicationController
     @documents = @study.documents
     @document = Document.new
     
+    @study_base_collection = @study.collections
+
     @studyMetaXML = Study.find(params[:id]).descMetadata.to_xml
     @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
     
