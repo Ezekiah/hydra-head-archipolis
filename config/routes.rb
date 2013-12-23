@@ -14,6 +14,16 @@ HydraHead::Application.routes.draw do
   Blacklight.add_routes(self)
   HydraHead.add_routes(self)
   devise_for :users
+  
+  
+  namespace :api do
+    resources :studies, only: [:index] do
+      resources :collections, only: [:index, :create, :update, :destroy]
+      resources :ressources, only: [:index, :create, :update, :destroy]
+    end
+  end
+  
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
