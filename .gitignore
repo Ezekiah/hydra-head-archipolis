@@ -20,12 +20,3 @@
 /tmp
 
 /jetty
-/nbproject
-
-*.sw*
-*~
-build/
-bin/
-node_modules/
-vendor/
-
