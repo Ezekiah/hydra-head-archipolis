@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 # See https://help.github.com/articles/ignoring-files for more about ignoring files.
 #
@@ -20,12 +21,11 @@
 /tmp
 
 /jetty
-/nbproject
-
+=======
 *.sw*
 *~
 build/
 bin/
 node_modules/
 vendor/
-
+>>>>>>> ngboilerplate/v0.3.1-release
