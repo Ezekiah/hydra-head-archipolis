@@ -20,3 +20,12 @@
 /tmp
 
 /jetty
+
+
+*.sw*
+*~
+build/
+bin/
+node_modules/
+vendor/
+
