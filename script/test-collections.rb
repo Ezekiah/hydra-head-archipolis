@@ -58,11 +58,11 @@ end
 
 
 
-#parse = ParseFolderStudyToFedora.new('enquetes/sp3_ol')
+parse = ParseFolderStudyToFedora.new('enquetes/sp3_ol')
 
 #get study
 
-col = Collection.find('changeme:1219')
+
 
 def traverse_collections(col)
 

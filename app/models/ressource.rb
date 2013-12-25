@@ -13,5 +13,12 @@ class Ressource < ActiveFedora::Base
     belongs_to :study, :property => :is_member_of_collection
     belongs_to :ressource, :property => :is_member_of_collection
     
+    def as_json(options={})
+    { 
+      :id => self.id,
+      :name => self.name,
+      :ressources => self.ressources
+    }
+  end
     
 end

@@ -12,4 +12,14 @@ class Collection < ActiveFedora::Base
     belongs_to :study, :property => :is_member_of_collection
     
     has_many :files
+    
+   def as_json(options={})
+    { :id => self.id,
+      :name => self.name,
+      :collections => self.collections,
+      :ressources => self.ressources,
+      
+      
+    }
+  end
 end

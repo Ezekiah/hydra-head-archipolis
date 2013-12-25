@@ -2,6 +2,9 @@ require 'datastreams/study_metadata'
 require 'datastreams/tree_metadata'
 
 class Study < ActiveFedora::Base
+  
+  attr_reader :title
+  
   has_metadata 'descMetadata', type:StudyMetadata
   has_metadata 'utilsMetadata', type:TreeMetadata
   
@@ -66,6 +69,16 @@ class Study < ActiveFedora::Base
   has_many :collections, :property => :is_part_of
   
   has_many :ressources, :property => :is_part_of
+  
+  def as_json(options={})
+    { 
+      :id => self.id,
+      :title => self.title,
+      :collections => self.collections,
+      :ressources => self.ressources,
+      
+    }
+  end
   
 end
 

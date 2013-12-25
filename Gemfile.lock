@@ -20,6 +20,8 @@ GEM
       rdf-rdfxml (= 1.0.1)
       rsolr
       rubydora (~> 1.6, >= 1.6.5)
+    active_model_serializers (0.8.1)
+      activemodel (>= 3.0)
     activemodel (4.0.1)
       activesupport (= 4.0.1)
       builder (~> 3.1.0)
@@ -36,6 +38,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    angularjs-rails (1.2.5)
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
@@ -314,7 +317,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   activesupport
+  angularjs-rails (~> 1.2.5)
   blacklight_advanced_search
   bootstrap-sass
   carrierwave

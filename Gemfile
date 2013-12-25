@@ -49,13 +49,15 @@ gem 'hydra'
 gem "bootstrap-sass"
 gem "devise"
 gem "devise-guests", "~> 0.3"
+
 group :development, :test do
   gem "rspec-rails"
   gem "jettywrapper"
+  gem 'debugger'
+  gem 'rack-webconsole-pry'
+  gem 'pry-rails'
 end
 
-group :development, :test do
-end
 
 
 gem 'wicked'
@@ -64,10 +66,6 @@ gem 'hydra-editor'
 
 gem 'jquery-rails'
 
-gem 'rack-webconsole-pry', :require => 'rack-webconsole'
-gem 'pry-rails', :group => :development
-
-gem 'debugger'
 
 gem 'dynatree-rails'
 
@@ -83,3 +81,7 @@ gem 'activesupport'
 gem "blacklight_advanced_search"
 
 gem 'carrierwave'
+
+gem "angularjs-rails", "~> 1.2.5"
+
+gem "active_model_serializers"
