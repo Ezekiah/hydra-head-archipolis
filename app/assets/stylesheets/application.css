@@ -16,5 +16,5 @@
  *= require dynatree/skin
  
  *= require 'blacklight_advanced_search'
-
+ *= require_tree ../javascripts/jQuery-contextMenu/src
 */

@@ -34,5 +34,5 @@
 //= require archipolis
 //= require_tree ./angular
 
-
+//= require_tree ./jQuery-contextMenu/src
 

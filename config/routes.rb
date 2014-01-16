@@ -24,9 +24,16 @@ HydraHead::Application.routes.draw do
     
     resources :studies
 
-    resources :collections 
+    resources :collections  do
+      get '/xml_form/' => 'collections#xml_form', :as => :xml_form
+      get '/html_form/' => 'collections#html_form', :as => :html_form
+      get 'get_collection_json'=>'collections#get_collection_json', :as => :get_collection_json
+    end
     
-    resources :ressources
+    resources :ressources do
+      get '/xml_form/' => 'ressources#xml_form', :as => :xml_form
+      get '/html_form/' => 'ressources#html_form', :as => :html_form
+    end
 
   end
   

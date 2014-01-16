@@ -1,6 +1,9 @@
 require 'datastreams/collection_metadata'
 
 class API::CollectionsController < ApplicationController
+   before_action :set_collection, only: [:show, :edit, :update, :destroy, :html_form, :json_study_tree]
+  
+  
   def index
     json = '{}'
    
@@ -24,12 +27,19 @@ class API::CollectionsController < ApplicationController
   
   def update
     respond_to do |format|
-      if @collection.update(study_params)
+      
+      if params['form_data']['collection']
+        
+        params['form_data']['collection'] = Collection.find(params['form_data']['collection'])
+        
+      end
+      
+      if @collection.update(params['form_data'])
         format.html { redirect_to @collection, notice: 'Collection was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render json: params }
       else
         format.html { render action: 'edit' }
-        format.json { render json: @collection.errors, status: :unprocessable_entity }
+        format.json { render json: params }
       end
     end
   end
@@ -38,7 +48,21 @@ class API::CollectionsController < ApplicationController
   
   def show
     collection = Collection.find(params[:id])
-    render:json => collection.as_json
+    render:json => collection
+  end
+  
+  
+  def html_form
+   
+   
+   render:text => @collection.html_form
+   
+  end
+  
+  
+  def get_collection_json
+    collection = Collection.find(params[:id])
+    render:json => json_study_tree(collection)
   end
   
   private
@@ -52,6 +76,25 @@ class API::CollectionsController < ApplicationController
       params[:collection]
     end
   
- 
+    
+    def json_study_tree(col)
+      json={}
+    
+    
+      collections = col.collections.each do |col|
+        { :key => col.id, :title => col.name, isFolder: true ,:children=>json_study_tree(col) }
+      end
+      
+      if col.ressources.empty? == false
+        col.ressources.each do |res|
+           collections << { :key => res.id, :title => res.name, :isLazy=>false, isFolder: false}
+        end
+      end
+      
+   
+      collections.to_json
+  
+    end
+    
 
 end

@@ -1,5 +1,7 @@
  ##IMPORT A FILE STRUCTURE IN FEDORA
- 
+
+include Hydra::ModelMethods
+
 class ParseFolderStudyToFedora
   
   #contructor
@@ -24,13 +26,13 @@ class ParseFolderStudyToFedora
       Dir.glob(dir+'/*').each do |item|
       
       if File.directory?(item)        
-        puts(item)
+        puts File.basename(item)
         #For each folder found, I create a collection object
         sub_collection = Collection.create(:name => File.basename(item), :type => 'bequali', :study=>@study)
         current_collection.collections << sub_collection
-        
+        puts('Object Added')
         #Also add the collection to the study
-        #@study.collections << sub_collection
+        @study.collections << sub_collection
         
         #The item is a directory so we launch parse_folder on it
         parse_folder(item, sub_collection)
@@ -40,7 +42,10 @@ class ParseFolderStudyToFedora
         puts(item)
         res = Ressource.create(:name => File.basename(item), :type => 'bequali', :study=>@study)
         current_collection.ressources << res
-        #@study.ressources << res
+        
+        res.add_file(File.open(item), 'content', File.basename(item))
+        
+        @study.ressources << res
         
       end
       
