@@ -1,0 +1,17 @@
+results @collections do |collection|
+  id collection.id
+  name collection.name
+  type collection.type
+  
+  ressources collection.ressources do |ressource|
+    name ressource.url
+    type ressource.type
+  end
+  
+  
+  collections collection.collections do |collection|
+    name collection.url
+    type collection.type
+  end
+  
+end
