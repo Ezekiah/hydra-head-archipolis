@@ -84,4 +84,16 @@ gem 'carrierwave'
 
 gem "angularjs-rails", "~> 1.2.5"
 
-gem "active_model_serializers"
+# Gemfile
+gem 'rabl'
+# Also add either `oj` or `yajl-ruby` as the JSON parser
+gem 'oj'
+
+gem 'test-unit'
+
+gem "cancan"
+
+
+gem "nested_form"
+
+gem "cocoon"

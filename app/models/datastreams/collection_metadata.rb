@@ -4,9 +4,9 @@
 class CollectionMetadata < ActiveFedora::OmDatastream
 
   set_terminology do |t|
-      t.root(path: "fields")
-      t.name
-      t.type
+      t.root(path: "metadatas")
+      t.title
+      t.rec_type
       
   end
   

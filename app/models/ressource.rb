@@ -3,20 +3,59 @@ require 'datastreams/ressource_metadata'
 class Ressource < ActiveFedora::Base
     has_metadata 'descMetadata', type:RessourceMetadata
     
-    has_attributes :name, datastream: 'descMetadata', multiple: false
-    has_attributes :type, datastream: 'descMetadata', multiple: false
+
+    
+    has_attributes :checksum, datastream: 'descMetadata', multiple: false
+    has_attributes :checksum_type, datastream: 'descMetadata', multiple: false
+    has_attributes :content_date, datastream: 'descMetadata', multiple: false
+    has_attributes :description, datastream: 'descMetadata', multiple: true
+    
+    has_attributes :digital_origin, datastream: 'descMetadata', multiple: false
+    has_attributes :dissemination, datastream: 'descMetadata', multiple: false
+    has_attributes :file, datastream: 'descMetadata', multiple: false
+    has_attributes :file_name, datastream: 'descMetadata', multiple: false
+    has_attributes :file_name_original, datastream: 'descMetadata', multiple: false
+    has_attributes :file_size, datastream: 'descMetadata', multiple: false
+    has_attributes :format_compression, datastream: 'descMetadata', multiple: false
+    has_attributes :format_compression_ratio, datastream: 'descMetadata', multiple: false
+    has_attributes :format_encodage, datastream: 'descMetadata', multiple: false
+    has_attributes :format_mimetype, datastream: 'descMetadata', multiple: false
+    has_attributes :format_pronom, datastream: 'descMetadata', multiple: false
+    has_attributes :format_structure, datastream: 'descMetadata', multiple: false
+    has_attributes :format_structure_type, datastream: 'descMetadata', multiple: false
+    has_attributes :format_version, datastream: 'descMetadata', multiple: false
+    has_attributes :language, datastream: 'descMetadata', multiple: true
+    has_attributes :note, datastream: 'descMetadata', multiple: false
+    has_attributes :order, datastream: 'descMetadata', multiple: false
+    has_attributes :processing_software_name, datastream: 'descMetadata', multiple: false
+    has_attributes :rec_created_date, datastream: 'descMetadata', multiple: false
+
+    has_attributes :rec_id, datastream: 'descMetadata', multiple: false
+    has_attributes :rec_modified_date, datastream: 'descMetadata', multiple: false
+    has_attributes :rec_type, datastream: 'descMetadata', multiple: false
+    has_attributes :subject_country, datastream: 'descMetadata', multiple: false
+    has_attributes :subject_topic, datastream: 'descMetadata', multiple: false
     has_attributes :title, datastream: 'descMetadata', multiple: false
-    has_attributes :label, datastream: 'descMetadata', multiple: false
-    
-    
+    has_attributes :url, datastream: 'descMetadata', multiple: false
+
+
+
     has_file_datastream "documentContent"
     
-    has_many :files, :property => :is_member_of_collection, :class_name => "ActiveFedora::Base"
+    #has_many :files, :property => :is_member_of_collection, :class_name => "ActiveFedora::Base"
     has_many :ressources, :property=>:is_member_of_collection
     
     belongs_to :collection, :property => :is_member_of_collection
     belongs_to :study, :property => :is_member_of_collection
     belongs_to :ressource, :property => :is_member_of_collection
+
+
+    accepts_nested_attributes_for :ressources
+
+
+
+
+
     
     def as_json(options={})
     { 
@@ -30,8 +69,6 @@ class Ressource < ActiveFedora::Base
    def html_form()
    
      builder = Nokogiri::HTML::Builder.new do |doc|
-      
-      
       
       doc.form {
         doc.h1 "Metadatas ressources"

@@ -10,7 +10,7 @@ class ParseFolderStudyToFedora
     Dir.chdir(@folder_path)
     
     @study = Study.create(:title=>File.basename(Dir.pwd))
-    @base_collection = Collection.create(:name => File.basename(folder_path), :type => 'bequali', :study=>@study)
+    @base_collection = Collection.create(:title => '_root_', :rec_type => 'bequali', :study=>@study)
     @study.collections << @base_collection
 
     parse_folder('.', @base_collection)
@@ -28,7 +28,7 @@ class ParseFolderStudyToFedora
       if File.directory?(item)        
         puts File.basename(item)
         #For each folder found, I create a collection object
-        sub_collection = Collection.create(:name => File.basename(item), :type => 'bequali', :study=>@study)
+        sub_collection = Collection.create(:title => File.basename(item), :rec_type => 'bequali', :study=>@study)
         current_collection.collections << sub_collection
         puts('Object Added')
         #Also add the collection to the study
@@ -40,7 +40,7 @@ class ParseFolderStudyToFedora
         
       elsif File.file?(item)
         puts(item)
-        res = Ressource.create(:name => File.basename(item), :type => 'bequali', :study=>@study)
+        res = Ressource.create(:file_name => File.basename(item), :rec_type => 'bequali', :study=>@study)
         current_collection.ressources << res
         
         res.add_file(File.open(item), 'content', File.basename(item))
