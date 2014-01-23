@@ -3,7 +3,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
   set_terminology do |t|
     t.root(path: "metadatas")
     
-    t.address{
+    t.addresses{
       t.country
       t.geo_latitude
       t.geo_longitude
@@ -12,14 +12,14 @@ class PersonMetadata < ActiveFedora::OmDatastream
       t.street
     }
     
-    t.affiliation{
+    t.affiliations{
         t.acronym
         t.name
         t.rec_id
         t.role
     }
     
-    t.identifier{
+    t.identifiers{
       t.type
       t.value
     }
@@ -27,7 +27,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
     
     t.date_birth
     t.date_death
-    t.email
+    t.emails
     
     t.gender
     t.name_family
@@ -37,7 +37,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
     t.name_suffix
     t.nationality
     
-    t.note{
+    t.notes{
       t.language
       t.value
     }
@@ -47,6 +47,8 @@ class PersonMetadata < ActiveFedora::OmDatastream
     
     t.rec_class
     t.rec_id
+    
+    t.rec_permission
 
   end
   
@@ -99,6 +101,8 @@ class PersonMetadata < ActiveFedora::OmDatastream
         
         t.study_role
         t.study_role_description
+        
+        t.rec_permission
     }
   
   end

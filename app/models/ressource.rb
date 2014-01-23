@@ -60,7 +60,7 @@ class Ressource < ActiveFedora::Base
     def as_json(options={})
     { 
       :id => self.id,
-      :name => self.name,
+      :title => self.title,
       :ressources => self.ressources
     }
     end
@@ -74,7 +74,7 @@ class Ressource < ActiveFedora::Base
         doc.h1 "Metadatas ressources"
         doc.div{
           doc.text "name : "
-          doc.input(:type=>'text', :name=>'name', :value=>self.name) {
+          doc.input(:type=>'text', :name=>'name', :value=>self.title) {
             doc.text "name"
           }
         }
@@ -93,12 +93,12 @@ class Ressource < ActiveFedora::Base
         option2 = {:type=>'radio', :name=>'type', :value=>'bequali'}
         
         
-        if self.type == 'custom'
-          option[:checked] = 'checked'
-        end
-         if self.type == 'bequali'
-          option2[:checked] = 'checked'
-        end
+        #if self.type == 'custom'
+        #  option[:checked] = 'checked'
+        #end
+        # if self.type == 'bequali'
+        #  option2[:checked] = 'checked'
+        #end
         
         
         doc.div{
@@ -118,11 +118,11 @@ class Ressource < ActiveFedora::Base
           study_collections.each do |col|
             option = {:name=>'collection', :value=>col.id}
             
-            if col.name == self.collection.name
+            if col.title == self.collection.title
               option[:selected] = 'true'
             end
 
-            doc.option(option).text(col.name)
+            doc.option(option).text(col.title)
           end
           
 

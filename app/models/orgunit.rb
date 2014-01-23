@@ -24,14 +24,18 @@ class Orgunit < ActiveFedora::Base
   has_attributes :name_suffix, datastream: 'descMetadata', multiple: true
   
   has_attributes :nationality, datastream: 'descMetadata', multiple: false
- 
-    has_attributes :rec_class, datastream: 'descMetadata', multiple: false
+  
+  has_attributes :phones, datastream: 'descMetadata', multiple: true
+  has_attributes :urls, datastream: 'descMetadata', multiple: true
+  
+  has_attributes :rec_class, datastream: 'descMetadata', multiple: false
   has_attributes :rec_id, datastream: 'descMetadata', multiple: false
   
   has_attributes :notes, datastream: 'descMetadata', multiple: true
   
   has_attributes :study_role, datastream: 'descMetadata', multiple: false
   has_attributes :study_role_description, datastream: 'descMetadata', multiple: false
+  has_attributes :rec_permission, datastream: 'descMetadata', multiple: true
 
 
   has_many :studies, :property=>:is_member_of_collection

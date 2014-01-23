@@ -35,5 +35,7 @@
 //= require_tree ./angular
 
 //= require_tree ./jQuery-contextMenu/src
-//= require jquery_nested_form
+
 //= require cocoon
+
+//= require jquery.table.addrow

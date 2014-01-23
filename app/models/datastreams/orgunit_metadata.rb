@@ -5,7 +5,7 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     
     t.acronym
     
-    t.address{
+    t.addresses{
       t.country
       t.geo_latitude
       t.geo_longitude
@@ -15,14 +15,14 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
       
     }
     
-    t.affiliation{
+    t.affiliations{
         t.acronym
         t.name
         t.rec_id
         t.role
     }
     
-    t.identifier{
+    t.identifiers{
       t.type
       t.value
     }
@@ -30,7 +30,7 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     
     t.date_foundation
     t.date_dissolution
-    t.email
+    t.emails
     
     
     t.name
@@ -38,12 +38,12 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     t.nationality
     
     
-    t.phone{
+    t.phones{
       t.formatted
     }
     
 
-    t.note{
+    t.notes{
       t.language
       t.value
     }
@@ -54,7 +54,7 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     
     t.rec_class
     t.rec_id
-    
+    t.rec_permission
 
   end
   
@@ -115,7 +115,8 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
           
           t.rec_class
           t.rec_id
-  
+          
+          t.rec_permission
       }
     end
     

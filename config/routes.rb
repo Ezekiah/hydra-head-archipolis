@@ -1,13 +1,14 @@
 
 HydraHead::Application.routes.draw do
   
+  resources :orgunits
+
+  resources :people
+
   mount HydraEditor::Engine => '/hydra-editor/'
   
   resources :documents
 
-  resources :studies do
-    resources :documents
-  end
   
 
   get "create_study/index"
@@ -36,6 +37,21 @@ HydraHead::Application.routes.draw do
     end
 
   end
+  
+  
+  
+
+  
+    resources :studies do
+      resources :documents
+    end
+    
+    
+    resources :study_steps
+    
+
+
+
   
   
   # The priority is based upon order of creation: first created -> highest priority.

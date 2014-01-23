@@ -93,7 +93,7 @@ gem 'test-unit'
 
 gem "cancan"
 
-
-gem "nested_form"
+gem "simple_form"
 
 gem "cocoon"
+

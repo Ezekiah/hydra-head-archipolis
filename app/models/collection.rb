@@ -36,7 +36,7 @@ class Collection < ActiveFedora::Base
         doc.h1 "Metadatas collection"
         doc.div{
           doc.text "name : "
-          doc.input(:type=>'text', :name=>'name', :value=>self.name) {
+          doc.input(:type=>'text', :name=>'name', :value=>self.title) {
             doc.text "name"
           }
         }
@@ -46,12 +46,12 @@ class Collection < ActiveFedora::Base
         option2 = {:type=>'radio', :name=>'type', :value=>'bequali'}
         
         
-        if self.type == 'custom'
-          option[:checked] = 'checked'
-        end
-         if self.type == 'bequali'
-          option2[:checked] = 'checked'
-        end
+        #if self.type == 'custom'
+        #  option[:checked] = 'checked'
+        #end
+        # if self.type == 'bequali'
+        #  option2[:checked] = 'checked'
+        #end
         
         
         doc.div{
@@ -71,11 +71,11 @@ class Collection < ActiveFedora::Base
           study_collections.each do |col|
             option = {:name=>'collection', :value=>col.id}
             
-            if col.name == self.collection.name
+            if col.name == self.collection.title
               option[:selected] = 'true'
             end
 
-            doc.option(option).text(col.name)
+            doc.option(option).text(col.title)
           end
           
 

@@ -6,7 +6,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
       t.root(path: "metadatas")
       
       
-      t.depositor
+      t.depositors
 
       t.copyright_holder
       t.software

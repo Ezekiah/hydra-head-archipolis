@@ -4,100 +4,14 @@
 
 <br/>
 
-<%= semantic_nested_form_for @study do |f| %>
-
-
-	depositor : <%= f.text_field :depositor %><%= f.link_to_add "Add a task", :depositor %><br/>
-
-      copyright_holder : <%= f.text_field :copyright_holder %><br/>
-      software : <%= f.text_field :software %><br/>
-      editor : <%= f.text_field :editor %><br/>
-      edition_first_date : <%= f.text_field :edition_first_date %><br/>
-      edition_last_date : <%= f.text_field :edition_last_date %><br/>
-      distributor : <%= f.text_field :distributor %><br/>
-      project : <%= f.text_field :project %><br/>
-      author : <%= f.text_field :author %><br/>
-      
-      
-      rec_id : <%= f.text_field :rec_id %><br/>
-      title : <%= f.text_field :title %><br/>
-      name : <%= f.text_field :name %><br/>
-      documents_count : <%= f.text_field :documents_count %><br/>
-      archive_extent : <%= f.text_field :archive_extent %><br/>
-      archive_location : <%= f.text_field :archive_location %><br/>
-      access_conditions : <%= f.text_field :access_conditions %><br/>
-      
-      
-    
-      contact : <%= f.text_field :contact %><br/>
-      data_collection_modes : <%= f.text_field :data_collection_modes %><br/>
-      data_collection_context : <%= f.text_field :data_collection_context %><br/>
-      data_collection_method : <%= f.text_field :data_collection_method %><br/>
-      data_collection_sampling : <%= f.text_field :data_collection_sampling %><br/>
-      data_collection_time_dimension : <%= f.text_field :data_collection_time_dimension %><br/>
-      publication : <%= f.text_field :publication %><br/>
-      description : <%= f.text_field :description %><br/>
-      analysis_type : <%= f.text_field :analysis_type %><br/>
-      analysis_anonymization : <%= f.text_field :analysis_anonymization %><br/>
-      keyword : <%= f.text_field :keyword %><br/>
-      
-      
-      classification : <%= f.text_field :classification %><br/>
-      observation_unit : <%= f.text_field :observation_unit %><br/>
-      data_collection_date_begin : <%= f.text_field :data_collection_date_begin %><br/>
-      data_collection_date_end : <%= f.text_field :data_collection_date_end %><br/>
-      documents_type : <%= f.text_field :documents_type %><br/>
-      analysis_transcription : <%= f.text_field :analysis_transcription %><br/>
-      coverage_spatial_geographic : <%= f.text_field :coverage_spatial_geographic %><br/>
-      coverage_spatial_units : <%= f.text_field :coverage_spatial_units %><br/>
-      coverage_spatial_country : <%= f.text_field :coverage_spatial_country %><br/>
-      coverage_temporal_begin : <%= f.text_field :coverage_temporal_begin %><br/>
-      coverage_temporal_end : <%= f.text_field :coverage_temporal_end %><br/>
-      target_group : <%= f.text_field :target_group %><br/>
-      location_of_units_of_observation : <%= f.text_field :location_of_units_of_observation %><br/>
-      data_language : <%= f.text_field :data_language %><br/>
-      documentation_language : <%= f.text_field :documentation_language %><br/>
-    
-    
-    
-      documents_date_begin : <%= f.text_field :documents_date_begin %><br/>
-      documents_date_end : <%= f.text_field :documents_date_end %><br/>
-      media_file : <%= f.text_field :media_file %><br/>
-      documents_transc_count : <%= f.text_field :documents_transc_count %><br/>
-      interviewer : <%= f.text_field :interviewer %><br/>
-      archive_completeness : <%= f.text_field :archive_completeness %><br/>
-      archive_arrangement_level : <%= f.text_field :archive_arrangement_level %><br/>
-      archive_consentement : <%= f.text_field :archive_consentement %><br/>
-      archive_agreememt : <%= f.text_field :archive_agreememt %><br/>
-      note : <%= f.text_field :note %><br/>
-
-	<%= f.fields_for :collections do |col_form| %>
-	  <%= col_form.text_field :title %>
-	  <%= col_form.link_to_remove "Remove this collection" %>
-	<% end %>
 
 
 
-<% end %>
-
-
-<%#=render 'form'%>
+<%=render 'form'%>
 
 
 
 
-<div style="clear:both">
-	<br/>
-	<h2>Files tree</h2>
-	<%=render 'documents/dynatree'%>
-</div>
-
-<br/>
-<p>
-	<a href="/documents/new">Add file to the study</a>
-</p>
-
-<% render 'documents/form'%>
 
 
 

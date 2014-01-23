@@ -2,6 +2,8 @@ require 'datastreams/study_metadata'
 require 'datastreams/tree_metadata'
 
 
+
+
 class Study < ActiveFedora::Base
   
   attr_reader :title
@@ -10,7 +12,10 @@ class Study < ActiveFedora::Base
   has_metadata 'utilsMetadata', type:TreeMetadata
   
   
-  has_attributes :depositor, datastream: 'descMetadata', multiple: true
+  has_attributes :depositors, datastream: 'descMetadata', multiple: true
+  
+  validates :title,  :presence => true
+  
   has_attributes :copyright_holder, datastream: 'descMetadata', multiple: true
   has_attributes :software, datastream: 'descMetadata', multiple: true
   has_attributes :editor, datastream: 'descMetadata', multiple: true
@@ -90,8 +95,15 @@ class Study < ActiveFedora::Base
   
   has_many :ressources, :property => :is_part_of, :through=> :collections
   
-   accepts_nested_attributes_for :collections
+  has_many :persons, :property => :is_part_of
+  
+  has_many :orgunits, :property => :is_part_of
+  
+  
+  accepts_nested_attributes_for :collections
   accepts_nested_attributes_for :ressources
+  accepts_nested_attributes_for :persons
+  accepts_nested_attributes_for :orgunits
   
   
   

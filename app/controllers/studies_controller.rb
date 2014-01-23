@@ -2,7 +2,7 @@ require 'datastreams/study_metadata'
 
 class StudiesController < ApplicationController
   before_action :set_study, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /studies
   # GET /studies.json
   def index
@@ -54,12 +54,19 @@ class StudiesController < ApplicationController
 
   # POST /studies
   # POST /studies.json
+  
+  
+  
   def create
+   
+    debugger
     @study = Study.new(study_params)
-
+  
     respond_to do |format|
       if @study.save
-        format.html { redirect_to @study, notice: 'Study was successfully created.' }
+        session[:study_id] = @study.id
+        
+        format.html { redirect_to study_steps_path('etape1', :study_id => @study.id), notice: 'Study was successfully created.' }
         format.json { render action: 'show', status: :created, location: @study }
       else
         format.html { render action: 'new' }
