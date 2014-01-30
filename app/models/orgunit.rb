@@ -12,16 +12,10 @@ class Orgunit < ActiveFedora::Base
   
   has_attributes :identifiers, datastream: 'descMetadata', multiple: true
   
-  has_attributes :date_birth, datastream: 'descMetadata', multiple: false
-  has_attributes :date_death, datastream: 'descMetadata', multiple: false
+ 
   has_attributes :emails, datastream: 'descMetadata', multiple: true
-  has_attributes :gender, datastream: 'descMetadata', multiple: false
+
   
-  has_attributes :name_family, datastream: 'descMetadata', multiple: false
-  has_attributes :name_nick, datastream: 'descMetadata', multiple: false
-  has_attributes :name_given, datastream: 'descMetadata', multiple: false
-  has_attributes :name_prefix, datastream: 'descMetadata', multiple: false
-  has_attributes :name_suffix, datastream: 'descMetadata', multiple: true
   
   has_attributes :nationality, datastream: 'descMetadata', multiple: false
   
@@ -33,9 +27,11 @@ class Orgunit < ActiveFedora::Base
   
   has_attributes :notes, datastream: 'descMetadata', multiple: true
   
-  has_attributes :study_role, datastream: 'descMetadata', multiple: false
-  has_attributes :study_role_description, datastream: 'descMetadata', multiple: false
-  has_attributes :rec_permission, datastream: 'descMetadata', multiple: true
+
+  
+  has_many :affiliations, :property=>'is_member_of_collection'
+    
+  accepts_nested_attributes_for :affiliations
 
 
   has_many :studies, :property=>:is_member_of_collection

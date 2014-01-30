@@ -8,14 +8,14 @@ class StudyMetadata < ActiveFedora::OmDatastream
       
       t.depositors
 
-      t.copyright_holder
-      t.software
-      t.editor
+      t.copyright_holders
+      t.softwares
+      t.editors
       t.edition_first_date
       t.edition_last_date
-      t.distributor
-      t.project
-      t.author
+      t.distributors
+      t.projects
+      t.authors
       
       
       t.rec_id
@@ -28,47 +28,47 @@ class StudyMetadata < ActiveFedora::OmDatastream
       
       
     
-      t.contact
+      t.contacts
       t.data_collection_modes
       t.data_collection_context
-      t.data_collection_method
-      t.data_collection_sampling
-      t.data_collection_time_dimension
-      t.publication
-      t.description
-      t.analysis_type
+      t.data_collection_methods
+      t.data_collection_samplings
+      t.data_collection_time_dimensions
+      t.publications
+      t.descriptions
+      t.analysis_types
       t.analysis_anonymization
-      t.keyword
+      t.keywords
       
       
-      t.classification
-      t.observation_unit
+      t.classifications
+      t.observation_units
       t.data_collection_date_begin
       t.data_collection_date_end
-      t.documents_type
+      t.documents_types
       t.analysis_transcription
-      t.coverage_spatial_geographic
+      t.coverage_spatial_geographics
       t.coverage_spatial_units
-      t.coverage_spatial_country
+      t.coverage_spatial_countries
       t.coverage_temporal_begin
       t.coverage_temporal_end
-      t.target_group
-      t.location_of_units_of_observation
-      t.data_language
-      t.documentation_language
+      t.target_groups
+      t.location_of_units_of_observations
+      t.data_languages
+      t.documentation_languages
     
     
     
       t.documents_date_begin
       t.documents_date_end
-      t.media_file
+      t.media_files
       t.documents_transc_count
-      t.interviewer
+      t.interviewers
       t.archive_completeness
       t.archive_arrangement_level
       t.archive_consentement
       t.archive_agreememt
-      t.note
+      t.notes
           
     
 

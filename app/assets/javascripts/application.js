@@ -36,6 +36,8 @@
 
 //= require_tree ./jQuery-contextMenu/src
 
+
 //= require cocoon
+
 
 //= require jquery.table.addrow

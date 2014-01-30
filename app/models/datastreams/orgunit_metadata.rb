@@ -48,13 +48,13 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
       t.value
     }
     
-    t.url{
+    t.urls{
       t.value
     }
     
     t.rec_class
     t.rec_id
-    t.rec_permission
+
 
   end
   

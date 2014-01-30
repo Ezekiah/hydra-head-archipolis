@@ -31,7 +31,7 @@ class StudiesController < ApplicationController
     @studyMetaXML = StudyMetadata.xml_template.to_s
     
     @hash = Hash.from_xml(@studyMetaXML.gsub("\n", "")) 
-        
+     
     
     
   end
@@ -58,9 +58,49 @@ class StudiesController < ApplicationController
   
   
   def create
-   
+    
     debugger
-    @study = Study.new(study_params)
+
+    @study = Study.create({:title=>study_params['title']})
+      
+      
+      
+      #select only _attributes
+      
+      obj_attributes = study_params.select { |key| key.to_s.match(/_attributes$/) }
+
+      
+      
+      obj_attributes.each do |key,value|
+          if key.to_s.match(/person/)
+            
+             #debugger
+            value.each do |k,v|
+              @study.send(key.to_s.gsub(/_attributes/, '')) << Person.new(v.delete('destroy'))
+              #debugger
+            end
+
+          elsif key.to_s.match(/orgunit/)
+            value.each do |k,v|
+              @study.send(key.to_s.gsub(/_attributes/, '')) << Orgunit.new(v.delete('destroy'))
+              #debugger
+            end
+
+          end
+      end
+      
+      
+      
+      
+
+     
+      
+      
+      
+      
+    
+ 
+
   
     respond_to do |format|
       if @study.save
@@ -76,7 +116,7 @@ class StudiesController < ApplicationController
   end
 
   # PATCH/PUT /studies/1
-  # PATCH/PUT /studies/1.json
+  # PATCH/PUT /studies/1.json debugger
   def update
     respond_to do |format|
       if @study.update(study_params)

@@ -5,7 +5,6 @@ class Person < ActiveFedora::Base
     has_metadata 'descMetadata', type:PersonMetadata
     
     has_attributes :addresses, datastream: 'descMetadata', multiple: true
-    has_attributes :affiliations, datastream: 'descMetadata', multiple: true
     
     has_attributes :identifiers, datastream: 'descMetadata', multiple: true
     
@@ -32,7 +31,14 @@ class Person < ActiveFedora::Base
     has_attributes :rec_id, datastream: 'descMetadata', multiple: false
    
     has_attributes :rec_permission, datastream: 'descMetadata', multiple: true
-
+    
+    belongs_to :study, :property=>'is_member_of_collection'
+    
+    has_many :affiliations, :property=>'is_member_of_collection'
+    
+  
+    accepts_nested_attributes_for :affiliations
+  
   def as_json(options={})
     {}
   end
