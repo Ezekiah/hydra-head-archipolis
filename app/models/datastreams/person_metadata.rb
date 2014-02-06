@@ -12,12 +12,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
       t.street
     }
     
-    t.affiliations{
-        t.acronym
-        t.name
-        t.rec_id
-        t.role
-    }
+    t.affiliation
     
     t.identifiers{
       t.type
@@ -67,12 +62,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
           t.street
         }
         
-        t.affiliation{
-            t.acronym
-            t.name
-            t.rec_id
-            t.role
-        }
+        t.affiliation
         
         t.identifier{
           t.type

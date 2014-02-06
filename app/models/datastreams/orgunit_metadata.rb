@@ -15,12 +15,8 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
       
     }
     
-    t.affiliations{
-        t.acronym
-        t.name
-        t.rec_id
-        t.role
-    }
+    t.affiliation
+       
     
     t.identifiers{
       t.type

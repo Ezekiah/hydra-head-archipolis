@@ -2,3 +2,21 @@
 @import 'bootstrap-responsive';
 
 @import 'blacklight/blacklight';
+
+.radio-buttons label {
+  display:inline;
+  
+}
+
+
+.radio-buttons span {
+  display:block;
+  
+}
+
+input[type="radio"] {
+    line-height: normal;
+    margin: -2px 5px 0;
+}
+
+

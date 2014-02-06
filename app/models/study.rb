@@ -40,7 +40,7 @@ class Study < ActiveFedora::Base
   
   has_attributes :contacts, datastream: 'descMetadata', multiple: true
   has_attributes :data_collection_modes, datastream: 'descMetadata', multiple: true
-  has_attributes :data_collection_context, datastream: 'descMetadata', multiple: true
+  has_attributes :data_collection_context, datastream: 'descMetadata', multiple: false
   has_attributes :data_collection_methods, datastream: 'descMetadata', multiple: true
   has_attributes :data_collection_samplings, datastream: 'descMetadata', multiple: true
   has_attributes :data_collection_time_dimensions, datastream: 'descMetadata', multiple: true
@@ -70,7 +70,7 @@ class Study < ActiveFedora::Base
 
   has_attributes :documents_date_begin, datastream: 'descMetadata', multiple: false
   has_attributes :documents_date_end, datastream: 'descMetadata', multiple: false
-  has_attributes :media_files, datastream: 'descMetadata', multiple: true
+
   has_attributes :documents_transc_count, datastream: 'descMetadata', multiple: false
   has_attributes :interviewers, datastream: 'descMetadata', multiple: true
   has_attributes :archive_completeness, datastream: 'descMetadata', multiple: false
@@ -80,8 +80,6 @@ class Study < ActiveFedora::Base
   has_attributes :notes, datastream: 'descMetadata', multiple: true
   has_attributes :tree, datastream: 'utilsMetadata', multiple: false
   
-  
-  has_many :documents, :property=> :is_part_of
   
   has_many :collections, :property => :is_part_of
   
@@ -105,6 +103,15 @@ class Study < ActiveFedora::Base
  
   has_many :orgunit_editors, :class_name => 'Orgunit', :foreign_key => 'orgunit_editors', :property => :is_part_of
   has_many :person_editors, :class_name => 'Person', :foreign_key => 'person_editors', :property => :is_part_of
+  
+  has_many :orgunit_contacts, :class_name => 'Orgunit', :foreign_key => 'orgunit_contacts', :property => :is_part_of
+  has_many :person_contacts, :class_name => 'Person', :foreign_key => 'person_contacts', :property => :is_part_of
+  
+  has_many :persons, :class_name => 'Person', :property => :is_part_of
+  has_many :orgunits, :class_name => 'Orgunit', :property => :is_part_of
+
+  has_many :affiliations, :class_name => 'Affiliation', :property => :is_part_of
+  
   
   def editors
     return self.orgunit_depositors + self.person_depositors
@@ -140,6 +147,8 @@ class Study < ActiveFedora::Base
   
   
   
+  
+  
   accepts_nested_attributes_for :collections
   accepts_nested_attributes_for :ressources
   accepts_nested_attributes_for :orgunit_depositors
@@ -152,6 +161,10 @@ class Study < ActiveFedora::Base
   accepts_nested_attributes_for :person_authors
   accepts_nested_attributes_for :orgunit_distributors
   accepts_nested_attributes_for :person_distributors
+  
+  accepts_nested_attributes_for :persons
+  accepts_nested_attributes_for :orgunits
+  
   
   
   

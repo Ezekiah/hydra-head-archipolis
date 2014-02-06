@@ -34,11 +34,13 @@ class Person < ActiveFedora::Base
     
     belongs_to :study, :property=>'is_member_of_collection'
     
-    has_many :affiliations, :property=>'is_member_of_collection'
     
-  
+    has_many :affiliations, :property=>:is_member_of_collection
+    
     accepts_nested_attributes_for :affiliations
-  
+    
+    
+    
   def as_json(options={})
     {}
   end

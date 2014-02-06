@@ -1,3 +1,25 @@
 // Place all the styles related to the studies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+   
+.nested-fields {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width:auto;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+button.add {
+  margin-top:-9px
+  
+}
+
+
+button.delete {
+  margin-top:-2px
+  
+}
+

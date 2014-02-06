@@ -30,7 +30,10 @@ class StudiesController < ApplicationController
     #Get datastream field
     @studyMetaXML = StudyMetadata.xml_template.to_s
     
-    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", "")) 
+    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
+    
+
+
      
     
     
@@ -58,49 +61,17 @@ class StudiesController < ApplicationController
   
   
   def create
+
     
-    debugger
-
-    @study = Study.create({:title=>study_params['title']})
-      
-      
-      
-      #select only _attributes
-      
-      obj_attributes = study_params.select { |key| key.to_s.match(/_attributes$/) }
-
-      
-      
-      obj_attributes.each do |key,value|
-          if key.to_s.match(/person/)
-            
-             #debugger
-            value.each do |k,v|
-              @study.send(key.to_s.gsub(/_attributes/, '')) << Person.new(v.delete('destroy'))
-              #debugger
-            end
-
-          elsif key.to_s.match(/orgunit/)
-            value.each do |k,v|
-              @study.send(key.to_s.gsub(/_attributes/, '')) << Orgunit.new(v.delete('destroy'))
-              #debugger
-            end
-
-          end
-      end
-      
-      
-      
-      
-
-     
-      
-      
-      
-      
     
- 
-
+    sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
+    
+    
+    @study = Study.create(sub_obj_non_attributes.to_h)
+    
+    traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
+      
+      
   
     respond_to do |format|
       if @study.save
@@ -149,4 +120,53 @@ class StudiesController < ApplicationController
     def study_params
       params[:study]
     end
+    
+    def traverse_study_attr(params, object)
+
+      #recover all _attributes (nested forms)
+      obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
+      
+      
+      
+      obj_attributes.each do |key,value|
+         
+
+         #Store model name ***_attributes
+         
+         model_property = key.to_s.gsub(/_attributes/, '')
+         
+         value.each do |k,v|
+           
+           
+           sub_obj_attributes = v.select { |key| key.to_s.match(/_attributes$/) }
+           
+           sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
+           
+  
+
+           if !sub_obj_non_attributes.empty?
+             
+             #debugger
+             newObject = eval(v['rec_class']).new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+             
+             object.send(model_property) << newObject
+            
+             if !sub_obj_attributes.empty?
+               
+               traverse_study_attr(sub_obj_attributes, newObject)
+               
+               
+             end
+            
+            
+           end
+            
+          end
+         
+         
+        
+      end
+      
+    end
+    
 end

@@ -11,33 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require 'blacklight_advanced_search'
-
-//= require angular
-//= require angular-animate
-//= require angular-resource
-
-
-//= require jquery.cookie
-//= require jquery.ui.all
 //= require jquery_ujs
 //= require turbolinks
 
-// Required by Blacklight
-//= require blacklight/blacklight
-
-//= require hydra-editor/hydra-editor
-
-//= require jquery.smartWizard-2.0.js
-//= require dynatree/jquery.dynatree
-
-//= require archipolis
-//= require_tree ./angular
-
-//= require_tree ./jQuery-contextMenu/src
-
-
-//= require cocoon
-
-
-//= require jquery.table.addrow
+//= require_tree .

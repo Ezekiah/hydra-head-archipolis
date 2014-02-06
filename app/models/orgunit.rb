@@ -8,7 +8,8 @@ class Orgunit < ActiveFedora::Base
   has_attributes :acronym, datastream: 'descMetadata', multiple: false
   
   has_attributes :addresses, datastream: 'descMetadata', multiple: true
-  has_attributes :affiliations, datastream: 'descMetadata', multiple: true
+  
+  
   
   has_attributes :identifiers, datastream: 'descMetadata', multiple: true
   
@@ -26,16 +27,11 @@ class Orgunit < ActiveFedora::Base
   has_attributes :rec_id, datastream: 'descMetadata', multiple: false
   
   has_attributes :notes, datastream: 'descMetadata', multiple: true
-  
-
-  
-  has_many :affiliations, :property=>'is_member_of_collection'
-    
-  accepts_nested_attributes_for :affiliations
-
-
+ 
   has_many :studies, :property=>:is_member_of_collection
+  has_many :affiliations, :property=>:is_member_of_collection
   
+  accepts_nested_attributes_for :affiliations
 
   
 end
