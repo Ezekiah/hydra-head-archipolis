@@ -4,4 +4,4 @@
 
 
 
-window.App = angular.module('Archipolis', ['ngResource'])
+#window.App = angular.module('Archipolis', ['ngResource'])

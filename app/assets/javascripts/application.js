@@ -11,7 +11,24 @@
 // about supported directives.
 //
 //= require jquery
+
+
+
+//= require jquery.cookie
+//= require jquery.ui.all
 //= require jquery_ujs
 //= require turbolinks
 
+// Required by Blacklight
+//= require blacklight/blacklight
+
+
+//= require dynatree/jquery.dynatree
+
+//= require archipolis
 //= require_tree .
+
+
+//= require cocoon
+
+

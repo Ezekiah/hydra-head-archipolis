@@ -4,7 +4,7 @@
 
 
 
-App.controller 'StudiesCtrl', ['$scope', ($scope) ->
-  $scope.message = "Angular Rocks!"
-]
+#App.controller 'StudiesCtrl', ['$scope', ($scope) ->
+ # $scope.message = "Angular Rocks!"
+#]
 
