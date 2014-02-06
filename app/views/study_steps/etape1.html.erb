@@ -1,0 +1,74 @@
+
+
+<%= simple_form_for(@study, url: wizard_path, :html => { :class => 'form-vertical' }) do |f| %>
+  
+  
+  
+   <div>
+		
+		
+		<%=f.input :data_collection_time_dimensions, :collection => {
+			'one time'=>'one time', 
+			'one time interview'=>'one time interview',
+			'repeated interview'=>'repeated interview', 
+			'observation ponctuelle'=>'observation ponctuelle', 
+			'observation systématique'=>'observation systématique', 
+			'other'=>'other' }, :as => :check_boxes%>
+    	 
+	</div>
+  
+
+  
+  
+  <div>
+	  <%= f.label  :publications , "publication :  " %>
+	  <%= f.text_field :publications,:multiple=>true , :value=>''%>
+	  <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
+  </div>
+  
+  
+  
+  
+  
+  
+  <div>
+	 
+	  
+	  <%=f.input :analysis_types, :collection => {
+			'analyse interprétative simple'=>'analyse interprétative simple', 
+			'analyse typologique '=>'analyse typologique ',
+			'other'=>'other' }, :as => :check_boxes%>
+  </div>
+  
+
+  <%= f.input :analysis_anonymization, as: :radio_buttons %>
+  
+
+  
+ 
+  
+  <div>
+	  <%= f.label  :keywords , "publication :  " %>
+	  <%= f.text_field :keywords,:multiple=>true , :value=>''%>
+	  <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
+  </div>
+  
+  
+  
+  <div>
+  	<%= f.label  :classifications , "classification :  " %><%= f.text_field :classifications,:multiple=>true, :value=>'' %>
+  	 <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
+  </div>
+  
+  <div>
+  	<%= f.label  :observation_units , "observation_unit :  " %><%= f.text_field :observation_units,:multiple=>true, :value=>'' %>
+  	 <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
+  </div>
+  
+  <%= f.label  :data_collection_date_begin , "data_collection_date_begin :  " %><%= f.text_field :data_collection_date_begin %><br/>
+ 
+  <button type="submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
+ 
+<%end%>
+ 
+  

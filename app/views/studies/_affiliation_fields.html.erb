@@ -1,0 +1,13 @@
+  <div class="sub-nested-fields">
+  
+  	name <%= f.text_field :name %><br/>
+	acronym : <%= f.text_field :acronym %><br/>
+	  
+	role : <%= f.text_field :role %><br/>
+	
+	rec_id : <%= f.text_field :rec_id %><br/>
+	<%=f.input :rec_class, :as => :hidden, :input_html => { :value => f.object.class.name }%>
+	
+	<%=link_to_remove_association "remove affiliation", f %>
+  
+  </div>

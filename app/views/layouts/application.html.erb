@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>HydraHead</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<% if notice %>
-  <p class="alert alert-notice"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert alert-error"><%= alert %></p>
-<% end %>
-
-<%= yield %>
-
-</body>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Hydra Head" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Hydra Head" %>">
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <header>
+      <%= render 'layouts/navigation' %>
+    </header>
+    <main role="main">
+       <%= render 'layouts/messages' %>
+       <%= yield %>
+    </main>
+  </body>
 </html>

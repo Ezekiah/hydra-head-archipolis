@@ -1,0 +1,35 @@
+<style>
+	#wizard .input-error{
+		background:#FB3500;
+		opacity:1
+	}
+</style>
+
+
+<%= form_for @study, url: wizard_path do |f| %>
+  <% if @user.errors.any? %>
+    <div class="error_messages">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= yield f %>
+  
+  
+	  
+  <p>Veuillez entrer l'intitulé de l'enquête : </p>
+  <%= f.label  :title , "title :  " %><%= f.text_field :title %><br/>
+	
+
+  
+  <div class="actions">
+    <%= f.submit "Continue" %>
+    or <%= link_to "skip this step", next_wizard_path %>
+  </div>
+<% end %>
+	
+

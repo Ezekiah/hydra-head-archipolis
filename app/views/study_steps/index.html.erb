@@ -1,0 +1,30 @@
+<h1>Listing studies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+<div ng-controller="StudiesCtrl">
+  <h1>Message: {{message}}</h1>
+</div>
+
+
+  <tbody>
+    <% @studies.each do |study| %>
+      <tr>
+      	<td><%= study.title %></td>
+        <td><%= link_to 'Show', study %></td>
+        <td><%= link_to 'Edit', edit_study_path(study) %></td>
+        <td><%= link_to 'Destroy', study, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Study', new_study_path %>

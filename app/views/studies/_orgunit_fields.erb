@@ -1,0 +1,56 @@
+
+	
+  <div class="nested-fields">
+    
+
+	<div>
+		addresse : <%= f.text_area :addresses , :value=>'', :multiple=>true%>
+		<button data-action="add" class="add" >+</button>
+		
+	</div>
+	
+	
+	 <div class="affiliations">
+	 <%= link_to_add_association('add an affiliation', f, :affiliations,:partial=>'/studies/affiliation_fields', :data => {"association-insertion-method" => "append" })%><br/>
+	</div>
+	
+	<div>
+		identifier : <%= f.text_field :identifiers, :value=>'', :multiple=>true %>
+		<button data-action="add" class="add" >+</button>
+		
+	</div>
+
+	
+	
+	
+	<div>
+		email : <%= f.text_field :emails, :value=>'', :multiple=>true %>
+		<button data-action="add" class="add" >+</button>
+		
+	</div>
+	
+	
+	nationality : <%= f.text_field :nationality, :value=>'' %><br/>
+	
+	
+	<div>
+		note : <%= f.text_area :notes, :value=>'', :multiple=>true %>
+		<button data-action="add" class="add" >+</button>
+		
+	</div>
+	
+	
+	
+	
+	
+	  
+	    
+	<%=f.input :rec_class, :as => :hidden, :input_html => { :value => f.object.class.name }%>
+	<%=f.input :rec_id, :as => :hidden, :input_html => {  }%>
+	
+	
+  </div>
+
+	
+
+	
