@@ -1,3 +1,7 @@
+require 'datastreams/study_metadata'
+require 'datastreams/person_metadata'
+require 'datastreams/orgunit_metadata'
+
 class StudyStepsController < ApplicationController
   
   include Wicked::Wizard
@@ -5,6 +9,11 @@ class StudyStepsController < ApplicationController
   
    def show
     @study = Study.find(session[:study_id])
+    
+    @studyMetaXML = StudyMetadata.xml_template.to_xml
+    @personMetaXML = PersonMetadata.xml_template.to_xml
+    @orgunitMetaXML = OrgunitMetadata.xml_template.to_xml
+    
     render_wizard
   end
   

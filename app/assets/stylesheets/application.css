@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require_tree .
- *= require hydra-editor/hydra-editor
+
  *= require smart_wizard.css
  *= require smart_wizard_vertical.css
  *= require dynatree/skin
@@ -19,4 +19,7 @@
 
  *= require formtastic
  *= require jquery.ui.all
+
+ *= require bootstrap-multiselect
+
 */

@@ -1,5 +1,7 @@
 // import the CSS framework
-@import "bootstrap";
+//@import "bootstrap";
+
+
 
 // make all images responsive by default
 img {
@@ -43,3 +45,36 @@ section {
   @extend .row;
   margin-top: 20px;
   }
+  
+  /*
+
+form.form-horizontal .controls {
+    margin-left: 120px;
+}
+
+form.form-horizontal .control-label {
+    width: 180px;
+}
+*/
+
+.input-prepend input,
+.input-prepend textarea,
+.input-prepend .uneditable-input,
+.input-append input,
+.input-append textarea,
+.input-append .uneditable-input {
+    font-size: 14px !important;
+}
+.input-append input:focus,
+.input-prepend input:focus,
+.input-append select:focus,
+.input-prepend select:focus,
+.input-append .uneditable-input:focus,
+.input-prepend .uneditable-input:focus {
+    z-index: 9999 !important;
+}
+
+label.error{
+  color:red;
+  font-size:90%;
+}

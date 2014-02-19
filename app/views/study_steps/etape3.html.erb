@@ -1,149 +1,79 @@
+<h1>Etape 3</h1>
+
 <%= simple_form_for(@study, url: wizard_path, :html => { :class => 'form-vertical' }) do |f| %>
+  	
+  	  <% if @study.errors.any? %>
+	    <div class="error_messages">
+	      <h2><%= pluralize(@study.errors.count, "error") %> prohibited this user from being saved:</h2>
+	      <ul>
+	      <% @study.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	  <%= yield f %>
+  	
+  	<% @doc = Nokogiri::XML.parse(@studyMetaXML) %>
+ 	
+ 	 <% tags = @doc.xpath("/metadatas/step3/*").each do |node|%>
+ 	 	
+ 	 	<% if node.name == 'association' %>
  
-  <%= f.label  :coverage_temporal_end , "coverage_temporal_end :  " %>
-  <%= f.text_field :coverage_temporal_end %><br/>
-  
-  
-  <div>
-	  <%= f.label  :target_groups , "target_groups :  " %>
-	  <%= f.text_field :target_groups, :value=>'', :multiple=>true %>
-	  <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
-  </div>
-  
-  <div>
-	  <%=f.input :location_of_units_of_observations, :collection => {
-	   'international'=>'international', 
-	   'national'=>'national', 
-	   'infra-national'=>'infra-national' 
-	   }, :as => :check_boxes%>
-  </div>
-  
-  
-  
-  <div>
-	  <%=f.input :data_languages, :collection => {
-	   'fr_FR'=>'fr_FR', 
-	   'en_EN'=>'en_EN', 
-	   }, :as => :check_boxes%>
-  </div>
-  
-  
-  <div>
-	  <%=f.input :documentation_languages, :collection => {
-	   'fr_FR'=>'fr_FR', 
-	   'en_EN'=>'en_EN', 
-	   }, :as => :check_boxes%>
-  </div>
-  
-  
-
-  
-  <%= f.label  :documents_date_begin , "documents_date_begin :  " %>
-  <%= f.text_field :documents_date_begin %><br/>
-  
-  <%= f.label  :documents_date_end , "documents_date_end :  " %>
-  <%= f.text_field :documents_date_end %><br/>
-  
-
-  
-  <%= f.label  :archive_completeness , "archive_completeness :  " %>
-  <%= f.text_field :archive_completeness %><br/>
-  
-  
-  <div class="radio-buttons">
- 	 <%= f.label :archive_arrangement_level, 'archive_arrangement_level' %><br/>
-  	 <%= f.collection_radio_buttons :archive_arrangement_level, [[1, 'Classé'] ,[2, 'Partiellement classé'], [3, 'Hétérogéne'], [4, 'Vrac']], :first, :last %>
-  </div>
-  
-  <br/>
-  <div class="radio-buttons">
-  	<%= f.label :archive_consentement, 'archive_consentement' %><br/>
-  	<%= f.collection_radio_buttons :archive_consentement, [[1, 'oui'] ,[2, 'non'], [3, 'partiellement'], [4, 'ne sais pas'], [5, 'réserve sa réponse']], :first, :last %>
-  </div>
-  
-  <br/>
-  <div class="radio-buttons">
-  	<%= f.label :archive_agreememt, 'archive_agreememt' %>
-  	<%= f.collection_radio_buttons :archive_agreememt, [[1, 'oui'] ,[2, 'non'], [3, 'partiellement'], [4, 'ne sais pas']], :first, :last %>
-  </div>
-	
-	
-	
-  <div>
-	  <%= f.label  :notes , "notes :  " %>
-	  <%= f.text_field :notes, :value=>'', :multiple=>true %>
-	  <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
-  </div>
-  
-  
-  <%= f.label  :documents_count , "documents_count :  " %>
-  <%= f.text_field :documents_count %><br/>
-  
-  <%= f.label  :archive_extent , "archive_extent :  " %>
-  <%= f.text_field :archive_extent %><br/>
-  
-  <%= f.label  :archive_location , "archive_location :  " %>
-  <%= f.text_field :archive_location %><br/>
-  
-  <div>
-  	<%= f.label  :access_conditions , "access_conditions :  " %>
-  	<%= f.text_field :access_conditions, :multiple=>true, :value=>'' %>
-  	<button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
-  </div>
-  
-  
-  
-  
-   <div id="contacts">
-	   <h3>Contacts</h3>
-	   
-	   <a class="add-contacts">
-			add a contact
+			<% association = node.xpath("*").each do |assoc|%>
 				
-			<%= link_to_add_association('add an orgunit contact', f, :orgunit_contacts,:partial=>'/studies/orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-	   		<%= link_to_add_association('add a person contact', f, :person_contacts,:partial=>'/studies/person_fields', :data => {"association-insertion-method" => "append" })%>
-	 
-	   </a>	
+		  		<div id="<%=assoc.name%>">
+		  		
+		  			<h4><%=assoc.name%></h4>
+		  		
+		  			<a class="add-<%=assoc.name%>" data-toggle="modal">add</a
+		  		
+		  			<%assoc.xpath('*').each do |node|%>
+		
+						<%=link_to_add_association(' ', f, node.name.to_sym, :partial=>'/studies/'+node.attribute('class_name').to_s().downcase+'_fields', :data => {"association-insertion-method" => "append" })%>
+		  			<%end%>
+		  		
+		  		</div>
+		  		
+		  	<%end%>
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'text'%>
+			
+ 			<div class="control-group">  		
+			  <%= f.label  node.name, node.name %>
+			  
+			   <div class="input-append input-prepend">					
+					<% if node.attribute('multiple').to_s == 'true'%>
+						<%= f.text_field node.name.to_sym,:multiple=>true , :value=>'', :class=>'span3',:placeHolder=>"Type something…"%>
+						
+						<button data-action="add" class="add btn btn-medium" ><i class="icon-plus"></i></button>
+					<% else %>
+						<%= f.text_field node.name.to_sym,:value=>'', :class=>'span3',:placeHolder=>"Type something…"%>
+					<%end%>
+				</div>
+			</div>
+				
+ 	
+ 	 	<%elsif node.attribute('type').to_s == 'checkbox'%>
+ 	 		<%=f.input node.name, :collection => eval(node.attribute('collection').to_s), :as => :check_boxes%>
+ 	 	
+ 	 	
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'radio_buttons'%>
+ 	 		<%=f.input node.name, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons%>
+ 	 	
+ 	 	<%end%>
+ 	 	
+ 	 	
+ 	 	
+ 	 <%end%>
+ 	
 
-	  
-	 </div> 
-  
-  <%=f.input :data_collection_modes, :collection => Study.data_collection_modes, :as => :check_boxes%>
-  
-  
-  
-  
-  <%= f.label  :data_collection_context , "data_collection_context :  " %>
-  <div>
-  	<%= f.text_field :data_collection_context %>
+  </fieldset>
+  	
 
-  </div>
-  
+    
+    <button type="submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
+    
 
-  
-  
-   <div>
-	  <%=f.input :data_collection_methods, :collection => {
-	   'questionnaire'=>'questionnaire', 
-		'directive interview'=>'directive interview', 
-		'semi-directive interview'=>'semi-directive interview',
-		'none directive interview'=>'none directive interview', 
-		'participant observation'=>'participant observation', 
-		'experimentation'=>'experimentation', 
-		'content analysis'=>'content analysis', 
-		'other'=>'other' 
-	   }, :as => :check_boxes%>
-  </div>
-  
-
-  
-  <div class="control-group">
-  	<%= f.label  :data_collection_samplings , "data_collection_samplings :  " %>
-    <%= f.text_field :data_collection_samplings, :value=>'', :multiple=>true %>
-  	<button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
-  </div>
-  
-  <button type="submit" class="add btn btn-primary" >Finish <i class="icon-white icon-arrow-right"></i></button>
-  
-  
-<%end%>
+<% end %>

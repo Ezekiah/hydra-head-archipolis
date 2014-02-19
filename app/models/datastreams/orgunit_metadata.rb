@@ -55,72 +55,68 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
   end
   
   
-
   def self.xml_template
-      builder = Nokogiri::XML::Builder.new do |t|
     
-      t.metadatas {
-         t.acronym
+    Nokogiri::XML.parse("<metadatas/>")
     
-          t.address{
-            t.country
-            t.geo_latitude
-            t.geo_longitude
-            t.locality_city_town
-            t.post_code
-            t.street
-            
-          }
-          
-          t.affiliation{
-              t.acronym
-              t.name
-              t.rec_id
-              t.role
-          }
-          
-          t.identifier{
-            t.type
-            t.value
-          }
-          
-          
-          t.date_foundation
-          t.date_dissolution
-          t.email
-          
-          
-          t.name
-         
-          t.nationality
-          
-          
-          t.phone{
-            t.formatted
-          }
-          
+  end
+  
+
+  def self.xml_form
       
-          t.note{
-            t.language
-            t.value
+      
+      
+      builder = Nokogiri::XML::Builder.new do |t|
+        t.metadatas{
+      
+          t.rec_id(:type=>'text', :value=>'', :label=>'Identifier')
+          
+          t.association(:name=>'addresses', :label=>'Address'){
+           t.properties{
+           t.property(:name=>'addresses', :class_name=>'Address')
+           }
           }
           
-          t.url{
-            t.value
+          t.association(:name=>'affiliations', :label=>'Affiliation'){
+            t.properties{
+           t.property(:name=>'affiliations', :class_name=>'Affiliation')
+           }
           }
           
-          t.rec_class
-          t.rec_id
+          t.association(:name=>'identifiers', :label=>'Identifier'){
+            t.properties{
+                t.property(:name=>'identifiers', :class_name=>'identifier')
+           }
+          }
+
           
-          t.rec_permission
+          
+        
+          t.emails(:type=>'text', :multiple=>'true', :label=>'Email')
+          
+          
+          t.nationality(:type=>'country', :label=>'Nationality')
+          t.rec_class(:type=>'hidden', :value=>'Person')
+          
+          
+          t.date_foundation(:type=>'date', :label=>'Foundation date')
+          t.date_dissolution(:type=>'date', :label=>'Dissolution date')
+          t.phones(:type=>'text', :multiple=>true, :label=>'Phone')
+          
+          t.notes(:type=>'text', :multiple=>true, :label=>'Note')
+          
+         
+            
+          t.urls(:type=>'text', :multiple=>true, :label=>'Web page')
+          
+            
+          
+         
       }
+    
     end
     
-    return builder.doc
-    
-    
-    
-    
-    
+    return builder.to_xml
+
   end
 end

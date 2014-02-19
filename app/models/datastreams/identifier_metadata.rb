@@ -1,4 +1,4 @@
-class AffiliationMetadata < ActiveFedora::OmDatastream
+class IdentifierMetadata < ActiveFedora::OmDatastream
 
   set_terminology do |t|
          t.root(path: "metadatas")
@@ -26,25 +26,26 @@ class AffiliationMetadata < ActiveFedora::OmDatastream
     end
     
     return builder.doc
-    
+
   end
   
   
-  def self.xml_form
-      
-      builder = Nokogiri::XML::Builder.new do |t|
+    def self.xml_form
+    
+        builder = Nokogiri::XML::Builder.new do |t|
+            
+            t.metadatas{
+              t.name(:type=>'text', :multiple=>'false')
+              t.acronym(:type=>'text')
+              t.rec_id(:type=>'hidden', :value=>'')
+              t.role(:type=>'text')
+            }
+        end
         
-        t.metadatas{
-          t.rec_id(:type=>'text', :value=>'', :label=>'Identifier')
-          t.name(:type=>'text', :multiple=>'false', :label=>'Affiliation')
-          t.acronym(:type=>'text', :label=>'Acronym')
-          t.role(:type=>'text', :label=>'Role')
-
-       }
+        return builder.doc
+    
     end
     
-    return builder.doc
     
-  end
   
 end

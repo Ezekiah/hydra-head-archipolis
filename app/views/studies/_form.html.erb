@@ -6,6 +6,7 @@
 </style>
 
 
+
 <%= simple_form_for(@study, html: {class: 'form-vertical' }) do |f| %>
   <% if @study.errors.any? %>
     <div class="error_messages">
@@ -19,120 +20,25 @@
   <% end %>
   <%= yield f %>
   
-  <div class="actions">
-  	
-  	 
-    <div>
-      	 <%= f.input :title, :value=>'' ,:name=>"study[title][]", :input_html => { :class => "span6" }, :hint => "add your study title here" %><br/>
-    </div>
-    
-    
-    <%= f.label  :descriptions , "description :  " %>
-    <div>
-	  <%= f.text_area :descriptions,:multiple=>true, :value=>'' %>
-	   <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
-  	</div>
-    
+  
+  <fieldset>
+	<legend>Général</legend>
 
-     <div>
-    	 <%=f.input :data_collection_modes, :collection => Study.data_collection_modes(), :as => :check_boxes%>
-     </div>
-     
-     <div id="depositors">
-	     <h3>Depositors</h3>
-			
-			<a class="add-depositors" data-toggle="modal">
-				add a depositor
-				<%= link_to_add_association('add an person depositor', f, :person_depositors,:partial=>'person_fields', :data => {"association-insertion-method" => "append" })%>
-		   		<%= link_to_add_association('add an orgunit depositor', f, :orgunit_depositors,:partial=>'orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-		   
-			</a>	
-			
-  	</div>
-  	
-  	
-  	
-  	
-  	 <div id="editors">
-  	
-	  	<h3>Editors</h3>
-	  	
-	  		<a class="add-editors">
-				add an editor
-				<%= link_to_add_association('add an orgunit editor', f, :orgunit_editors,:partial=>'orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-		   		<%= link_to_add_association('add an person editor', f, :person_editors,:partial=>'person_fields', :data => {"association-insertion-method" => "append" })%>
-		  
-			</a>	
+  	<%== display_form(@studyMetaXML, f=f, xpath_str="/metadatas/general/*")%>
 
-	   </div>
-	   
-	 <div id="interviewers">   
-		<h3>Interviewers</h3>
-	
-		<a class="add-interviewers">
-			add an interviewer
-			<%= link_to_add_association('add an orgunit inteviewer', f, :orgunit_interviewers,:partial=>'orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-	   		<%= link_to_add_association('add an person interviewer', f, :person_interviewers,:partial=>'person_fields', :data => {"association-insertion-method" => "append" })%>
-	  
-		</a>	
-	  </div> 
-	   
-	<div id="copyright-holders">
-		 <h3>Copyright holders</h3>
-		 
-		 <a class="add-copyright-holders">
-			add a copyright-holder
-			<%= link_to_add_association('add an orgunit Copyright holder', f, :orgunit_copyright_holders,:partial=>'orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-		    <%= link_to_add_association('add an person Copyright holder', f, :person_copyright_holders,:partial=>'person_fields', :data => {"association-insertion-method" => "append" })%>
-		   
-		</a>	
+	<button type="submit" id="button_submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
+  </fieldset>
 
-	   </div> 
-	 
-	 <div id="authors">
-	  	
-		  <h3>Authors</h3>
-			
-			<a class="add-authors">
-			   add an author
-			   <%= link_to_add_association('add an orgunit author', f, :orgunit_authors,:partial=>'orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-			   <%= link_to_add_association('add an person  author', f, :person_authors,:partial=>'person_fields', :data => {"association-insertion-method" => "append" })%>
-			   
-		   </a>	
-		
-		
-	   </div> 
-	    
-
-		<div id="distributors">
-		   <h3>Distributors</h3>
-		   
-		   <a class="add-distributors">
-				add a distributor
-					
-				<%= link_to_add_association('add an orgunit distributors', f, :orgunit_distributors,:partial=>'orgunit_fields', :data => {"association-insertion-method" => "append" })%><br/>
-		   		<%= link_to_add_association('add an person  distributors', f, :person_distributors,:partial=>'person_fields', :data => {"association-insertion-method" => "append" })%>
-		 
-		   </a>	
-	
-		  
-		 </div> 
-	   <br/>
-	   
-	  
-
-    
-    
-    
-    
-     <button type="submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
-    
-  </div>
 <% end %>
 
 
 	
 	<div class="choose"></div>
+	
+	<div id="dialog-confirm" title="Delete ?" style="display:none">
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+	</div>
+	
 	
 	
 

@@ -1,4 +1,14 @@
 require 'datastreams/study_metadata'
+require 'datastreams/person_metadata'
+require 'datastreams/orgunit_metadata'
+
+require 'datastreams/affiliation_metadata'
+
+require 'datastreams/address_metadata'
+require 'datastreams/identifier_metadata'
+require 'datastreams/description_metadata'
+require 'datastreams/keyword_metadata'
+
 
 class StudiesController < ApplicationController
   before_action :set_study, only: [:show, :edit, :update, :destroy]
@@ -28,15 +38,36 @@ class StudiesController < ApplicationController
   def new
     @study = Study.new
     #Get datastream field
-    @studyMetaXML = StudyMetadata.xml_template.to_s
+   
     
-    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
-    
+    @study_base_collection = @study.collections
+    @studyMetaXML = StudyMetadata.xml_form.to_xml
 
+    @personMetaXML = PersonMetadata.xml_form
+    @orgunitMetaXML = OrgunitMetadata.xml_form
+    @affiliationMetaXML = AffiliationMetadata.xml_form.to_xml
+    @addressMetaXML = AddressMetadata.xml_form.to_xml
+    @identifierMetaXML = IdentifierMetadata.xml_form.to_xml
+    @descriptionMetaXML = DescriptionMetadata.xml_form.to_xml
+    @keywordMetaXML = DescriptionMetadata.xml_form.to_xml
+    
+    @doc = Nokogiri::XML.parse(@studyMetaXML)
+    
+    
+    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ value.name, value.iso_639_1]:""}.reject!(&:empty?)
+    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ value.name, value.iso_639_1]}
+    
+    @LOCATIONS = { 'Most used' => @most_used_languages,
+                   'others' => 
+                   @all_languages-@most_used_languages
+    }
+    
+    
+                      
+                 
+    
+  
 
-     
-    
-    
   end
   
   # GET /studies/1/files

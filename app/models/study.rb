@@ -45,10 +45,12 @@ class Study < ActiveFedora::Base
   has_attributes :data_collection_samplings, datastream: 'descMetadata', multiple: true
   has_attributes :data_collection_time_dimensions, datastream: 'descMetadata', multiple: true
   has_attributes :publications, datastream: 'descMetadata', multiple: true
-  has_attributes :descriptions, datastream: 'descMetadata', multiple: true
+
   has_attributes :analysis_types, datastream: 'descMetadata', multiple: true
   has_attributes :analysis_anonymization, datastream: 'descMetadata', multiple: false
-  has_attributes :keywords, datastream: 'descMetadata', multiple: true
+ 
+  
+  has_attributes :disciplines, datastream: 'descMetadata', multiple: true
   
   
   has_attributes :classifications, datastream: 'descMetadata', multiple: true
@@ -112,6 +114,10 @@ class Study < ActiveFedora::Base
 
   has_many :affiliations, :class_name => 'Affiliation', :property => :is_part_of
   
+  has_many :descriptions, :class_name => 'Description', :property => :is_part_of
+  
+  has_many :keywords, :class_name => 'Keyword', :property => :is_part_of
+  
   
   def editors
     return self.orgunit_depositors + self.person_depositors
@@ -148,6 +154,8 @@ class Study < ActiveFedora::Base
   
   
   
+  accepts_nested_attributes_for :descriptions
+  accepts_nested_attributes_for :affiliations
   
   accepts_nested_attributes_for :collections
   accepts_nested_attributes_for :ressources
@@ -161,6 +169,8 @@ class Study < ActiveFedora::Base
   accepts_nested_attributes_for :person_authors
   accepts_nested_attributes_for :orgunit_distributors
   accepts_nested_attributes_for :person_distributors
+  
+  accepts_nested_attributes_for :keywords
   
   accepts_nested_attributes_for :persons
   accepts_nested_attributes_for :orgunits

@@ -1,61 +1,79 @@
 <h1>Etape 2</h1>
 
 <%= simple_form_for(@study, url: wizard_path, :html => { :class => 'form-vertical' }) do |f| %>
-  
-  <%= f.label  :data_collection_date_end , "data_collection_date_end :  " %>
-  <%= f.text_field :data_collection_date_end %><br/>
-  
-  
-  <%=f.input :documents_types, :collection => {
-   "collection"=>"collection", 
-   "dataset"=>"dataset", 
-   "still image"=>"still image", 
-   "interactive resource"=>"interactive resource", 
-   "moving image"=>"moving image", 
-   "physical object"=>"physical object", 
-   "software"=>"software", 
-   "sound"=>"sound", 
-   "text"=>"text"
-   }, :as => :check_boxes%>
-  
-  
-  
+  	
+  	  <% if @study.errors.any? %>
+	    <div class="error_messages">
+	      <h2><%= pluralize(@study.errors.count, "error") %> prohibited this user from being saved:</h2>
+	      <ul>
+	      <% @study.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	  <%= yield f %>
+  	
+  	<% @doc = Nokogiri::XML.parse(@studyMetaXML) %>
+ 	
+ 	 <% tags = @doc.xpath("/metadatas/step2/*").each do |node|%>
+ 	 	
+ 	 	<% if node.name == 'association' %>
+ 
+			<% association = node.xpath("*").each do |assoc|%>
+				
+		  		<div id="<%=assoc.name%>">
+		  		
+		  			<h4><%=assoc.name%></h4>
+		  		
+		  			<a class="add-<%=assoc.name%>" data-toggle="modal">add</a
+		  		
+		  			<%assoc.xpath('*').each do |node|%>
+		
+						<%=link_to_add_association(' ', f, node.name.to_sym, :partial=>'/studies/'+node.attribute('class_name').to_s().downcase+'_fields', :data => {"association-insertion-method" => "append" })%>
+		  			<%end%>
+		  		
+		  		</div>
+		  		
+		  	<%end%>
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'text'%>
+			
+ 			<div class="control-group">  		
+			  <%= f.label  node.name, node.name %>
+			  
+			   <div class="input-append input-prepend">					
+					<% if node.attribute('multiple').to_s == 'true'%>
+						<%= f.text_field node.name.to_sym,:multiple=>true , :value=>'', :class=>'span3',:placeHolder=>"Type something…"%>
+						
+						<button data-action="add" class="add btn btn-medium" ><i class="icon-plus"></i></button>
+					<% else %>
+						<%= f.text_field node.name.to_sym,:value=>'', :class=>'span3',:placeHolder=>"Type something…"%>
+					<%end%>
+				</div>
+			</div>
+				
+ 	
+ 	 	<%elsif node.attribute('type').to_s == 'checkbox'%>
+ 	 		<%=f.input node.name, :collection => eval(node.attribute('collection').to_s), :as => :check_boxes%>
+ 	 	
+ 	 	
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'radio_buttons'%>
+ 	 		<%=f.input node.name, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons%>
+ 	 	
+ 	 	<%end%>
+ 	 	
+ 	 	
+ 	 	
+ 	 <%end%>
+ 	
 
-  <%= f.label :analysis_transcription, 'analysis_transcription' %>
-  
-  <%=  f.collection_radio_buttons :analysis_transcription, [[true, 'Yes'] ,[false, 'No'], [false, 'Don\'t know']], :first, :last %>
-  
+  </fieldset>
+  	
 
-  
-  <%= f.label  :coverage_spatial_geographics , "coverage_spatial_geographics :  " %>
-  <%= f.text_field :coverage_spatial_geographics %><br/>
-  
-  <%= f.label  :coverage_spatial_units , "coverage_spatial_units :  " %>
-  <%= f.text_field :coverage_spatial_units %><br/>
-  
-  <%= f.label  :coverage_spatial_countries , "coverage_spatial_country :  " %>
-  <%= f.text_field :coverage_spatial_countries %><br/>
-  
-  <%= f.label  :coverage_temporal_begin , "coverage_temporal_begin :  " %>
-  <%= f.text_field :coverage_temporal_begin %><br/>
-  
-  
-  
-  
-  <div>
-  	  <%= f.label  :softwares , "softwares :  " %>
-	  <%= f.text_field :softwares, :required=>"false"%>
-	  <button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
-	  
-  </div>
-  
-  
-  <%= f.label  :edition_first_date , "edition_first_date :  " %><%= f.text_field :edition_first_date %><br/>
-  <%= f.label  :edition_last_date , "edition_last_date :  " %><%= f.text_field :edition_last_date %><br/>
-  
-  <%= f.label  :projects , "projects :  " %><%= f.text_field :projects %><br/>
+    
+    <button type="submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
+    
 
-  <%= f.label  :rec_id , "rec_id :  " %><%= f.text_field :rec_id %><br/>
-  
-  <%= f.submit "finish" %>
-<%end%>
+<% end %>

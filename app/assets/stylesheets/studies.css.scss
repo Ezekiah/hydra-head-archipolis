@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-   
+
 .nested-fields {
   position: relative;
   background: #FFF;
@@ -11,15 +11,27 @@
   max-width: 500px;
   margin: 20px auto;
 }
-
+/*
 button.add {
   margin-top:-9px
   
-}
+}*/
 
-
+/*
 button.delete {
   margin-top:-2px
   
 }
+*/
 
+div.control-group > label:first-child{
+  font-weight:100;
+  
+}
+
+.check_boxes .controls, .radio_buttons .controls{
+  
+  margin-left:5px;
+  
+  
+}

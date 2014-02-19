@@ -1,13 +1,86 @@
-  <div class="sub-nested-fields">
-  
-  	name <%= f.text_field :name %><br/>
-	acronym : <%= f.text_field :acronym %><br/>
-	  
-	role : <%= f.text_field :role %><br/>
+	<fieldset>
 	
-	rec_id : <%= f.text_field :rec_id %><br/>
-	<%=f.input :rec_class, :as => :hidden, :input_html => { :value => f.object.class.name }%>
-	
-	<%=link_to_remove_association "remove affiliation", f %>
+	 <% @doc = Nokogiri::XML.parse(@affiliationMetaXML) %>
+ 	
+ 	 <% tags = @doc.xpath("/metadatas/*").each do |node|%>
+ 	 	
+ 	 	<% if node.name == 'association' %>
+ 
+			<% properties = node.xpath("properties//property")%>
+				
+		  		<div id="<%=node.attribute('name')%>">
+		  		
+		  			<h4><%=node.attribute('name')%></h4>
+		  		
+		  			<a class="add-<%=node.attribute('name')%>" data-toggle="modal">add</a>
+		  		
+		  			<%properties.each do |node|%>
+						<%=link_to_add_association(' ', f, node.attribute('name').to_s.to_sym, :partial=>'/studies/'+node.attribute('class_name').to_s().downcase+'_fields', :data => {"association-insertion-method" => "append" })%>
+
+		  			<%end%>
+		  		
+		  		</div>
+		  	
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'text'%>
+			
+ 			<div class="control-group">  		
+			  <%= f.label  node.name, node.name %>
+			  
+			   <div class="input-append input-prepend">					
+					<% if node.attribute('multiple').to_s == 'true'%>
+						<%= f.text_field node.name.to_sym,:multiple=>true , :value=>'', :class=>'span3',:placeHolder=>"Type something…"%>
+						
+						<button data-action="add" class="add btn btn-small" ><i class="icon-plus"></i></button>
+					<% else %>
+						<%= f.text_field node.name.to_sym,:value=>'', :class=>'span3',:placeHolder=>"Type something…"%>
+					<%end%>
+				</div>
+			</div>
+				
+ 	
+ 	 	<%elsif node.attribute('type').to_s == 'checkbox'%>
+ 	 		<%=f.input node.name, :collection => eval(node.attribute('collection').to_s), :as => :check_boxes%>
+ 	 	
+ 	 	
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'radio_buttons'%>
+ 	 		<%=f.input node.name, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons%>
+ 	 	
+ 	 	
+ 	 	
+ 	 	<%elsif node.attribute('type').to_s == 'countries'%>
+ 	 		<%= f.input node.name, as: :country %>
+ 	 	
+ 	 	<%end%>
+ 	 	
+ 	 <%end%>
   
-  </div>
+ 	
+
+  </fieldset>
+  	
+
+    
+
+	
+	
+
+	
+	
+	
+	
+
+  	
+
+    
+
+	
+	
+
+	
+	
+	
+	
+	
+	

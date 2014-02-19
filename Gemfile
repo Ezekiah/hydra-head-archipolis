@@ -46,6 +46,8 @@ end
 
 gem 'hydra'
 
+gem 'hydra-head'
+
 gem "bootstrap-sass"
 gem "devise"
 gem "devise-guests", "~> 0.3"
@@ -59,6 +61,7 @@ group :development, :test do
 end
 
 
+gem 'blacklight'
 
 gem 'wicked'
 
@@ -96,4 +99,30 @@ gem "cancan"
 gem "simple_form"
 
 gem "cocoon"
+
+gem 'countries'
+
+gem 'country_select'
+
+
+gem 'xml-simple'
+
+#gem 'jquery-ui-bootstrap-rails', :git => "git@github.com:kristianmandrup/jquery-ui-bootstrap-rails.git"
+
+#gem 'jquery-multiselect-rails', :git => 'git://github.com/arojoal/jquery-multiselect-rails.git'
+
+gem 'country-select-engine'
+
+
+gem 'language_list', :git => 'git@github.com:scsmith/language_list.git'
+
+gem 'bootstrap-multiselect-rails', :git => 'git@github.com:benjamincanac/bootstrap-multiselect-rails.git'
+
+gem 'mustache-js-rails'
+
+gem 'bootstrap-datetimepicker-rails'
+
+gem 'jquery-validation-rails'
+
+
 

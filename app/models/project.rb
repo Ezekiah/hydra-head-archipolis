@@ -1,10 +1,12 @@
-require 'datastreams/person_metadata'
+require 'datastreams/project_metadata'
 
-class Person < ActiveFedora::Base
+class Project < ActiveFedora::Base
   
-    has_metadata 'descMetadata', type:PersonMetadata
+    has_metadata 'descMetadata', type:ProjectMetadata
     
-
+    has_attributes :addresses, datastream: 'descMetadata', multiple: true
+    
+    has_attributes :identifiers, datastream: 'descMetadata', multiple: true
     
     has_attributes :date_birth, datastream: 'descMetadata', multiple: false
     has_attributes :date_death, datastream: 'descMetadata', multiple: false
@@ -20,8 +22,6 @@ class Person < ActiveFedora::Base
     has_attributes :nationality, datastream: 'descMetadata', multiple: false
     has_attributes :notes, datastream: 'descMetadata', multiple: true
     
-    has_attributes :phones, datastream: 'descMetadata', multiple: true
-    
     has_attributes :study_role, datastream: 'descMetadata', multiple: false
     has_attributes :study_role_description, datastream: 'descMetadata', multiple: false
   
@@ -36,8 +36,6 @@ class Person < ActiveFedora::Base
     
     
     has_many :affiliations, :property=>:is_member_of_collection
-    has_many :addresses, :property=>:is_member_of_collection
-    has_many :identifiers, :property=>:is_member_of_collection
     
     accepts_nested_attributes_for :affiliations
     

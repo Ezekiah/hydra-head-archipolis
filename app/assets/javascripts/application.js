@@ -13,7 +13,7 @@
 //= require jquery
 
 
-
+//= require bootstrap
 //= require jquery.cookie
 //= require jquery.ui.all
 //= require jquery_ujs
@@ -31,4 +31,9 @@
 
 //= require cocoon
 
+
+//= require bootstrap-multiselect
+
+//= require jquery.validate
+//= require jquery.validate.additional-methods
 
