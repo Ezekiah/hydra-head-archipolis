@@ -20,6 +20,21 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
+    
+	<%= javascript_tag do %>
+		I18n.defaultLocale = "<%= I18n.default_locale %>";
+		I18n.locale = "<%= I18n.locale %>";
+		I18n.fallbacks = true;
+	<% end %>
+	
+	<%= javascript_include_tag 'jquery.validate.localization/messages_'+I18n.locale.to_s if locale.to_s != 'en' %>  
+	<%= javascript_include_tag 'bootstrap-datepicker/locales/bootstrap-datepicker.'+I18n.locale.to_s if locale.to_s != 'en' %>
+	
+	<script>
+		jQuery.noConflict(); if (typeof(window.$) === 'undefined') { window.$ = jQuery; } 
+	</script>
+	
+    
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -48,7 +63,10 @@
     </div>
 
     <div class="row">
+    	<%= lang_switcher %>
       <%= yield %>
+      
+      
     </div>
   </div>
 

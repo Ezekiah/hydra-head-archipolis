@@ -20,6 +20,7 @@ class AffiliationMetadata < ActiveFedora::OmDatastream
          xml.acronym
          xml.rec_id
          xml.role
+         xml.rec_class
       }
   
   
@@ -34,13 +35,19 @@ class AffiliationMetadata < ActiveFedora::OmDatastream
       
       builder = Nokogiri::XML::Builder.new do |t|
         
-        t.metadatas{
-          t.rec_id(:type=>'text', :value=>'', :label=>'Identifier')
-          t.name(:type=>'text', :multiple=>'false', :label=>'Affiliation')
-          t.acronym(:type=>'text', :label=>'Acronym')
-          t.role(:type=>'text', :label=>'Role')
 
-       }
+         t.affiliation{
+             
+         
+              t.rec_id(:type=>'text', :value=>'', :label=>'Identifier', :display=>'public')
+              t.name(:type=>'text', :multiple=>'false', :label=>'Affiliation', :display=>'public')
+              t.acronym(:type=>'text', :label=>'Acronym', :display=>'public')
+              t.role(:type=>'text', :label=>'Role', :display=>'public')
+             
+              t.rec_class(:type=>'hidden', :value=>'Affiliation', :display=>'public')
+          
+          }
+       
     end
     
     return builder.doc

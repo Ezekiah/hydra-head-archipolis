@@ -55,50 +55,57 @@ class PersonMetadata < ActiveFedora::OmDatastream
 
   def self.xml_form
     builder = Nokogiri::XML::Builder.new do |t|
-      t.metadatas{
+     
          
-          t.rec_id(:type=>'text', :value=>'', :label=>'Identifier')
-         
-         t.association(:name=>'addresses', :label=>'Address'){
-          t.properties{ t.property(:name=>'addresses', :class_name=>'Address')}
-          }
-          
-          t.association(:name=>'affiliations', :label=>'Affiliation'){
-           t.properties{t.property(:name=>'affiliations', :class_name=>'Affiliation')}
-          }
-          
-          t.association(:name=>'identifiers', :label=>'Identifier'){
-           t.properties{t.property(:name=>'identifiers', :class_name=>'Identifier')}
-          }
+         t.person{
+
+             t.rec_id(:type=>'text', :value=>'', :label=>'Identifier', :required=>true, :display=>'private')
+             
+             t.association(:name=>'addresses', :label=>'Address', :display=>'private'){
+              t.properties{ t.property(:name=>'addresses', :class_name=>'Address')}
+              }
+              
+             
+              
+              t.association(:name=>'identifiers', :label=>'Identifier', :display=>'private'){
+               t.properties{t.property(:name=>'identifiers', :class_name=>'Identifier', :display=>'private')}
+              }
+            
+            
+            t.date_birth(:type=>'date', :label=>'Birth date', :required=>true, :display=>'private')
+            t.date_death(:type=>'date', :label=>'Date of death', :required=>true, :display=>'private')
+            t.emails(:type=>'text', :multiple=>'true', :label=>'Email', :required=>true, :display=>'private')
+            
+            t.gender(:type=>'radio_buttons', :collection=>{'homme'=>'0', 'femme'=>1}, :label=>'Sex', :display=>'private')
+            
+            t.name_family(:type=>'text', :label=>'Family name', :display=>'public')
+            t.name_nick(:type=>'text', :label=>'Surname', :display=>'private')
+            t.name_given(:type=>'text', :label=>'Given name', :display=>'public')
+            t.name_prefix(:type=>'text', :label=>'Particle non dropping', :display=>'private')
+            t.name_suffix(:type=>'text', :label=>'Terms of address', :display=>'private')
+            t.nationality(:type=>'country', :label=>'Nationality', :display=>'private')
+            
+            
+             t.association(:name=>'affiliations', :label=>'Affiliation', :display=>'public'){
+               t.properties{t.property(:name=>'affiliations', :class_name=>'Affiliation')}
+              }
+            
+            t.phones(:type=>'text', :label=>'Phone', :display=>'private')
+            
+            t.rec_class(:type=>'hidden', :value=>'Person', :display=>'public')
+           
+            
+            t.notes(:type=>'text', :multiple=>true, :label=>'Note', :display=>'private')
+            
+            t.study_role(:type=>'checkbox', :collection=>{'speaker'=>'speaker', 'investigator'=>'investigator', 
+              'protagonist'=>'protagonist', 'depositor'=>'depositor'}, :label=>'Study role', :display=>'private')
+              
+            t.study_role_description(:type=>'text', :multiple=>false, :label=>'Study role description', :display=>'private')
+            
+        }
         
-        
-        t.date_birth(:type=>'date', :label=>'Birth date')
-        t.date_death(:type=>'date', :label=>'Date of death')
-        t.emails(:type=>'text', :multiple=>'true', :label=>'Email')
-        
-        t.gender(:type=>'radio_buttons', :collection=>{'homme'=>'0', 'femme'=>1}, :label=>'Sex')
-        
-        t.name_family(:type=>'text', :label=>'Family name')
-        t.name_nick(:type=>'text', :label=>'Surname')
-        t.name_given(:type=>'text', :label=>'Given name')
-        t.name_prefix(:type=>'text', :label=>'Particle non dropping')
-        t.name_suffix(:type=>'text', :label=>'Terms of address')
-        t.nationality(:type=>'country', :label=>'Nationality')
-        
-        t.phones(:type=>'text', :label=>'Phone')
-        
-        t.rec_class(:type=>'hidden', :value=>'Person')
        
-        
-        t.notes(:type=>'text', :multiple=>true, :label=>'Note')
-        
-        t.study_role(:type=>'checkbox', :collection=>{'speaker'=>'speaker', 'investigator'=>'investigator', 
-          'protagonist'=>'protagonist', 'depositor'=>'depositor'}, :label=>'Study role')
-          
-        t.study_role_description(:type=>'text', :multiple=>false, :label=>'Study role description')
-        
-       
-    }
+    
     
   end
   

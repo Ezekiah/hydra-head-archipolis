@@ -93,46 +93,120 @@ class StudyMetadata < ActiveFedora::OmDatastream
     
     builder = Nokogiri::XML::Builder.new do |t|
     
-    t.metadatas {
+    t.study{
+      
       
       
       t.general{
           
        
-           t.rec_id(:type=>'text', :required=>true, :label=>'Identifier')
+           t.rec_id(:type=>'text', :required=>true, :label=>'Identifier', :display=>'public')
            
-           t.title(:type=>'text', :multiple=>false, :required=>true, :label=>'Study title')
+           t.title(:type=>'text', :multiple=>false, :required=>true, :label=>'Study title', :display=>'public')
            
           
-            t.association(:name=>'descriptions', :label=>'Abstracts', :required=>true){
+            t.association(:name=>'descriptions', :label=>'Abstracts', :required=>true, :display=>'public'){
               t.properties{
                 t.property(:name=>'descriptions', :class_name=>'Description')
               }          
             }
           
           
-          t.disciplines(:type=>'text', :multiple=>true, :required=>false, :label=>'Disciplines')
+          t.disciplines(:type=>'text', :multiple=>true, :required=>false, :label=>'Disciplines', :display=>'public')
           
-          t.classifications(:type=>'text', :multiple=>true, :required=>false, :label=>'Classifications')
+          t.classifications(:type=>'text', :multiple=>true, :required=>false, :label=>'Classifications', :display=>'public' )
           
-          t.association(:name=>'keywords', :label=>'keywords', :required=>true){
+          t.association(:name=>'keywords', :label=>'keywords', :required=>true, :display=>'public'){
               t.properties{
                 t.property(:name=>'keywords', :class_name=>'Keyword')
               }          
           }
+          
+          t.coverage_temporal_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public')
+          t.coverage_temporal_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public')
 
       }
+    
+      
+      t.contributor{
+          
+           t.association(:name=>'authors', :label=>'authors', :required=>true, :display=>'public'){
+              t.properties{
+                t.property(:name=>'person_authors', :class_name=>'Person')
+                t.property(:name=>'orgunit_authors', :class_name=>'Orgunit')
+              }
+            }
+            
+            
+            t.association(:name=>'projects', :label=>'projects', :required=>true, :display=>'public'){
+               t.properties{
+                    t.property(:name=>'projects', :class_name=>'Project', :popup=>true)
+               }     
+            }
+            
+            
+            t.association(:name=>'depositors', :label=>'depositors', :required=>true, :display=>'public'){
+                t.properties{
+                   t.property(:name=>'person_depositors', :class_name=>'Person')
+                   t.property(:name=>'orgunit_depositors', :class_name=>'Orgunit')
+               }        
+            }
+            
+             t.association(:name=>'distributors', :label=>'distributors', :required=>true, :display=>'public'){
+               t.properties{
+                t.property(:name=>'person_distributors', :class_name=>'Person')
+                t.property(:name=>'orgunit_distributors', :class_name=>'Orgunit') 
+                 
+               }       
+            }
+            
+            t.association(:name=>'contacts', :label=>'contacts', :display=>'public'){
+               t.properties{
+                    t.property(:name=>'person_contacts', :class_name=>'Person')
+                    t.property(:name=>'orgunit_contacts', :class_name=>'Orgunit')
+               }       
+            }
+
+        
+      }
+     
+     
       
       
-      t.step2{
+      
+      t.step3{
+        t.coverage_spatial_geographics(:type=>'text', :multiple=>true)
+        t.coverage_spatial_units(:type=>'text', :multiple=>true)
+       
+        t.association(:name=>'interviewers', :label=>'interviewers'){
+               t.property(:name=>'person_interviewers', :class_name=>'Person')
+               t.property(:name=>'orgunit_interviewers', :class_name=>'Orgunit')          
+            }
+        
+        
+        t.target_groups(:type=>'text', :multiple=>true)
+        
+        t.location_of_units_of_observations('type'=>'checkbox', :collection=>{
+           'international'=>'international', 
+           'national'=>'national', 
+           'infra-national'=>'infra-national' 
+         })
+         
+        t.data_languages('type'=>'checkbox', :collection=> {
+          'fr_FR'=>'fr_FR', 
+          'en_EN'=>'en_EN', 
+       })
+       
+        
+        
+        
+        
+      }
+      
+      t.step4{
           
           
-          t.coverage_temporal_begin(:type=>'date')
-          t.coverage_temporal_end(:type=>'date')
-      
-      
-          
-          t.coverage_spatial_countries('type'=>'country', 'multiple'=>false)
+           t.coverage_spatial_countries('type'=>'country', 'multiple'=>false)
           
           t.softwares(:type=>'text', :multiple=>true, :required=>false)
     
@@ -165,42 +239,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
           t.access_conditions(:type=>'text', :multiple=>true)
           
           
-            t.association(:name=>'distributors', :label=>'distributors'){
-               t.properties{
-                t.property(:name=>'person_distributors', :class_name=>'Person')
-                t.property(:name=>'orgunit_distributors', :class_name=>'Orgunit') 
-                 
-               }
-               
-                        
-            }
-            
-            t.association(:name=>'authors', :label=>'authors'){
-              t.property(:name=>'person_authors', :class_name=>'Person')
-              t.property(:name=>'orgunit_authors', :class_name=>'Orgunit') 
-            }
-            
-            
-            t.association(:name=>'contacts', :label=>'contacts'){
-               t.property(:name=>'person_contacts', :class_name=>'Person')
-               t.property(:name=>'orgunit_contacts', :class_name=>'Orgunit')          
-            }
-            
-            t.association(:name=>'interviewers', :label=>'interviewers'){
-               t.property(:name=>'person_interviewers', :class_name=>'Person')
-               t.property(:name=>'orgunit_interviewers', :class_name=>'Orgunit')          
-            }
-            
-            t.association(:name=>'depositors', :label=>'depositors'){
-               t.property(:name=>'person_depositors', :class_name=>'Person')
-               t.property(:name=>'orgunit_depositors', :class_name=>'Orgunit')          
-            }
-            
-           
-            
-           
-            
-            
+
            
             
             t.data_collection_context(:type=>'text', :multiple=>false)
@@ -258,41 +297,6 @@ class StudyMetadata < ActiveFedora::OmDatastream
             
             
             t.analysis_transcription(:type=>"radio_buttons")
-
-        
-        
-        
-      }
-     
-      
-      
-      t.step3{
-        t.coverage_spatial_geographics(:type=>'text', :multiple=>true)
-        t.coverage_spatial_units(:type=>'text', :multiple=>true)
-       
-        
-        
-        
-        t.target_groups(:type=>'text', :multiple=>true)
-        
-        t.location_of_units_of_observations('type'=>'checkbox', :collection=>{
-           'international'=>'international', 
-           'national'=>'national', 
-           'infra-national'=>'infra-national' 
-         })
-         
-        t.data_languages('type'=>'checkbox', :collection=> {
-          'fr_FR'=>'fr_FR', 
-          'en_EN'=>'en_EN', 
-       })
-       
-        
-        
-        
-        
-      }
-      
-      t.step4{
         
         t.documentation_languages('type'=>'checkbox', :collection=> {
         'fr_FR'=>'fr_FR', 
@@ -326,11 +330,11 @@ class StudyMetadata < ActiveFedora::OmDatastream
       }
       
       
-      
+      }
      
       
       
-    }
+    
     end
     
     return builder.doc

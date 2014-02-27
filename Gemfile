@@ -120,9 +120,29 @@ gem 'bootstrap-multiselect-rails', :git => 'git@github.com:benjamincanac/bootstr
 
 gem 'mustache-js-rails'
 
-gem 'bootstrap-datetimepicker-rails'
+gem 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 
 gem 'jquery-validation-rails'
 
+gem "i18n-js"
+
+gem 'eco'
 
 
+gem 'localized_language_select', :git=>'git@github.com:davec/localized_language_select.git'
+
+
+gem 'localized_country_select', :git => 'git@github.com:mlitwiniuk/localized_country_select.git'
+
+gem 'hpricot'
+
+
+gem 'bootstrap-modal-rails'
+
+gem 'jquery-tmpl-rails'
+
+gem 'execjs'
+
+gem 'eco-source'
+
+gem "fs", "~> 0.2.1"

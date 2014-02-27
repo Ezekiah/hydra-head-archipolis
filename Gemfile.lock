@@ -1,9 +1,31 @@
 GIT
+  remote: git://github.com/Nerian/bootstrap-datepicker-rails.git
+  revision: 7e394137813970fa7c8044f1d0b69322b77af5f6
+  specs:
+    bootstrap-datepicker-rails (1.3.0.1)
+      railties (>= 3.0)
+
+GIT
   remote: git@github.com:benjamincanac/bootstrap-multiselect-rails.git
   revision: 49d72a322d72adbcf26cfbfe434b23d6604f4aea
   specs:
     bootstrap-multiselect-rails (0.0.3)
       railties (>= 3.2.0, < 5.0)
+
+GIT
+  remote: git@github.com:davec/localized_language_select.git
+  revision: d88527a62eb3854ac42a6602d28342f531a82f12
+  specs:
+    localized_language_select (0.2.0)
+      rails (>= 2.3.5)
+      rails (>= 2.3.5)
+
+GIT
+  remote: git@github.com:mlitwiniuk/localized_country_select.git
+  revision: bd9fd4f9d816c8735aee9c648e07b7714c6653cc
+  specs:
+    localized_country_select (0.9.7)
+      actionpack (>= 3.0)
 
 GIT
   remote: git@github.com:scsmith/language_list.git
@@ -67,7 +89,8 @@ GEM
     blankslate (2.1.2.4)
     block_helpers (0.3.3)
       activesupport (>= 2.0)
-    bootstrap-datetimepicker-rails (0.0.11)
+    bootstrap-modal-rails (2.2.0)
+      railties (>= 3.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     bootstrap_forms (4.0.1)
@@ -115,6 +138,11 @@ GEM
       devise
     diff-lcs (1.2.5)
     dynatree-rails (1.2.5)
+    eco (1.0.0)
+      coffee-script
+      eco-source
+      execjs
+    eco-source (1.1.0.rc.1)
     ensure_valid_encoding (0.5.3)
     equivalent-xml (0.4.0)
       nokogiri (>= 1.4.3)
@@ -124,8 +152,10 @@ GEM
     ffi (1.9.3)
     formtastic (2.2.1)
       actionpack (>= 3.0)
+    fs (0.2.1)
     hike (1.2.3)
     hooks (0.3.3)
+    hpricot (0.8.6)
     hydra (0.24.0)
     hydra-access-controls (6.4.1)
       active-fedora (~> 6.6)
@@ -151,6 +181,8 @@ GEM
       hydra-core (= 6.4.1)
       rails (>= 3.2.6)
     i18n (0.6.9)
+    i18n-js (2.1.2)
+      i18n
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -165,6 +197,8 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-tmpl-rails (1.1.0)
+      rails (>= 3.1.0)
     jquery-ui-rails (4.0.3)
       jquery-rails
       railties (>= 3.1.0)
@@ -342,7 +376,8 @@ DEPENDENCIES
   angularjs-rails (~> 1.2.5)
   blacklight
   blacklight_advanced_search
-  bootstrap-datetimepicker-rails
+  bootstrap-datepicker-rails!
+  bootstrap-modal-rails
   bootstrap-multiselect-rails!
   bootstrap-sass
   cancan
@@ -356,17 +391,26 @@ DEPENDENCIES
   devise
   devise-guests (~> 0.3)
   dynatree-rails
+  eco
+  eco-source
+  execjs
   formtastic
+  fs (~> 0.2.1)
+  hpricot
   hydra
   hydra-editor
   hydra-head
+  i18n-js
   jbuilder (~> 1.2)
   jettywrapper
   jquery-cookie-rails
   jquery-rails
+  jquery-tmpl-rails
   jquery-ui-sass-rails
   jquery-validation-rails
   language_list!
+  localized_country_select!
+  localized_language_select!
   mustache-js-rails
   oj
   pry-rails

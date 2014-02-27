@@ -7,22 +7,23 @@ HydraHead::Application.routes.draw do
 
   resources :people
 
-  mount HydraEditor::Engine => '/hydra-editor/'
+  #mount HydraEditor::Engine => '/hydra-editor/'
   
-  resources :documents
+  #resources :documents
 
   
 
-  get "create_study/index"
-  get "create_study/show"  
+  #get "create_study/index"
+  #get "create_study/show"  
   
   
-  root :to => "catalog#index"
+  #root :to => "catalog#index"
   
   Blacklight.add_routes(self)
   
   HydraHead.add_routes(self)
   devise_for :users
+  
   
   
   namespace :api do
@@ -45,16 +46,24 @@ HydraHead::Application.routes.draw do
   
   
 
-  
+  scope "/:locale", locale: /en|fr/ do
     resources :studies do
-      resources :documents
+     
     end
-    
     
     resources :study_steps
     
+    
+    
 
+  
+    
+    root to: redirect("/%{locale}/studies", status: 302)
+  end
 
+  root to: redirect("/#{I18n.default_locale}", status: 302), as: :redirected_root
+
+  get "/*path", to: redirect("/#{I18n.default_locale}/%{path}", status: 302), constraints: {path: /(?!(#{I18n.available_locales.join("|")})\/).*/}, format: false
 
   
   

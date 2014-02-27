@@ -20,4 +20,313 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  #GENERAL
+  general: "General"
+ 
+  edit-box:
+    author: 'author'
+    distributor: 'distributor'
+    contact: 'contact'
+    depositor: 'depositor'
+    funding_agency_name: 'funding agency name'
+    project: 'project'
+    keyword: 'keyword'
+    abstract: 'abstract'
+  
+  redux: "reduce"
+  
+  titles:
+    new_study: "New study"
+    
+  
+  new: 'new'
+  
+  add: add
+  most_used: "Most used"
+  others: "Others"
+  choose_language: "Choose a language"
+  date_click: "Click and choose a date"
+  
+
+  general:
+   
+    
+    label: 'General'
+    type_something: "Type something..."
+    rec_id:
+      label: "Identifier"
+      help: "Identifier"
+    title:
+      label: "Study title"
+      help: "Study title"
+    descriptions:
+      label: "Abstracts"
+      help: "Abstracts"
+    disciplines:
+      label: "Discipline"
+      help: "Discipline"
+    classifications:
+      label: "Classifications"
+      help: "Classifications"
+    keywords:
+      label: "Keywords"
+      help: "Keywords"
+    coverage_temporal_begin:
+      label: "Time Period Covered start"
+      help: "Time Period Covered start"
+    coverage_temporal_end:
+      label: "Time Period Covered end"
+      help: "Time Period Covered end"
+    
+  contributor:
+    label: 'contributor'
+    acronym:
+      label: "Project acronym"
+      help: "Project acronym"
+    awards:
+      label: "Awards"
+      help: "Awards"
+    date_begin:
+      label: "Start date"
+      help: "Start date"
+    date_end:
+      label: "End date"
+      help: "End date"
+    identifiers:
+      label: "ANR project reference"
+      help: "ANR project reference"
+    title:
+      label: "Project title"
+      help: "Project title"
+    authors:
+      label: "Author(s)"
+      help: "Author(s)"
+    projects:
+      label: "funding Agency, Grant number"
+      help: "funding Agency, Grant number"
+    depositors:
+      label: "Depositer"
+      help: "Depositer"
+    distributors:
+      label: "Distributor"
+      help: "Distributor"
+    contacts:
+      label: "Contact(s)"
+      help: "Contact(s)"
+      
+      
+       
+  orgunit:
+    label: "Legal person"
+    name:
+      label: 'Name'
+      help: 'Name'
+      
+  person:
+    label: "Individual"
+    rec_id:
+      label: "rec_id"
+      help: "rec_id"              
+    addresses:
+      label: "Addresses"
+      help: "Addresses"                   
+    identifiers:
+      label: "Identifier"
+      help: "Identifier"           
+    date_birth:
+      label: "Birth date"
+      help: "Birth date"
+    date_death:
+      label: "Date of death"
+      help: "Date of death"
+    emails:
+      label: "Email(s)"
+      help: "Email(s)"     
+    gender:
+      label: "Sex"
+      help: "Sex"    
+    name_family:
+      label: "Name"
+      help: "Name"
+    name_nick:
+      label: "Nickname"
+      help: "Nickname"
+    name_given:
+      label: "Given name"
+      help: "Given name"
+    name_prefix:
+      label: "Particle non dropping"
+      help: "Particle non dropping"
+    name_suffix:
+      label: "Qualificatif"
+      help: "Qualificatif"
+    nationality:
+      label: "Nationality"
+      help: "Nationality"              
+    affiliations:
+      label: "Affiliation"
+      help: "Affiliation"               
+    phones:
+      label: "Phone(s)"
+      help: "Phone(s)"                     
+    notes:
+      label: "Note(s)"
+      help: "Note(s)"      
+    study_role:
+      label: "study_role"
+      help: "study_role"
+    protagonist:
+      label: "protagonist"
+      help: "protagonist"          
+    study_role_description:
+      label: "protagonist"
+      help: "protagonist"
+      
+  affiliation:
+    label: 'affiliation'
+    name:
+      label: 'Name'
+      help: 'Name'
+    acronym:
+      label: 'Acronym'
+      help: 'Acronym'
+    rec_id:
+      label: 'rec_id'
+      help: 'rec_id'
+    role:
+      label: 'role'
+      help: 'role'
+    
+
+    
+    
+  address:
+    label: 'address'
+    p_country:
+      label: 'p_country'
+      help: 'p_country'
+    geo_latitude:
+      label: 'geo_latitude'
+      help: 'geo_latitude'
+    geo_longitude:
+      label: 'geo_longitude'
+      help: 'geo_longitude'
+    locality_city_town:
+      label: 'locality_city_town'
+      help: 'locality_city_town'
+    post_code:
+      label: 'post_code'
+      help: 'post_code'
+    street:
+      label: 'street'
+      help: 'street'
+        
+
+    
+  keyword:
+    label: 'keyword'
+    value:
+      label: 'Description'
+      help: 'Description'
+    language:
+      label: 'Language'
+      help: 'Language'
+    
+     
+      
+  description:
+    label: 'description'
+    value:
+      label: 'Description'
+      help: 'Description'
+    language:
+      label: 'Language'
+      help: 'Language'
+      
+  award:
+    label: 'award'
+    value:
+      label: 'Value'
+      help: 'Value'
+    language:
+      label: 'Language'
+      help: 'Language'
+    
+  
+  
+  project:
+    label: 'project'
+    title:
+      label: 'title'
+      help: 'title'
+    acronym:
+      label: 'acronym'
+      help: 'acronym'
+    
+    awards:
+      label: 'awards'
+      help: 'awards'
+    
+    descriptions:
+      label: 'descriptions'
+      help: 'descriptions'
+    
+    identifiers:
+      label: 'identifiers'
+      help: 'identifiers'
+
+    date_begin:
+      label: 'date_begin'
+      help: 'date_begin'
+      
+    date_end:
+      label: 'date_end'
+      help: 'date_end'
+      
+    funding_agent_names:
+      label: "Funding source"
+      help: 'Funding source'
+    
+  identifier:
+    label: 'identifier'
+    value:
+      label: 'value'
+      help: 'value'
+        
+    id_type:
+      label: 'id_type'
+      help: 'id_type'
+  
+
+
+  #DESCRIPTION
+  label-language: "Language"
+  label-value: "Value"
+  
+  calendar: "Calendar"
+  type_something: "Type something..."
+  
+  help:
+    rec_id: "Identifier"
+    title: "Study title"
+    descriptions: "Abstracts"
+    disciplines: "Discipline"
+    classifications: "Classifications"
+    keywords: "Keywords"
+    coverage_temporal_begin: "Time Period Covered start"
+    coverage_temporal_end: "Time Period Covered end"
+    acronym: "Project acronym"
+   
+  
+  
+    
+
+
+
+
+
+
+
+
+    
+    

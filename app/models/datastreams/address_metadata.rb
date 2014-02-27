@@ -39,14 +39,20 @@ class AddressMetadata < ActiveFedora::OmDatastream
   def self.xml_form
       
       builder = Nokogiri::XML::Builder.new do |t|
-        t.metadatas{
-            t.p_country(:type=>'countries', :value=>'', :label=>'Country')
-            t.geo_latitude(:type=>'text', :value=>'', :label=>'Geo latitude')
-            t.geo_longitude(:type=>'text', :value=>'', :label=>'Geo longitude')
-            t.locality_city_town(:type=>'text', :value=>'', :label=>'City town')
-            t.post_code(:type=>'text', :value=>'', :label=>'Post code')
-            t.street(:type=>'text_area', :value=>'', :label=>'Street')
-        }
+       
+            
+            t.address{
+                
+                t.p_country(:type=>'countries', :value=>'', :label=>'Country', :display=>'public')
+                t.geo_latitude(:type=>'text', :value=>'', :label=>'Geo latitude', :display=>'public')
+                t.geo_longitude(:type=>'text', :value=>'', :label=>'Geo longitude', :display=>'public')
+                t.locality_city_town(:type=>'text', :value=>'', :label=>'City town', :display=>'public')
+                t.post_code(:type=>'text', :value=>'', :label=>'Post code', :display=>'public')
+                t.rec_class(:type=>'hidden', :value=>'Address', :label=>'', :display=>'public')
+                t.street(:type=>'text_area', :value=>'', :label=>'Street', :display=>'public')
+                
+            }
+        
 
       end
     

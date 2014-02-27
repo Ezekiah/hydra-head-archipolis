@@ -1,0 +1,15 @@
+<div class="edit-box" id="<%=@uid2%>">
+    <div class="control-group input-append">
+		<button type="button" class="btn btn-default btn-lg" data-toggle="edit">
+			<%=@label_link%>
+		</button>
+		
+		<button type="button" class="add btn btn-medium edit">
+			<i class="icon-edit"></i>
+		</button>
+		
+		<button type="button" class="add btn btn-medium delete">
+			<i class="icon-remove"></i>
+		</button>
+	</div>
+</div>

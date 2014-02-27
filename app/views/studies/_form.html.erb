@@ -22,24 +22,29 @@
   
   
   <fieldset>
-	<legend>Général</legend>
+	<legend><%=t('general.label')%></legend>
+	
+	
+	
 
-  	<%== display_form(@studyMetaXML, f=f, xpath_str="/metadatas/general/*")%>
 
+  	<%== display_form(@studyMetaXML, f=f, xpath_str="/study/general/*")%>
+	
+	
+	
 	<button type="submit" id="button_submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
   </fieldset>
 
 <% end %>
 
-
 	
-	<div class="choose"></div>
-	
-	<div id="dialog-confirm" title="Delete ?" style="display:none">
-		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+	<div id="dialog-confirm"  style="">
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><p></p>
 	</div>
 	
-	
+
+    
+    
 	
 
 	

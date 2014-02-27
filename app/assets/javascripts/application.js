@@ -15,7 +15,12 @@
 
 //= require bootstrap
 //= require jquery.cookie
-//= require jquery.ui.all
+
+//= require jquery.ui.dialog
+//= require jquery.ui.tooltip
+//= require jquery.ui.button
+
+
 //= require jquery_ujs
 //= require turbolinks
 
@@ -33,7 +38,24 @@
 
 
 //= require bootstrap-multiselect
+//= require bootstrap-dropdown
+//= require bootstrap-modal
+//= require bootstrap-tooltip
 
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+
+
+//= require bootstrap-datepicker/core
+
+//= require i18n
+//= require i18n/translations
+
+//= require jquery-tmpl
+//= require_tree ./templates
+
+
+
+
+
 

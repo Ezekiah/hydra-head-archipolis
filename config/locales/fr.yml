@@ -1,0 +1,330 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+fr:
+  #GENERAL
+  
+  author: 'auteur'
+  depositor: 'depositeur'
+  distributor: 'distributeur'
+  contact: 'contact'
+  
+  type_something: "Saisissez un texte"
+  
+  most_used: "Les plus utilisées"
+  others: "Autres"
+  choose_language: "Choisir une langue"
+  add: Ajouter
+  
+  new: 'nouvelle'
+  
+  edit-box:
+    author: 'auteur'
+    distributor: 'distributeur'
+    contact: 'contact'
+    depositor: 'depositeur'
+    funding_agency_name: 'funding agency name'
+    project: 'projet'
+    keyword: 'mot-clé'
+    abstract: 'résumé'
+
+  
+  
+  date_click: "Cliquer pour choisir une date"
+  
+  titles:
+    new_study: "Nouvelle enquête"
+  
+  name: "Nom"
+
+  general:
+    label: 'Général'
+    
+    rec_id:
+      label: "Identifiant"
+      help: "Identifiant"
+    title: 
+      label: "Titre de l'étude"
+      help: "Titre de l'étude"
+    descriptions:
+      label: "Résumés"
+      help: "Résumés"
+    disciplines:
+      label: "Discipline"
+      help: "Discipline"
+    classifications:
+      label: "Classifications"
+      help: "Classifications"
+    keywords:
+      label: "Mots-clés"
+      help: "Mots-clés"
+      
+    coverage_temporal_begin:
+      label: "Période couverte début"
+      help: "Période couverte début"
+    coverage_temporal_end:
+      label: "Période couverte fin"
+      help: "Période couverte fin"
+    language:
+      label: "Langage"
+      help: "Langage"
+    value:
+      label: "Contenu"
+      help: "Contenu"
+  contributor:
+    acronym:
+      label: "Acronyme du projet"
+      help: "Acronyme du projet"
+    awards:
+      label: "Distinctions"
+      help: "Distinctions"
+    date_begin:
+      label: "Date de début"
+      help: "Date de début"
+    date_end:
+      label: "Date de fin"
+      help: "Date de fin"
+    identifiers:
+      label: "Identifiant ANR du projet"
+      help: "Identifiant ANR du projet"
+    title:
+      label: "Titre du projet"
+      help: "Titre du projet"
+    authors:
+      label: "Auteur(s)"
+      help: "Auteur(s)"
+    projects:
+      label: "Agence de financement, Bourses"
+      help: "Agence de financement, Bourses"
+    depositors:
+      label: "Déposant(s)"
+      help: "Déposant(s)"
+    distributors:
+      label: "Diffuseur des données"
+      help: "Diffuseur des données"
+    contacts:
+      label: "Contact(s)"
+      help: "Contact(s)"
+    
+  
+  
+ 
+ 
+    
+  orgunit:
+    label: "Personne morale"
+    
+    name:
+      label: 'Nom'
+      help: 'Nom'
+  
+    
+  person:
+    label: "Personne physique"
+    rec_id:
+      label: "rec_id"
+      help: "rec_id"              
+    addresses:
+      label: "Adresse(s)"
+      help: "Adresse(s)"                   
+    identifiers:
+      label: "Identifiant"
+      help: "Identifiant"           
+    date_birth:
+      label: "Date de naissance"
+      help: "Date de naissance"
+    date_death: "Date de décès"
+    emails:
+      label: "Emails"
+      help: "Emails"     
+    gender:
+      label: "Sexe"
+      help: "Sexe"    
+    name_family:
+      label: "Nom"
+      help: "Nom"
+    name_nick:
+      label: "Surnom"
+      help: "Surnom"
+    name_given:
+      label: "Prénom"
+      help: "Prénom"
+    name_prefix:
+      label: "Particule à conserver"
+      help: "Particule à conserver"
+    name_suffix:
+      label: "Qualificatif"
+      help: "Qualificatif"
+    nationality:
+      label: "Nationalité"
+      help: "Nationalité"              
+    affiliations:
+      label: "Affiliation"
+      help: "Affiliation"               
+    phones:
+      label: "Téléphone(s)"
+      help: "Téléphone(s)"                     
+    notes:
+      label: "Note(s)"
+      help: "Note(s)"      
+    study_role:
+      label: "study_role"
+      help: "study_role"
+    protagonist:
+      label: "protagonist"
+      help: "protagonist"          
+    study_role_description:
+      label: "protagonist"
+      help: "protagonist"
+      
+  affiliation:
+    label: 'affiliation'
+    name:
+      label: 'Name'
+      help: 'Name'
+    acronym:
+      label: 'Acronym'
+      help: 'Acronym'
+    rec_id:
+      label: 'rec_id'
+      help: 'rec_id'
+    role:
+      label: 'role'
+      help: 'role'
+      
+  description:
+    label: 'description'
+    value:
+      label: 'Valeur'
+      help: 'Valeur'
+    language:
+      label: 'Langage'
+      help: 'Langage'
+      
+  award:
+    label: 'award'
+    value:
+      label: 'Valeur'
+      help: 'Valeur'
+    language:
+      label: 'Langage'
+      help: 'Langage'
+   
+   
+  keyword:
+    label: 'keyword'
+    value:
+      label: 'Valeur'
+      help: 'Valeur'
+    language:
+      label: 'Langage'
+      help: 'Langage'
+      
+  address:
+    label: 'address'
+    p_country:
+      label: 'p_country'
+      help: 'p_country'
+    geo_latitude:
+      label: 'geo_latitude'
+      help: 'geo_latitude'
+    geo_longitude:
+      label: 'geo_longitude'
+      help: 'geo_longitude'
+    locality_city_town:
+      label: 'locality_city_town'
+      help: 'locality_city_town'
+    post_code:
+      label: 'post_code'
+      help: 'post_code'
+    street:
+      label: 'street'
+      help: 'street'
+      
+  project:
+    label: 'project'
+    title:
+      label: 'titre'
+      help: 'titre'
+    acronym:
+      label: 'acronym'
+      help: 'acronym'
+    
+    awards:
+      label: 'awards'
+      help: 'awards'
+    
+    descriptions:
+      label: 'descriptions'
+      help: 'descriptions'
+    
+    identifiers:
+      label: 'identifiers'
+      help: 'identifiers'
+
+    date_begin:
+      label: 'Date de début'
+      help: 'Date de début'
+      
+    date_end:
+      label: 'Date de fin'
+      help: 'Date de fin'
+      
+    funding_agent_names:
+      label: "Source de financement"
+      
+  identifier:
+    label: 'identifier'
+    value:
+      label: 'value'
+      help: 'value'
+        
+    id_type:
+      label: 'id_type'
+      help: 'id_type'
+    
+   
+    
+    
+  #DESCRIPTION
+  calendar: "Calendrier"
+  
+
+  
+  
+  
+
+  popup:
+    title-delete-item: "Delete ?"
+    delete-item-content: "This item will be permanently deleted and cannot be recovered. Are you sure ?"
+    delete-item-button: "Delete"
+    cancel: "Cancel"
+    
+
+
+
+
+
+
+
+
+    
+    

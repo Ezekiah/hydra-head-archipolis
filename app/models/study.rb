@@ -21,9 +21,6 @@ class Study < ActiveFedora::Base
   has_attributes :edition_first_date, datastream: 'descMetadata', multiple: false
   has_attributes :edition_last_date, datastream: 'descMetadata', multiple: false
   
-  has_attributes :projects, datastream: 'descMetadata', multiple: true
-  
-  
   
   has_attributes :rec_id, datastream: 'descMetadata', multiple: false
   has_attributes :title, datastream: 'descMetadata', multiple: false
@@ -118,6 +115,8 @@ class Study < ActiveFedora::Base
   
   has_many :keywords, :class_name => 'Keyword', :property => :is_part_of
   
+  has_many :projects, :class_name => 'Project', :property => :is_part_of
+  
   
   def editors
     return self.orgunit_depositors + self.person_depositors
@@ -156,6 +155,8 @@ class Study < ActiveFedora::Base
   
   accepts_nested_attributes_for :descriptions
   accepts_nested_attributes_for :affiliations
+  
+  accepts_nested_attributes_for :projects
   
   accepts_nested_attributes_for :collections
   accepts_nested_attributes_for :ressources

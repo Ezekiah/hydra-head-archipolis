@@ -4,6 +4,7 @@ class KeywordMetadata < ActiveFedora::OmDatastream
          t.root(path: "metadatas")
          t.language
          t.value
+         t.rec_class
 
   end
   
@@ -15,6 +16,7 @@ class KeywordMetadata < ActiveFedora::OmDatastream
       xml.metadatas {
         xml.language
         xml.value
+        xml.rec_class
       }
   
   
@@ -29,10 +31,18 @@ class KeywordMetadata < ActiveFedora::OmDatastream
       
     builder = Nokogiri::XML::Builder.new do |t|
         
-    t.metadatas{
-      t.language(:type=>'select', :multiple=>'false', :required=>true, :label=>'Language')
-      t.value(:type=>'text', :required=>true, :label=>'Keyword')
-    }
+   
+      
+      t.keyword{
+          t.language(:type=>'language_list', :multiple=>'false', :required=>true, :label=>'Language')
+          t.value(:type=>'text_area', :required=>true, :label=>'Keyword')
+          t.rec_class(:type=>'hidden', :value=>'Keyword')
+          
+      }
+        
+        
+      
+    
     end
     
     return builder.doc

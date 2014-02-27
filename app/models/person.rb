@@ -40,6 +40,8 @@ class Person < ActiveFedora::Base
     has_many :identifiers, :property=>:is_member_of_collection
     
     accepts_nested_attributes_for :affiliations
+    accepts_nested_attributes_for :addresses
+    accepts_nested_attributes_for :identifiers
     
     
     

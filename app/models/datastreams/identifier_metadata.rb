@@ -1,13 +1,10 @@
 class IdentifierMetadata < ActiveFedora::OmDatastream
 
   set_terminology do |t|
-         t.root(path: "metadatas")
-         t.name
-         t.acronym
-         t.rec_id
+     t.root(path: "metadatas")
+     t.id_type
+     t.value
          
-         t.role
-         t.rec_class
   end
   
   
@@ -16,10 +13,9 @@ class IdentifierMetadata < ActiveFedora::OmDatastream
       builder = Nokogiri::XML::Builder.new do |xml|
     
       xml.metadatas {
-         xml.name
-         xml.acronym
-         xml.rec_id
-         xml.role
+         xml.id_type
+         
+         xml.value
       }
   
   
@@ -33,13 +29,23 @@ class IdentifierMetadata < ActiveFedora::OmDatastream
     def self.xml_form
     
         builder = Nokogiri::XML::Builder.new do |t|
+            collection = [
+                ['ANR project reference', 'anr'], 
+                ['European grant agreement number', 'eu'],
+                ['HAL identifier', 'hal'],
+                ['Spire identifier', 'hdl'],
+            ]
+                
+                
+                
+          t.identifier{
+              t.id_type(:type=>'select', :collection=>collection, :multiple=>'false', :display=>'public', :prompt=>'identifier_type')
+              t.value(:type=>'text_area', :multiple=>'false', :display=>'public')
+              
+              t.rec_class(:type=>'hidden', :value=>'Identifier', :display=>'public')    
+          }  
+
             
-            t.metadatas{
-              t.name(:type=>'text', :multiple=>'false')
-              t.acronym(:type=>'text')
-              t.rec_id(:type=>'hidden', :value=>'')
-              t.role(:type=>'text')
-            }
         end
         
         return builder.doc

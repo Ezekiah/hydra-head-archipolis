@@ -1,0 +1,22 @@
+<div style="margin: 0;" class="btn-toolbar">
+    
+    
+    <div class="btn-group">
+      <button data-toggle="dropdown" class="btn dropdown-toggle"> <i class="icon-plus"></i></button>
+      <ul class="dropdown-menu">
+        <li><a class="choose_person" href="#"><%=@person%></a></li>
+        <li><a class="choose_orgunit" href="#"><%=@orgunit%></a></li>
+      </ul>
+      
+      <button type="button" data-toggle="tooltip" class="btn btn-medium" data-placement="right" title="<%=@title_help%>">
+		<i class="">?</i> 
+	</button>
+      
+      
+    </div><!-- /btn-group -->
+   
+  </div>
+
+ 
+
+

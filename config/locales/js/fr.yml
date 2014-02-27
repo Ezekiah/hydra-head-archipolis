@@ -1,0 +1,38 @@
+fr:
+  
+  
+  
+  
+  js:
+    redux_link: "réduire"
+    popup:
+      title-delete-item: "Supprimer ?"
+      delete-item-content: "Cet élement sera définitivement supprimé, voulez-vous continuer ?"
+      delete-item-button: "Supprimer"
+      cancel: "Annuler"
+      
+      save: "Terminer"
+      choose: "Choisir"
+      
+      text: "texte"
+      lang: "lang"
+      
+      person: "personne"
+      new: "nouvelle"
+      
+      address: "adresse"
+      affiliation: "affiliation"
+      identifier: "identifier"
+      
+      project: "projet"
+      
+      person: "personne"
+      orgunit: "Organisation"
+      
+      create:
+        descriptions: 'Créer une description'
+        keywords: 'Créer un mot-clé'
+        
+      edit:
+        descriptions: 'Editer une description'
+        keywords: 'Editer un mot-clé'

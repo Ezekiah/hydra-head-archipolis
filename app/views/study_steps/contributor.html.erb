@@ -1,0 +1,33 @@
+<%= simple_form_for(@study, url: wizard_path, :html => { :class => 'form-vertical' }) do |f| %>
+	
+	  <% if @study.errors.any? %>
+	    <div class="error_messages">
+	      <h2><%= pluralize(@study.errors.count, "error") %> prohibited this user from being saved:</h2>
+	      <ul>
+	      <% @study.errors.full_messages.each do |msg| %>
+	        <li><%= msg %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+	  <%= yield f %>
+	
+
+	<fieldset>
+		<%== display_form(@studyMetaXML, f=f, xpath_str="//contributor/*")%>
+	</fieldset>
+	
+	
+	<div id="dialog-confirm"  style="">
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><p></p>
+	</div>
+	
+	    <!-- Button to trigger modal -->
+  
+     
+
+	
+  <button type="submit" class="add btn btn-primary" >Next <i class="icon-white icon-arrow-right"></i></button>
+	
+	
+<%end%>

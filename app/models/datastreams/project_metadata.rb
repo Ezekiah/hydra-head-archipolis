@@ -4,52 +4,10 @@ class ProjectMetadata < ActiveFedora::OmDatastream
     t.root(path: "metadatas")
     
     t.acronym
-    
-    t.addresses{
-      t.country
-      t.geo_latitude
-      t.geo_longitude
-      t.locality_city_town
-      t.post_code
-      t.street
-      
-    }
-    
-    t.affiliation
-       
-    
-    t.identifiers{
-      t.type
-      t.value
-    }
-    
-    
-    t.date_foundation
-    t.date_dissolution
-    t.emails
-    
-    
-    t.name
-   
-    t.nationality
-    
-    
-    t.phones{
-      t.formatted
-    }
-    
-
-    t.notes{
-      t.language
-      t.value
-    }
-    
-    t.urls{
-      t.value
-    }
-    
+    t.awards
     t.rec_class
-    t.rec_id
+    t.date_begin
+    t.date_end
 
 
   end
@@ -60,67 +18,77 @@ class ProjectMetadata < ActiveFedora::OmDatastream
       builder = Nokogiri::XML::Builder.new do |t|
     
       t.metadatas {
+         t.title
          t.acronym
+         t.awards
+         t.rec_class
+         t.date_begin
+         t.date_end
+         t.descriptions
+         t.identifiers
+
     
-          t.address{
-            t.country
-            t.geo_latitude
-            t.geo_longitude
-            t.locality_city_town
-            t.post_code
-            t.street
-            
-          }
           
-          t.affiliation{
-              t.acronym
-              t.name
-              t.rec_id
-              t.role
-          }
-          
-          t.identifier{
-            t.type
-            t.value
-          }
-          
-          
-          t.date_foundation
-          t.date_dissolution
-          t.email
-          
-          
-          t.name
-         
-          t.nationality
-          
-          
-          t.phone{
-            t.formatted
-          }
-          
-      
-          t.note{
-            t.language
-            t.value
-          }
-          
-          t.url{
-            t.value
-          }
-          
-          t.rec_class
-          t.rec_id
-          
-          t.rec_permission
       }
     end
     
     return builder.doc
+
+  end
+  
+  def self.xml_form
+      
+      builder = Nokogiri::XML::Builder.new do |t|
     
+  
+       
+          t.project{
+              
+              t.acronym(:type=>'text', :value=>'', :label=>'Acronym', :display=>'public')
+              
+              
+              t.title(:type=>'text', :value=>'', :label=>'Identifier', :required=>true, :display=>'public')
+              
+              
+              t.association(:name=>'awards', :label=>'awards', :required=>false, :display=>'private'){
+                 t.properties{
+                    t.property(:name=>'awards', :class_name=>'Award')
+                  }          
+              }
+              
+              t.association(:name=>'descriptions', :label=>'descriptions', :required=>true, :display=>'private'){
+                 t.properties{
+                    t.property(:name=>'descriptions', :class_name=>'Description')
+                  }          
+              }
+              
+              t.association(:name=>'identifiers', :label=>'identifiers', :required=>true, :display=>'public'){
+                 t.properties{
+                    t.property(:name=>'identifiers', :class_name=>'Identifier')
+                  }          
+              }
+              
+              t.association(:name=>'funding_agent_names', :label=>'Funding agent names', :required=>true, :display=>'public'){
+                 t.properties{
+                    t.property(:name=>'funding_agent_names', :class_name=>'Orgunit')
+                  }          
+              }
+              
     
+              t.rec_class(:type=>'hidden', :value=>'Project')
+              
+              t.date_begin(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'private')
+              t.date_end(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'private')
+              
+
+           }
+       
+    end
     
-    
+    return builder.doc
     
   end
+  
+  
+  
 end

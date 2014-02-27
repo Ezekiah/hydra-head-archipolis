@@ -1,0 +1,38 @@
+en:
+  
+  
+  
+  
+  js:
+    redux_link: "reduce"
+    popup:
+      title-delete-item: "Delete ?"
+      delete-item-content: "This item will be permanently deleted and cannot be recovered. Are you sure ?"
+      delete-item-button: "Delete"
+      cancel: "cancel"
+      
+      save: "save"
+      choose: "choose"
+      
+      person: "person"
+      new: "new"
+      
+      address: "address"
+      affiliation: "affiliation"
+      identifier: "identifier"
+      
+      
+      orgunit: "orgunit"
+      project: "projet"
+      
+      
+      text: "text"
+      lang: "lang"
+      
+      create:
+        descriptions: 'Create a description'
+        keywords: 'Create a keyword'
+        
+      edit:
+        descriptions: 'Edit a description'
+        keywords: 'Edit a keyword'

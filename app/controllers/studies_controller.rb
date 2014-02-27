@@ -1,17 +1,20 @@
 require 'datastreams/study_metadata'
 require 'datastreams/person_metadata'
 require 'datastreams/orgunit_metadata'
-
 require 'datastreams/affiliation_metadata'
-
 require 'datastreams/address_metadata'
 require 'datastreams/identifier_metadata'
 require 'datastreams/description_metadata'
 require 'datastreams/keyword_metadata'
 
 
+
 class StudiesController < ApplicationController
   before_action :set_study, only: [:show, :edit, :update, :destroy]
+  before_filter :export_i18n_messages
+  
+  
+ 
   
   # GET /studies
   # GET /studies.json
@@ -41,6 +44,7 @@ class StudiesController < ApplicationController
    
     
     @study_base_collection = @study.collections
+    
     @studyMetaXML = StudyMetadata.xml_form.to_xml
 
     @personMetaXML = PersonMetadata.xml_form
@@ -49,24 +53,16 @@ class StudiesController < ApplicationController
     @addressMetaXML = AddressMetadata.xml_form.to_xml
     @identifierMetaXML = IdentifierMetadata.xml_form.to_xml
     @descriptionMetaXML = DescriptionMetadata.xml_form.to_xml
-    @keywordMetaXML = DescriptionMetadata.xml_form.to_xml
-    
-    @doc = Nokogiri::XML.parse(@studyMetaXML)
+    @keywordMetaXML = KeywordMetadata.xml_form.to_xml
     
     
-    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ value.name, value.iso_639_1]:""}.reject!(&:empty?)
-    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ value.name, value.iso_639_1]}
+    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
     
-    @LOCATIONS = { 'Most used' => @most_used_languages,
-                   'others' => 
+    @LOCATIONS = { t('most_used') => @most_used_languages,
+                   t('others') => 
                    @all_languages-@most_used_languages
     }
-    
-    
-                      
-                 
-    
-  
 
   end
   
@@ -94,7 +90,6 @@ class StudiesController < ApplicationController
   def create
 
     
-    
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
     
@@ -108,7 +103,7 @@ class StudiesController < ApplicationController
       if @study.save
         session[:study_id] = @study.id
         
-        format.html { redirect_to study_steps_path('etape1', :study_id => @study.id), notice: 'Study was successfully created.' }
+        format.html { redirect_to study_steps_path('etape1', :study_id => @study.id, :locale=>params['locale']), notice: 'Study was successfully created.' }
         format.json { render action: 'show', status: :created, location: @study }
       else
         format.html { render action: 'new' }
@@ -157,34 +152,44 @@ class StudiesController < ApplicationController
       #recover all _attributes (nested forms)
       obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
       
+
       
-      
+      #foreach association
       obj_attributes.each do |key,value|
          
-
+         
          #Store model name ***_attributes
          
+         #remove _attributes from key to get the association name
          model_property = key.to_s.gsub(/_attributes/, '')
+         
          
          value.each do |k,v|
            
-           
+           #Check if sub associations exists
            sub_obj_attributes = v.select { |key| key.to_s.match(/_attributes$/) }
-           
+           #recover simple properties
            sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
            
-  
+           
 
            if !sub_obj_non_attributes.empty?
              
              #debugger
-             newObject = eval(v['rec_class']).new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
-             
+             if v.has_key?("rec_class")
+                 
+                 rec_class = eval(v['rec_class'])
+                 
+                 newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+            
+             end
+                        
+
              object.send(model_property) << newObject
             
              if !sub_obj_attributes.empty?
                
-               traverse_study_attr(sub_obj_attributes, newObject)
+                traverse_study_attr(sub_obj_attributes, newObject)
                
                
              end
@@ -199,5 +204,11 @@ class StudiesController < ApplicationController
       end
       
     end
+    
+     
+     def export_i18n_messages
+        SimplesIdeias::I18n.export!
+        end
+ 
     
 end

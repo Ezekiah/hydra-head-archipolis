@@ -67,52 +67,57 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
       
       
       builder = Nokogiri::XML::Builder.new do |t|
-        t.metadatas{
-      
-          t.rec_id(:type=>'text', :value=>'', :label=>'Identifier')
-          
-          t.association(:name=>'addresses', :label=>'Address'){
-           t.properties{
-           t.property(:name=>'addresses', :class_name=>'Address')
-           }
-          }
-          
-          t.association(:name=>'affiliations', :label=>'Affiliation'){
-            t.properties{
-           t.property(:name=>'affiliations', :class_name=>'Affiliation')
-           }
-          }
-          
-          t.association(:name=>'identifiers', :label=>'Identifier'){
-            t.properties{
-                t.property(:name=>'identifiers', :class_name=>'identifier')
-           }
-          }
-
-          
-          
         
-          t.emails(:type=>'text', :multiple=>'true', :label=>'Email')
-          
-          
-          t.nationality(:type=>'country', :label=>'Nationality')
-          t.rec_class(:type=>'hidden', :value=>'Person')
-          
-          
-          t.date_foundation(:type=>'date', :label=>'Foundation date')
-          t.date_dissolution(:type=>'date', :label=>'Dissolution date')
-          t.phones(:type=>'text', :multiple=>true, :label=>'Phone')
-          
-          t.notes(:type=>'text', :multiple=>true, :label=>'Note')
+            
+            
+          t.orgunit{
+            
+              t.name(:type=>'text', :value=>'', :label=>'Name', :display=>'public')
+              
+              t.rec_id(:type=>'text', :value=>'', :label=>'Identifier', :display=>'private')
+              
+              t.association(:name=>'addresses', :label=>'Address', :display=>'private'){
+               t.properties{
+               t.property(:name=>'addresses', :class_name=>'Address')
+               }
+              }
+              
+              t.association(:name=>'affiliations', :label=>'Affiliation', :display=>'private'){
+                t.properties{
+               t.property(:name=>'affiliations', :class_name=>'Affiliation', :display=>'public')
+               }
+              }
+              
+              t.association(:name=>'identifiers', :label=>'Identifier', :display=>'private'){
+                t.properties{
+                    t.property(:name=>'identifiers', :class_name=>'identifier', :display=>'public')
+               }
+              }
+    
+              
+              
+            
+              t.emails(:type=>'text', :multiple=>'true', :label=>'Email', :display=>'private')
+              
+              
+              t.nationality(:type=>'country', :label=>'Nationality', :display=>'private')
+              t.rec_class(:type=>'hidden', :value=>'Orgunit', :display=>'public')
+              
+              
+              t.date_foundation(:type=>'date', :label=>'Foundation date', :display=>'private')
+              t.date_dissolution(:type=>'date', :label=>'Dissolution date', :display=>'private')
+              t.phones(:type=>'text', :multiple=>true, :label=>'Phone', :display=>'private')
+              
+              t.notes(:type=>'text', :multiple=>true, :label=>'Note', :display=>'private')
+              
+             
+                
+              t.urls(:type=>'text', :multiple=>true, :label=>'Web page', :display=>'private')
+              
+          }
           
          
-            
-          t.urls(:type=>'text', :multiple=>true, :label=>'Web page')
-          
-            
-          
-         
-      }
+      
     
     end
     
