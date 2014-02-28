@@ -79,6 +79,13 @@ class Study < ActiveFedora::Base
   has_attributes :notes, datastream: 'descMetadata', multiple: true
   has_attributes :tree, datastream: 'utilsMetadata', multiple: false
   
+  has_attributes :data_collection_extent, datastream: 'descMetadata', multiple: false
+  has_attributes :data_collection_has_media, datastream: 'utilsMetadata', multiple: false
+  
+  
+     
+  
+  
   
   has_many :collections, :property => :is_part_of
   
@@ -175,6 +182,8 @@ class Study < ActiveFedora::Base
   
   accepts_nested_attributes_for :persons
   accepts_nested_attributes_for :orgunits
+  
+  accepts_nested_attributes_for :person_contacts
   
   
   

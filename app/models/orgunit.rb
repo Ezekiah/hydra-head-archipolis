@@ -5,6 +5,7 @@ class Orgunit < ActiveFedora::Base
   has_metadata 'descMetadata', type:OrgunitMetadata
   
   has_attributes :acronym, datastream: 'descMetadata', multiple: false
+  has_attributes :name, datastream: 'descMetadata', multiple: false
   
   #has_attributes :addresses, datastream: 'descMetadata', multiple: true
 

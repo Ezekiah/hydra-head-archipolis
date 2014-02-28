@@ -121,7 +121,7 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     
     end
     
-    return builder.to_xml
+    return builder.doc
 
   end
 end

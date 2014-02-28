@@ -1,0 +1,90 @@
+= simple_form_for(@person) do |p|
+  = p.error_notification
+  .form-inputs
+    name nick : #{p.text_field :name_nick}
+    %br/
+    name family : #{p.text_field :name_family}
+    %br/
+    addresses : #{p.text_field :addresses}
+    %br/
+    %input.addRow{:type => "button", :value => "Add Row"}/
+    %input.delRow{:type => "button", :value => "Delete Row"}/
+    affiliations : #{p.text_field :affiliations}
+    %br/
+    identifiers : #{p.text_field :identifiers}
+    %br/
+    %input.addRow{:type => "button", :value => "Add Row"}/
+    %input.delRow{:type => "button", :value => "Delete Row"}/
+    date_birth : #{p.text_field :date_birth}
+    %br/
+    date_death : #{p.text_field :date_death}
+    %br/
+    emails : #{p.text_field :emails}
+    %br/
+    %input.addRow{:type => "button", :value => "Add Row"}/
+    %input.delRow{:type => "button", :value => "Delete Row"}/
+    gender : #{p.text_field :gender}
+    %br/
+    name_family : #{p.text_field :name_family}
+    %br/
+    name_nick : #{p.text_field :name_nick}
+    %br/
+    name_given : #{p.text_field :name_given}
+    %br/
+    name_prefix : #{p.text_field :name_prefix}
+    %br/
+    name_suffix : #{p.text_field :name_suffix}
+    %br/
+    %input.addRow{:type => "button", :value => "Add Row"}/
+    %input.delRow{:type => "button", :value => "Delete Row"}/
+    nationality : #{p.text_field :nationality}
+    %br/
+    notes : #{p.text_field :notes}
+    %br/
+    %input.addRow{:type => "button", :value => "Add Row"}/
+    %input.delRow{:type => "button", :value => "Delete Row"}/
+    study_role : #{p.text_field :study_role}
+    %br/
+    study_role_description : #{p.text_field :study_role_description}
+    %br/
+    rec_class : #{p.text_field :rec_class}
+    %br/
+    rec_id : #{p.text_field :rec_id}
+    %br/
+  .form-actions
+    = p.button :submit
+%table{:border => "1"}
+  %tr
+    %td{:colspan => "4"} Enter Your Information
+  %tr
+    %td Email
+    %td
+      %input{:size => "24", :type => "text"}/
+    %td
+      %input.addRow{:type => "button", :value => "Add Row"}/
+    %td
+      %input.delRow{:type => "button", :value => "Delete Row"}/
+  %tr
+    %td Email
+    %td
+      %input{:size => "24", :type => "text"}/
+    %td
+      %input.addRow{:type => "button", :value => "Add Row"}/
+    %td
+      %input.delRow{:type => "button", :value => "Delete Row"}/
+:javascript
+  (function($){
+  	$(document).ready(function(){
+  		$(".addRow").btnAddRow();
+  		$(".delRow").btnDelRow();
+  });
+  })(jQuery);
+:javascript
+  (function($){
+  	$(document).ready(function(){
+  		$(".addRow").btnAddRow();
+  		$(".delRow").btnAddRow();
+  		
+  		
+  });
+  })(jQuery);

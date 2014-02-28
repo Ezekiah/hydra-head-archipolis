@@ -9,28 +9,17 @@ require 'datastreams/keyword_metadata'
 require 'datastreams/award_metadata'
 require 'datastreams/project_metadata'
 
+
+
 class StudyStepsController < ApplicationController
   
   include Wicked::Wizard
-  steps :contributor, :etape2, :etape3
+  steps :contributor, :universe, :etape3
   
    def show
     @study = Study.find(session[:study_id])
     
-    @studyMetaXML = StudyMetadata.xml_form.to_xml
-    @personMetaXML = PersonMetadata.xml_form
-    @orgunitMetaXML = OrgunitMetadata.xml_form
-    @affiliationMetaXML = AffiliationMetadata.xml_form.to_xml
-    @addressMetaXML = AddressMetadata.xml_form.to_xml
-    @identifierMetaXML = IdentifierMetadata.xml_form.to_xml
-    @descriptionMetaXML = DescriptionMetadata.xml_form.to_xml
-    @keywordMetaXML = KeywordMetadata.xml_form.to_xml
-    
-    @awardMetaXML =AwardMetadata.xml_form.to_xml
-    @projectMetaXML = ProjectMetadata.xml_form.to_xml
-    
-    
-    
+
     @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
     @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
     
@@ -43,6 +32,7 @@ class StudyStepsController < ApplicationController
   end
   
   def update 
+
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
     @study = Study.find('changeme:58')

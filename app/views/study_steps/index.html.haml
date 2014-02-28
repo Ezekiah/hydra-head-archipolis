@@ -1,0 +1,18 @@
+%h1 Listing studies
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+  %div{"ng-controller" => "StudiesCtrl"}
+    %h1 Message: {{message}}
+  %tbody
+    - @studies.each do |study|
+      %tr
+        %td= study.title
+        %td= link_to 'Show', study
+        %td= link_to 'Edit', edit_study_path(study)
+        %td= link_to 'Destroy', study, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Study', new_study_path

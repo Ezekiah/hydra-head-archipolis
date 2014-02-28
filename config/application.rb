@@ -19,6 +19,7 @@ module HydraHead
     
     config.generators do |g|
       g.test_framework :rspec, :spec => true
+      g.template_engine :haml
     end
   
 

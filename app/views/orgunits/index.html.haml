@@ -1,0 +1,15 @@
+%h1 Listing orgunits
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+  %tbody
+    - @orgunits.each do |orgunit|
+      %tr
+        %td= link_to 'Show', orgunit
+        %td= link_to 'Edit', edit_orgunit_path(orgunit)
+        %td= link_to 'Destroy', orgunit, method: :delete, data: { confirm: 'Are you sure?' }
+%br/
+= link_to 'New Orgunit', new_orgunit_path

@@ -1,0 +1,22 @@
+:css
+  #wizard .input-error{
+  	background:#FB3500;
+  	opacity:1
+  }
+= form_for @study, url: wizard_path do |f|
+  - if @user.errors.any?
+    .error_messages
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  = yield f
+  %p Veuillez entrer l'intitulé de l'enquête :
+  = f.label  :title , "title :  "
+  = f.text_field :title
+  %br/
+  .actions
+    = f.submit "Continue"
+    or #{link_to "skip this step", next_wizard_path}

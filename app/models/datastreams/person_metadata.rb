@@ -109,7 +109,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
     
   end
   
-  return builder.to_xml
+  return builder.doc
 
     
     

@@ -45,15 +45,7 @@ class StudiesController < ApplicationController
     
     @study_base_collection = @study.collections
     
-    @studyMetaXML = StudyMetadata.xml_form.to_xml
 
-    @personMetaXML = PersonMetadata.xml_form
-    @orgunitMetaXML = OrgunitMetadata.xml_form
-    @affiliationMetaXML = AffiliationMetadata.xml_form.to_xml
-    @addressMetaXML = AddressMetadata.xml_form.to_xml
-    @identifierMetaXML = IdentifierMetadata.xml_form.to_xml
-    @descriptionMetaXML = DescriptionMetadata.xml_form.to_xml
-    @keywordMetaXML = KeywordMetadata.xml_form.to_xml
     
     
     @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)

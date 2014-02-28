@@ -40,20 +40,39 @@ module StudiesHelper
 	end
 
 
-	def display_form(xml, f, xpath_str)
+
+    def gen_select (f, node, collection, prompt)
+        return f.select node.name, collection, :input_html => { :required => node.attribute('required') }, :prompt => prompt
+    end
+    
+    def gen_add_button(jst, params=false)
+        file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', jst )
+        Eco.render(File.read(file), params)
+    end
+    
+    def gen_help_button( params=false)
+        file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', 'button_help.jst.eco' )
+        params['title']=t('help')
+        
+        Eco.render(File.read(file), params)
+    end
+    
+   
+    
+
+	def display_form(xml, f, xpath_str, str=false)
 
 		@xml = Nokogiri::XML.parse(xml)
         
         builder = Nokogiri::HTML::Builder.new do |doc|
             doc.body {
-                
-                
+
         		tags = @xml.xpath(xpath_str).each do |node|
         		    
         		    root_node = node.parent
         		    
         		    properties = node.xpath("properties//property")
-        		    #doc.text(debug node.xpath("properties//property[@class_name='Person']| //property[@class_name='Orgunit']"))
+        		   
         		    
                     if node.attribute('display').to_s != 'private'
                     
@@ -67,63 +86,60 @@ module StudiesHelper
                                     doc.div(:id=>'add-'+node.attribute('name')) {
                                         
                                         class_name = node.search('.//property').attribute('class_name').to_s
+                                      
+                                      
+                                      if node.search('.//property').size.to_s == '2'
+                                           doc.text(gen_add_button('button_list.jst.eco',{ orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node.name.to_s+'.'+node.attribute('name')+'.help'),type:'association' }      ))
+                                        else
+                                          doc.text(gen_add_button('button_add.jst.eco',{type:'association'}))
+                                          doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.attribute('name')+'.help')} ))
+                                  
+                                        end
                                         
                                        
-                                        if node.search('.//property').size.to_s == '2'                                                                           
-
-                                          file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', 'button_list.jst.eco' )
-                                          doc.text(Eco.render(File.read(file), { orgunit: t("orgunit.label"), person: t("person.label"), title_help:t(root_node.name.to_s+'.'+node.attribute('name')+'.help') }))
-    
-                                        else
-                                          file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', 'buttons.jst.eco' )
-                                          doc.text(Eco.render(File.read(file))) 
-                                        
-                                        end
-                                    
-                                    
                                     }
                                  }
                                  
-
-                                
                                 class_name=node.attribute('class_name').to_s().downcase
-                                
 
                                 properties.each do |prop|
                                       
-                                        class_name=prop.attribute('class_name').to_s().downcase
-                                        
-                                         link = link_to_add_association(' ', f, 
-                                                prop.attribute('name').to_s.to_sym, 
-                                                :partial=>'/studies/'+class_name+'_fields', 
-                                                :data => {"association-insertion-method" => "before" },
-                                        )
-                                        
-                                        
-                                        html = Nokogiri::HTML(link)   
-                                        a = html.css('a')
-                                        
-                                                                               
-                                        if prop.attribute('popup').to_s == 'false'
-                                            doc.text(a[0]['data-association-insertion-template'].to_s.html_safe)
-                                        end
-                                        
-                                        doc.div{
-                                            doc.text( link.to_s.html_safe )
+                                    class_name=prop.attribute('class_name').to_s().downcase
+                                    
+                                    metadata_class = class_name.capitalize+'Metadata'
+                                    
+                                     link = link_to_add_association(' ', f, 
+                                            prop.attribute('name').to_s.to_sym, 
+                                            :partial=>'/studies/display_fields', 
+                                            :render_options => {:locals => {
+                                                :xml=>Object.const_get(metadata_class).xml_form.to_xml, 
+                                                :xpath=>'/'+class_name.to_s.singularize+'/*'}, 
+                                                },
+                                            :data => {"association-insertion-method" => "before" },
+                                    )
+                                    
+                                     html = Nokogiri::HTML(link)   
+                                            a = html.css('a')
                                             
-                                        } 
-        
-                                      
-                                    end
-                                
+                                            if node.attribute('popup').to_s == 'false'
+                                                doc.text(a[0]['data-association-insertion-template'].to_s.html_safe)
+                                            end
+                                   
+                                    
+                                                                           
+                                    
+                                    
+                                    doc.div{
+                                        doc.text( link.to_s.html_safe )
+                                        
+                                    } 
+    
+                                  
+                                end
 
-                            
-                            
                             }
                                  
 
-                            
-                            
                             elsif node.attribute('type').to_s == 'text'
     
                                  doc.div(:class=>'archi-field control-group'){
@@ -135,23 +151,15 @@ module StudiesHelper
                                              
                                              
                                          if node.attribute('multiple').to_s == 'true'
-                                            doc.button(:type=>'button','data-action'=>"add", :class=>'add btn btn-medium', :title=>t('add')){
-                                                 doc.i(:class=>"icon-plus")
-                                                 
-                                             }
-                                          
+                                           doc.text(gen_add_button('button_add.jst.eco',{type:'single'}))
                                          end
                                          
-                                         doc.button(:type=>'button','data-toggle'=>"tooltip", :class=>'btn btn-default', 'data-placement'=>"right", :title=>t("help."+node.name)){
-                                            doc.text('?')
-                                         }
-                                         
+                                        doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')} ))
                                         
                                         
-                                         
+
                                      }
-                                     
-                                     
+  
                                  }
                              
                              
@@ -168,16 +176,29 @@ module StudiesHelper
                             elsif node.attribute('type').to_s == 'checkbox'
                                 
                                 doc.div(:class=>'archi-field control-group'){
-                                
                                     doc.text(f.input node.name, :required=>node.attribute('required'), :label=>node.name, :collection => eval(node.attribute('collection').to_s), input_html: { :multiple => 'multiple' }, :as => :check_boxes)
-                            
                                 }
+                                
+                                
+                                 
+                                 
+                                
                             
                             elsif node.attribute('type').to_s == 'radio_buttons'
                                 doc.div(:class=>'archi-field control-group'){
                                     doc.text(f.input node.name, :label=>t('label.'+node.name), :required=>node.attribute('required'), :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons)
-                                }    
-                            
+                                }
+                                
+                                
+                                doc.div(:class=>'input-append input-prepend'){
+                                    
+                                if node.attribute('multiple').to_s == 'true'
+                                    doc.text(gen_add_button('button_add.jst.eco',{type:'single'})) 
+                                 end
+                                
+                                
+                                     doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')} ))
+                                 }
                           
                             
                             
@@ -187,13 +208,17 @@ module StudiesHelper
                                 doc.text(f.input node.name, :label=>t('label.'+node.name),:required=>node.attribute('required'), :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...'))
                                 #doc.text(localized_language_select(node.name, :language, [], :include_blank => 'Please choose...'))
 
-                                     if node.attribute('multiple').to_s == 'true'
-                                            doc.button(:type=>'button','data-action'=>"add", 'type'=>"button", :class=>'add btn btn-medium', :title=>t('add')){
-                                                 doc.i(:class=>"icon-plus")  
-                                            }
-                                            
-                                     end
+                                
+                                 
+                                 doc.div(:class=>'input-append input-prepend'){
+                                  if node.attribute('multiple').to_s == 'true'
+                                    doc.text(gen_add_button('button_add.jst.eco',{type:'single'}))                                           
+                                 end
+                                 doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')}))
+                                     
+                                 }
 
+                               
                                elsif node.attribute('type').to_s == 'date'
     
                                  doc.div(:class=>'archi-field control-group'){
@@ -213,22 +238,23 @@ module StudiesHelper
                                          )
                                              
                                          
-                                         if node.attribute('multiple').to_s == 'true'
-                                            doc.button(:type=>'button','data-action'=>"add", :class=>'add btn btn-medium', :title=>t('add')){
-                                                 doc.i(:class=>"icon-plus")
-                                                 
-                                             }
-                                          
-                                         end
+                                         
                                          
                                          doc.span(:type=>'button', :class=>'add-on', 'data-placement'=>"right", :title=>t("calendar")){
                                             doc.text('<i data-time-icon="icon-time" class="icon-th"></i>')
                                          }
                                          
+                                        
                                          
-                                         doc.button(:type=>'button','data-toggle'=>"tooltip", :class=>'btn btn-default', 'data-placement'=>"right", :title=>t("help."+node.name)){
-                                                 doc.text('?')
-                                         }
+                                   
+                                             
+                                          if node.attribute('multiple').to_s == 'true'
+                                            doc.text(gen_add_button('button_add.jst.eco',{type:'single'})) 
+                                         end
+                                         
+                                         doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')} ))
+                                         
+                                       
                                            
                                      }
  
@@ -239,17 +265,19 @@ module StudiesHelper
                                   doc.div(:class=>'archi-field control-group'){
                                     doc.text(f.label  node.name, t(root_node.name.to_s+'.'+node.name.to_s+'.label') )
                                      
-                                    doc.div{
-                                        doc.text(f.select node.name, grouped_options_for_select(@LOCATIONS), :required=>node.attribute('required'), :prompt => t("choose_language"))
-                                    }
                                     
-                                     if node.attribute('multiple').to_s == 'true'
-                                            doc.button(:type=>'button','data-action'=>"add", 'type'=>"button", :class=>'add btn btn-medium', :title=>t('add')){
-                                                 doc.i(:class=>"icon-plus")  
-                                            }
-                                            
-                                     end
+                                    doc.text(gen_select(f, node, grouped_options_for_select(@LOCATIONS), t("choose_language")))
                                     
+                                    
+                                    doc.div(:class=>'input-append input-prepend'){
+                                             
+                                          if node.attribute('multiple').to_s == 'true'
+                                            doc.text(gen_add_button('button_add.jst.eco',{type:'single'})) 
+                                         end
+                                         
+                                         doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')} ))
+                                     }
+                                
                                  }
                                  
                             elsif node.attribute('type').to_s == 'select'
@@ -260,16 +288,20 @@ module StudiesHelper
                                     doc.text(f.label  node.name, t(root_node.name.to_s+'.'+node.name.to_s+'.label') )
                                     
                            
-                                    doc.div{
-                                        doc.text(f.select node.name, eval(node.attribute('collection').to_s), :required=>node.attribute('required'), :prompt => '')
-                                    }
                                     
-                                     if node.attribute('multiple').to_s == 'true'
-                                            doc.button(:type=>'button','data-action'=>"add", 'type'=>"button", :class=>'add btn btn-medium', :title=>t('add')){
-                                                 doc.i(:class=>"icon-plus")  
-                                            }
-                                            
-                                     end
+                                        doc.text(
+                                            gen_select(f, node, eval(node.attribute('collection').to_s), node.attribute('prompt'))
+                                        )
+                                        
+                                    
+                                    doc.div(:class=>'input-append input-prepend'){
+                                             
+                                              if node.attribute('multiple').to_s == 'true'
+                                                doc.text(gen_add_button('button_add.jst.eco',{type:'single'})) 
+                                             end
+                                             
+                                             doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')} ))
+                                         }
                                     
                                  }
                               
@@ -283,11 +315,14 @@ module StudiesHelper
                                         doc.text(f.text_area node.name.to_sym,:value=>'', :multiple=>true, :required=>node.attribute('required'), :class=>'span3',:placeHolder=>t("type_something"))
                                     
                                     
-                                         if node.attribute('multiple').to_s == 'true'
-                                            doc.button(:type=>'button','data-action'=>"add", 'type'=>"button", :class=>'add btn btn-medium', :title=>t('add')){
-                                                doc.i(:class=>"icon-plus")
-                                            }    
-                                         end
+                                         doc.div(:class=>'input-append input-prepend'){
+                                             
+                                              if node.attribute('multiple').to_s == 'true'
+                                                doc.text(gen_add_button('button_add.jst.eco',{type:'single'})) 
+                                             end
+                                             
+                                             doc.text(gen_help_button({title_help:t(root_node.name.to_s+'.'+node.name+'.help')} ))
+                                         }
                                      
                                      }
                                      

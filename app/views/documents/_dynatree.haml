@@ -1,0 +1,392 @@
+#tree
+  = display_study_tree @study.collections.first
+  - cache do
+%div
+  Active node:
+  %span#echoActive -
+%div
+  Focused node:
+  %span#echoFocused -
+%p
+  %button#btnAddCode Add nodes programmatically
+  %button#btnAddObject Add nodes using arrays
+  %button#btnActiveNode Activate item id4.3.2
+  %button#btnShowActive Show active node...
+  %button#btnSetTitle Set active node title
+  %button#btnFromDict Modify active node fom dict
+  %button#btnAddFile Add file into current node
+/ Start_Exclude: This block is not part of the sample code
+%hr/
+/ Modal1
+#modal_form.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "modal_form", :role => "dialog", :tabindex => "-1"}
+:javascript
+  var clipboardNode = null;
+  	var pasteMode = null;
+  
+  	function copyPaste(action, node) {
+  		
+  		node = $("#tree").dynatree("getActiveNode")
+  		
+  		switch( action ) {
+  		case "delete":
+  			node.remove();
+  			var nodeKey = node.data.key;
+  	
+  			
+  			$.ajaxSetup({ cache: false });
+  			jQuery.ajax({
+  			  type: "post",
+  			  url: '/api/ressources/'+nodeKey, // L'url vers laquelle la requete sera envoyee
+  			  data: {
+  			    id: nodeKey,
+  			    "_method":"delete" // Les donnees que l'on souhaite envoyer au serveur au format JSON
+  			  },
+  			  dataType: "json",
+  			  success: function(data, textStatus, jqXHR) {
+  			    // La reponse du serveur est contenu dans data
+  			    // On peut faire ce qu'on veut avec ici
+  			  },
+  			  error: function(jqXHR, textStatus, errorThrown) {
+  			    // Une erreur s'est produite lors de la requete
+  			  }
+  			});
+  
+  			
+  		break;
+  		
+  		case "edit":
+  			
+  			
+  			//node = $("#tree").dynatree("getActiveNode")
+  			
+  			console.log(node.data.title)
+  			console.log(node.data.key)
+  			var nodeKey = node.data.key;
+  			
+  			console.log(node.data.type);
+  			//GET FORM BY AJAX
+  			
+  			$.ajaxSetup({ cache: false });
+  			jQuery.ajax({
+  			  type: "get",
+  			  url: '/api/'+node.data.type+'/'+nodeKey+'/html_form', // L'url vers laquelle la requete sera envoyee
+  			  
+  			  dataType: "html",
+  			  data: {
+  			    id: nodeKey,
+  			  },
+  			  
+  			  success: function(data, textStatus, jqXHR) {
+  			    console.log(data)
+  
+  			    $('#modal_form').html(data)
+  			    
+  			    $('#modal_form').find('input[type=submit]').click(function(){
+  
+  			    	 datas ={
+  			    	
+  			    		form_data : {
+  					   		name:$('#modal_form').find('input[name=name]').val(),
+  					   		collection:$('select[name=collections]').val(),
+  					    	type:$('input[name=type]:checked').val(),
+  					   },
+  
+  					    /*title:$('#modal_form').find('input[name=title]').val(),
+  					    
+  					    label:$('#modal_form').find('input[name=label]').val(),
+  					    */
+  					    
+  					    "_method":"put"
+  				    }
+  			    	
+  			    	jQuery.ajax({
+  					  type: "POST",
+  					  url: '/api/'+node.data.type+'/'+nodeKey+'/', // L'url vers laquelle la requete sera envoyee
+  
+  					  data: $.param(datas),
+  					  dataType: "json",
+  					  success: function(data, textStatus, jqXHR) {
+  					    // La reponse du serveur est contenu dans data
+  					    // On peut faire ce qu'on veut avec ici
+  					  },
+  					  error: function(jqXHR, textStatus, errorThrown) {
+  					    // Une erreur s'est produite lors de la requete
+  					  }
+  					});
+  			    	
+  			    	
+  			    	return false;
+  			    })
+  			    
+  			    
+  			    $('#modal_form').modal()
+  			    //Call modal
+  			    
+  			    // La reponse du serveur est contenu dans data
+  			    // On peut faire ce qu'on veut avec ici
+  			  },
+  			  error: function(jqXHR, textStatus, errorThrown) {
+  			    // Une erreur s'est produite lors de la requete
+  			  }
+  			});
+  			
+  			
+  			
+  
+  		break;
+  		
+  		
+  		case "cut":
+  		case "copy":
+  			clipboardNode = node;
+  			pasteMode = action;
+  			break;
+  		case "paste":
+  			if( !clipboardNode ) {
+  				alert("Clipoard is empty.");
+  				break;
+  			}
+  			if( pasteMode == "cut" ) {
+  				// Cut mode: check for recursion and remove source
+  				var isRecursive = false;
+  				var cb = clipboardNode.toDict(true, function(dict){
+  					// If one of the source nodes is the target, we must not move
+  					if( dict.key == node.data.key )
+  						isRecursive = true;
+  				});
+  				if( isRecursive ) {
+  					alert("Cannot move a node to a sub node.");
+  					return;
+  				}
+  				node.addChild(cb);
+  				clipboardNode.remove();
+  			} else {
+  				// Copy mode: prevent duplicate keys:
+  				var cb = clipboardNode.toDict(true, function(dict){
+  					dict.title = "Copy of " + dict.title;
+  					delete dict.key; // Remove key, so a new one will be created
+  				});
+  				node.addChild(cb);
+  			}
+  			clipboardNode = pasteMode = null;
+  			break;
+  		default:
+  			alert("Unhandled clipboard action '" + action + "'");
+  		}
+  	};	
+  	function bindContextMenu(span) {
+  	    $.contextMenu({
+  	        selector: '#tree', 
+  	        callback: function(key, options) {
+  	           var nodeKey = $("#tree").dynatree("getActiveNode").data.key;
+  	        	/*console.log($("#tree").dynatree("getActiveNode").data.title)
+  	        	console.log(nodeKey)
+  	        	console.log(key)
+  	        	console.log($("#tree").dynatree("getActiveNode"))*/
+  	        	copyPaste(key, $("#tree").dynatree("getActiveNode"))
+  	        },
+  	        items: {
+  	            "edit": {name: "Edit", icon: "edit"},
+  	            "cut": {name: "Cut", icon: "cut"},
+  	            "copy": {name: "Copy", icon: "copy"},
+  	            "paste": {name: "Paste", icon: "paste"},
+  	            "delete": {name: "Delete", icon: "delete"},
+  	            "sep1": "---------",
+  	            "quit": {name: "Quit", icon: "quit"}
+  	        }
+  	    });
+  	    
+  	    $('#tree').mousedown(function(event) {
+  		    switch (event.which) {
+  		        case 1:
+  		        case 2:
+  		        case 3:
+  		        default:
+  		           event.target.click();
+  		    }
+  		});
+  	}
+  
+  	
+  		
+  		$( "#menu" ).menu();
+  		// Initialize the tree inside the <div>element.
+  		// The tree structure is read from the contained <ul> tag.
+  		$("#tree").dynatree({
+  			title: "Programming Sample",
+  			
+  		 //initAjax: {url: "/api/collections/#{@study.collections[0].id}/get_collection_json",
+             //data: {id: "#{@study.collections[0].id}", 
+              //      mode: "all"
+              //      }
+            // },
+  
+  			
+  			
+  			onCreate:bindContextMenu,
+  			onActivate: function(node) {
+  				$("#echoActive").text(node.data.title);
+  //				alert(node.getKeyPath());
+  				if( node.data.url )
+  					window.open(node.data.url, node.data.target);
+  			},
+  			onDeactivate: function(node) {
+  				$("#echoSelected").text("-");
+  			},
+  			onFocus: function(node) {
+  				$("#echoFocused").text(node.data.title);
+  			},
+  			onBlur: function(node) {
+  				$("#echoFocused").text("-");
+  			},
+  			onLazyRead: function(node){
+  				var fakeJsonResult = [
+  					{ title: 'Lazy node 1', isLazy: true },
+  					{ title: 'Simple node 2', select: true }
+  				];
+  //				alert ("Let's pretend we're using this AJAX response to load the branch:\n " + jsonResult);
+  				function fakeAjaxResponse() {
+  					return function() {
+  						node.addChild(fakeJsonResult);
+  						// Remove the 'loading...' status:
+  						node.setLazyNodeStatus(DTNodeStatus_Ok);
+  					};
+  				}
+  				window.setTimeout(fakeAjaxResponse(), 1500);
+  			}
+  		});
+  
+  		$("#btnAddCode").click(function(){
+  			// Sample: add an hierarchic branch using code.
+  			// This is how we would add tree nodes programatically
+  			var rootNode = $("#tree").dynatree("getRoot");
+  			var childNode = rootNode.addChild({
+  				title: "Programatically addded nodes",
+  				tooltip: "This folder and all child nodes were added programmatically.",
+  				isFolder: true
+  			});
+  			childNode.addChild({
+  				title: "Document using a custom icon",
+  				icon: "customdoc1.gif"
+  			});
+  		});
+  		
+  		
+  		$("#btnAddFile").click(function(){
+  			
+  			var node = $("#tree").dynatree("getActiveNode");
+  			
+  			if(node){
+  				
+  			} else {
+  				node = $("#tree").dynatree("getRoot");
+  				
+  			}
+  			
+  			// Sample: add an hierarchic branch using code.
+  			// This is how we would add tree nodes programatically
+  			var childNode = node.addChild({
+  				title: "Programatically addded nodes",
+  				tooltip: "This folder and all child nodes were added programmatically.",
+  				isFolder: false
+  			});
+  		});
+  		
+  		
+  
+  		$("#btnAddObject").click(function(){
+  			// Sample: add an hierarchic branch using an array
+  			var obj = [
+  				{ title: 'Lazy node 1', isLazy: true },
+  				{ title: 'Lazy node 2', isLazy: true },
+  				{ title: 'Folder node 3', isFolder: true,
+  					children: [
+  						{ title: 'node 3.1' },
+  						{ title: 'node 3.2',
+  							children: [
+  								{ title: 'node 3.2.1' },
+  								{ title: 'node 3.2.2',
+  									children: [
+  										{ title: 'node 3.2.2.1' }
+  									]
+  								}
+  							]
+  						}
+  					]
+  				}
+  			];
+  			$("#tree").dynatree("getRoot").addChild(obj);
+  		});
+  
+  		$("#btnActiveNode").click(function(){
+  			$("#tree").dynatree("getTree").activateKey("id4.3.2");
+  //			$("#tree").dynatree("getTree").getNodeByKey("id4.3.2").activate();
+  		});
+  		$("#btnSetTitle").click(function(){
+  			var node = $("#tree").dynatree("getActiveNode");
+  			if( !node ) return;
+  			node.setTitle(node.data.title + ", " + new Date());
+  			// this is a shortcut for
+  			// node.fromDict({title: node.data.title + new Date()});
+  		});
+  		$("#btnFromDict").click(function(){
+  			var node = $("#tree").dynatree("getActiveNode");
+  			if( !node ) return;
+  //			alert(JSON.stringify(node.toDict(true)));
+  			// Set node data and - optionally - replace children
+  			node.fromDict({
+  				title: node.data.title + new Date(),
+  				children: [{title: "t1"}, {title: "t2"}]
+  			});
+  		});
+  
+  		$("#btnShowActive").click(function(){
+  			var node = $("#tree").dynatree("getActiveNode");
+  			if( node ){
+  				alert("Currently active: " + node.data.title);
+  			}else{
+  				alert("No active node.");
+  			}
+  		});
+  
+  		$("#btnDisable").toggle(function(){
+  				$("#tree").dynatree("disable");
+  				$(this).text("Enable");
+  				return false;
+  			}, function(){
+  				$("#tree").dynatree("enable");
+  				$(this).text("Disable");
+  				return false;
+  			});
+  		$("#btnToggleExpand").click(function(){
+  			$("#tree").dynatree("getRoot").visit(function(node){
+  				node.toggleExpand();
+  			});
+  			return false;
+  		});
+  		$("#btnCollapseAll").click(function(){
+  			$("#tree").dynatree("getRoot").visit(function(node){
+  				node.expand(false);
+  			});
+  			return false;
+  		});
+  		$("#btnExpandAll").click(function(){
+  			$("#tree").dynatree("getRoot").visit(function(node){
+  				node.expand(true);
+  			});
+  			return false;
+  		});
+  		$("#btnSortActive").click(function(){
+  			var node = $("#tree").dynatree("getActiveNode");
+  			// Custom compare function (optional) that sorts case insensitive
+  			var cmp = function(a, b) {
+  				a = a.data.title.toLowerCase();
+  				b = b.data.title.toLowerCase();
+  				return a > b ? 1 : a < b ? -1 : 0;
+  			};
+  			node.sortChildren(cmp, false);
+  		});
+  		$("#btnSortAll").click(function(){
+  			var node = $("#tree").dynatree("getRoot");
+  			node.sortChildren(null, true);
+  		});

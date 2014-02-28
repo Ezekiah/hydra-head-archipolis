@@ -1,0 +1,23 @@
+- for column in object.class.columns
+  - if column.name != "id"
+    .field
+      .label
+        = f.label "#{column.name}".to_sym
+      - if column.type == :integer || column.type == :float || column.type == :string
+        - if column.name =~ /_id$/ # is this a id/foreign key field
+          - column_class = column.name.gsub(/_id$/, '').classify.constantize
+          - if column_class
+            = collection_select(object.class.name.underscore.to_sym, column.name.to_sym, column_class.all, :id, :name, :prompt => true)
+          - else
+            = f.text_field column.name.to_sym
+        - else
+          = f.text_field column.name.to_sym
+      - elsif column.type == :text
+        = f.text_area column.name.to_sym
+      - elsif column.type == :datetime
+        = f.datetime_select column.name.to_sym
+      - elsif column.type == :boolean
+        = f.check_box column.name.to_sym
+      - else
+      - # Unknown Column Type
+\- See more at: http://blog.hulihanapplications.com/browse/view/55-ruby-on-rails-multiple-model-form-generator#sthash.wQ2Nchzb.dpuf

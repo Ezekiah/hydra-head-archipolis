@@ -22,7 +22,10 @@
 en:
   #GENERAL
   general: "General"
- 
+  
+  popover:
+    help: "Help"
+  
   edit-box:
     author: 'author'
     distributor: 'distributor'
@@ -32,7 +35,7 @@ en:
     project: 'project'
     keyword: 'keyword'
     abstract: 'abstract'
-  
+    description: 'description'
   redux: "reduce"
   
   titles:
@@ -113,8 +116,42 @@ en:
     contacts:
       label: "Contact(s)"
       help: "Contact(s)"
+   
+  universe:
+    location_of_units_of_observations:
+      label: "Location of Units of Observation"
+      help: ""
+    coverage_spatial_countries:
+      label: "Covered countries"
+      help: ""
+    coverage_spatial_geographics:
+      label: "Geographic coverage"
+      help: ""
+    coverage_spatial_units:
+      label: "Spatial Units"
+      help: ""
+    observation_units:
+      label: "Observation Units"
+      help: ""
+    target_groups:
+      label: "Target Groups"
+      help: ""
+    documents_date_begin:
+      label: "Study documents date begin"
+      help: ""
+    documents_date_end:
+      label: "Study documents date end"
+      help: ""
+        
       
       
+   
+
+
+
+
+
+
        
   orgunit:
     label: "Legal person"

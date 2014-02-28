@@ -1,0 +1,34 @@
+= form_for @document,:html => { :multipart => true } do |f|
+  - if @document.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@document.errors.count, "error")
+        prohibited this document from being saved:
+      %ul
+        - @document.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :title
+    %br/
+    = f.text_field :title
+  .field
+    = f.label :author
+    %br/
+    = f.text_field :author
+  .field
+    = f.label :research_phase
+    %br/
+    = f.text_field :research_phase
+  .field
+    = f.label :study
+    %br/
+    = select(:document, :study, options_from_collection_for_select(Study.all, :id, :title))
+  .field
+    = f.label 'Upload document'
+    %br/
+    = file_field_tag 'documentContent'
+  = succeed "</br/>" do
+    %br/
+  .actions
+    %p
+      = f.submit

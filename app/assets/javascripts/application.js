@@ -41,6 +41,7 @@
 //= require bootstrap-dropdown
 //= require bootstrap-modal
 //= require bootstrap-tooltip
+//= require bootstrap-popover
 
 //= require jquery.validate
 //= require jquery.validate.additional-methods
@@ -51,7 +52,6 @@
 //= require i18n
 //= require i18n/translations
 
-//= require jquery-tmpl
 //= require_tree ./templates
 
 

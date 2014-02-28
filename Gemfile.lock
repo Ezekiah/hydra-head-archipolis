@@ -45,7 +45,7 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    active-fedora (6.7.6)
+    active-fedora (6.7.7)
       activesupport (>= 3.0.0)
       deprecation
       mediashelf-loggable
@@ -54,7 +54,7 @@ GEM
       rdf (~> 1.1.1.1)
       rdf-rdfxml (= 1.0.1)
       rsolr
-      rubydora (~> 1.6, >= 1.6.5)
+      rubydora (~> 1.7.4)
     activemodel (4.0.1)
       activesupport (= 4.0.1)
       builder (~> 3.1.0)
@@ -70,10 +70,11 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
-    angularjs-rails (1.2.12.1)
     arel (4.0.2)
-    atomic (1.1.14)
-    bcrypt-ruby (3.1.2)
+    atomic (1.1.15)
+    bcrypt (3.1.7)
+    bcrypt-ruby (3.1.5)
+      bcrypt (>= 3.1.3)
     blacklight (4.7.0)
       bootstrap-sass (>= 2.2.0, < 2.4)
       deprecation (~> 0.1)
@@ -93,14 +94,14 @@ GEM
       railties (>= 3.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
-    bootstrap_forms (4.0.1)
     builder (3.1.4)
     cancan (1.6.10)
-    carrierwave (0.9.0)
+    carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
-    childprocess (0.4.2)
+      mime-types (>= 1.16)
+    childprocess (0.5.1)
       ffi (~> 1.0, >= 1.0.11)
     cocoon (1.2.5)
     coderay (1.1.0)
@@ -125,16 +126,16 @@ GEM
       debugger-linecache (~> 1.2.0)
       debugger-ruby_core_source (~> 1.3.1)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.1)
+    debugger-ruby_core_source (1.3.2)
     deprecation (0.1.0)
       activesupport
-    devise (3.2.2)
+    devise (3.2.3)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise-guests (0.3.2)
+    devise-guests (0.3.3)
       devise
     diff-lcs (1.2.5)
     dynatree-rails (1.2.5)
@@ -153,32 +154,45 @@ GEM
     formtastic (2.2.1)
       actionpack (>= 3.0)
     fs (0.2.1)
+    haml (4.0.5)
+      tilt
     hike (1.2.3)
     hooks (0.3.3)
     hpricot (0.8.6)
-    hydra (0.24.0)
-    hydra-access-controls (6.4.1)
-      active-fedora (~> 6.6)
+    html2haml (1.0.1)
+      erubis (~> 2.7.0)
+      haml (>= 4.0.0.rc.1)
+      hpricot (~> 0.8.6)
+      ruby_parser (~> 3.1.1)
+    hydra (6.2.0.rc1)
+      active-fedora (~> 6.7.7)
+      blacklight (~> 4.7.0)
+      hydra-head (~> 6.5.0)
+      jettywrapper (~> 1.5.0)
+      nokogiri (~> 1.6.0)
+      nom-xml (~> 0.5.1)
+      om (~> 3.0.3)
+      rails (>= 3.2.15, < 5.0)
+      rsolr (~> 1.0.9)
+      rubydora (~> 1.7.4)
+      solrizer (~> 3.1.0)
+    hydra-access-controls (6.5.0)
+      active-fedora (~> 6.7)
       activesupport
-      blacklight (~> 4.0)
+      blacklight (~> 4.7)
       cancan
       deprecation
-    hydra-core (6.4.1)
-      active-fedora
-      blacklight (~> 4.0)
+    hydra-core (6.5.0)
+      active-fedora (~> 6.7)
+      blacklight (~> 4.7)
       block_helpers
       deprecation (>= 0.0.5)
-      hydra-access-controls (= 6.4.1)
+      hydra-access-controls (= 6.5.0)
       jettywrapper (>= 1.4.1)
       rails (>= 3.2.3, < 5)
-    hydra-editor (0.2.2)
-      active-fedora (>= 6.3.0)
-      bootstrap_forms
-      deprecation
-      rails (>= 3.2.13, < 5.0)
-    hydra-head (6.4.1)
-      hydra-access-controls (= 6.4.1)
-      hydra-core (= 6.4.1)
+    hydra-head (6.5.0)
+      hydra-access-controls (= 6.5.0)
+      hydra-core (= 6.5.0)
       rails (>= 3.2.6)
     i18n (0.6.9)
     i18n-js (2.1.2)
@@ -197,8 +211,6 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    jquery-tmpl-rails (1.1.0)
-      rails (>= 3.1.0)
     jquery-ui-rails (4.0.3)
       jquery-rails
       railties (>= 3.1.0)
@@ -227,15 +239,13 @@ GEM
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.4)
-    mustache-js-rails (0.0.6)
-      railties (>= 3.1)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     nom-xml (0.5.1)
       activesupport
       i18n
       nokogiri
-    oj (2.5.4)
+    oj (2.5.5)
     om (3.0.4)
       activemodel
       activesupport
@@ -246,7 +256,7 @@ GEM
     orm_adapter (0.5.0)
     parslet (1.5.0)
       blankslate (~> 2.0)
-    polyglot (0.3.3)
+    polyglot (0.3.4)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -293,7 +303,7 @@ GEM
     rspec-core (2.14.7)
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.5)
+    rspec-mocks (2.14.6)
     rspec-rails (2.14.1)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -302,7 +312,9 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    rubydora (1.7.1)
+    ruby_parser (3.1.3)
+      sexp_processor (~> 4.1)
+    rubydora (1.7.4)
       activemodel
       activesupport
       deprecation
@@ -320,6 +332,7 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    sexp_processor (4.4.1)
     simple_form (3.0.1)
       actionpack (>= 4.0.0, < 4.1)
       activemodel (>= 4.0.0, < 4.1)
@@ -331,7 +344,7 @@ GEM
       nokogiri
       stomp
       xml-simple
-    sprockets (2.10.1)
+    sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -340,15 +353,15 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sqlite3 (1.3.8)
+    sqlite3 (1.3.9)
     stomp (1.3.2)
     test-unit (2.5.5)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.18.1)
-    thread_safe (0.1.3)
-      atomic
+    thread_safe (0.2.0)
+      atomic (>= 1.1.7, < 2)
     tilt (1.4.1)
     treetop (1.4.15)
       polyglot
@@ -373,7 +386,6 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-  angularjs-rails (~> 1.2.5)
   blacklight
   blacklight_advanced_search
   bootstrap-datepicker-rails!
@@ -396,22 +408,20 @@ DEPENDENCIES
   execjs
   formtastic
   fs (~> 0.2.1)
-  hpricot
-  hydra
-  hydra-editor
+  haml (~> 4.0.5)
+  html2haml
+  hydra (~> 6.2.0.rc1)
   hydra-head
   i18n-js
   jbuilder (~> 1.2)
   jettywrapper
   jquery-cookie-rails
   jquery-rails
-  jquery-tmpl-rails
   jquery-ui-sass-rails
   jquery-validation-rails
   language_list!
   localized_country_select!
   localized_language_select!
-  mustache-js-rails
   oj
   pry-rails
   rabl

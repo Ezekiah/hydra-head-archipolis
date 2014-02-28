@@ -2,12 +2,15 @@ class ProjectMetadata < ActiveFedora::OmDatastream
 
    set_terminology do |t|
     t.root(path: "metadatas")
-    
     t.acronym
+    t.title
+    t.descriptions
+    t.identifiers
     t.awards
     t.rec_class
     t.date_begin
     t.date_end
+    t.funding_agent_names
 
 
   end
@@ -15,25 +18,7 @@ class ProjectMetadata < ActiveFedora::OmDatastream
   
 
   def self.xml_template
-      builder = Nokogiri::XML::Builder.new do |t|
-    
-      t.metadatas {
-         t.title
-         t.acronym
-         t.awards
-         t.rec_class
-         t.date_begin
-         t.date_end
-         t.descriptions
-         t.identifiers
-
-    
-          
-      }
-    end
-    
-    return builder.doc
-
+      Nokogiri::XML.parse("<metadatas/>")
   end
   
   def self.xml_form

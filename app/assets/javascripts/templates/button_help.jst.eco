@@ -1,0 +1,3 @@
+<span data-toggle="tooltip" class="add-on" data-placement="right" title="<%=@title%>" data-content="<%=@title_help%>">
+	?
+</span>

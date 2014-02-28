@@ -76,6 +76,9 @@ class StudyMetadata < ActiveFedora::OmDatastream
       t.notes
       
       t.documents_types
+      
+      t.data_collection_extent
+      t.data_collection_has_media
           
     
 
@@ -105,7 +108,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
            t.title(:type=>'text', :multiple=>false, :required=>true, :label=>'Study title', :display=>'public')
            
           
-            t.association(:name=>'descriptions', :label=>'Abstracts', :required=>true, :display=>'public'){
+            t.association(:name=>'descriptions', :label=>'Abstracts', :required=>true, :display=>'public', :popup=>'false'){
               t.properties{
                 t.property(:name=>'descriptions', :class_name=>'Description')
               }          
@@ -116,7 +119,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
           
           t.classifications(:type=>'text', :multiple=>true, :required=>false, :label=>'Classifications', :display=>'public' )
           
-          t.association(:name=>'keywords', :label=>'keywords', :required=>true, :display=>'public'){
+          t.association(:name=>'keywords', :label=>'keywords', :required=>true, :display=>'public', :popup=>'false'){
               t.properties{
                 t.property(:name=>'keywords', :class_name=>'Keyword')
               }          
@@ -130,7 +133,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
       
       t.contributor{
           
-           t.association(:name=>'authors', :label=>'authors', :required=>true, :display=>'public'){
+           t.association(:name=>'authors', :label=>'authors', :required=>true, :display=>'public', :popup=>'true'){
               t.properties{
                 t.property(:name=>'person_authors', :class_name=>'Person')
                 t.property(:name=>'orgunit_authors', :class_name=>'Orgunit')
@@ -138,21 +141,21 @@ class StudyMetadata < ActiveFedora::OmDatastream
             }
             
             
-            t.association(:name=>'projects', :label=>'projects', :required=>true, :display=>'public'){
+            t.association(:name=>'projects', :label=>'projects', :required=>true, :display=>'public', :popup=>'true'){
                t.properties{
                     t.property(:name=>'projects', :class_name=>'Project', :popup=>true)
                }     
             }
             
             
-            t.association(:name=>'depositors', :label=>'depositors', :required=>true, :display=>'public'){
+            t.association(:name=>'depositors', :label=>'depositors', :required=>true, :display=>'public', :popup=>'true'){
                 t.properties{
                    t.property(:name=>'person_depositors', :class_name=>'Person')
                    t.property(:name=>'orgunit_depositors', :class_name=>'Orgunit')
                }        
             }
             
-             t.association(:name=>'distributors', :label=>'distributors', :required=>true, :display=>'public'){
+             t.association(:name=>'distributors', :label=>'distributors', :required=>true, :display=>'public', :popup=>'true'){
                t.properties{
                 t.property(:name=>'person_distributors', :class_name=>'Person')
                 t.property(:name=>'orgunit_distributors', :class_name=>'Orgunit') 
@@ -160,7 +163,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
                }       
             }
             
-            t.association(:name=>'contacts', :label=>'contacts', :display=>'public'){
+            t.association(:name=>'contacts', :label=>'contacts', :display=>'public', :popup=>'true'){
                t.properties{
                     t.property(:name=>'person_contacts', :class_name=>'Person')
                     t.property(:name=>'orgunit_contacts', :class_name=>'Orgunit')
@@ -170,43 +173,95 @@ class StudyMetadata < ActiveFedora::OmDatastream
         
       }
      
-     
-      
-      
-      
-      t.step3{
-        t.coverage_spatial_geographics(:type=>'text', :multiple=>true)
-        t.coverage_spatial_units(:type=>'text', :multiple=>true)
+            
+
+      t.universe{
+        
+        t.location_of_units_of_observations('type'=>'checkbox', :collection=>[
+                ['international','international'], 
+                ['national','national'],
+                ['infra-national','infra-national'],
+                ['Spire identifier', 'hdl'],
+            ], :multiple=>false, :required=>true)
+        
+         t.coverage_spatial_countries('type'=>'country', 'multiple'=>true, :required=>true)
+          
+          
+        t.coverage_spatial_geographics(:type=>'text', :multiple=>true, :required=>true)
+        
+        t.coverage_spatial_units(:type=>'text', :multiple=>true,:required=>true)
+        
+        t.observation_units(:type=>'text', :multiple=>true, :required=>true)
+        
+        t.target_groups(:type=>'text', :multiple=>true, :required=>true)
+        
+        t.documents_date_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public', :required=>false)
+        t.documents_date_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public', :required=>false)
        
-        t.association(:name=>'interviewers', :label=>'interviewers'){
+ 
+      }
+      
+      t.method{
+          
+          t.data_collection_date_begin(:type=>'date', :required=>false)
+          t.data_collection_date_end(:type=>'date', :required=>false)
+          
+            t.data_collection_time_dimensions(:type=>'checkbox', :required=>true, :collection=>{
+              'one time'=>'one time', 
+              'one time interview'=>'one time interview',
+              'repeated interview'=>'repeated interview', 
+              'observation ponctuelle'=>'observation ponctuelle', 
+              'observation systématique'=>'observation systématique', 
+              'other'=>'other' 
+            })
+          
+           t.data_collection_modes(:type=>'checkbox', :required=>true, :collection=>{'interview'=>'interview', 
+              'observation'=>'observation', 'content analysis'=>'content analysis', 
+              'questionnaire'=>'questionnaire', 'other'=>'other'}
+            )
+            
+           t.data_collection_samplings(:type=>'text', :multiple=>true, :required=>false)
+            
+           
+            t.data_collection_methods(:type=>'checkbox', :required=>true, :collection => {
+              'questionnaire'=>'questionnaire', 
+              'directive interview'=>'directive interview', 
+              'semi-directive interview'=>'semi-directive interview',
+              'none directive interview'=>'none directive interview', 
+              'participant observation'=>'participant observation', 
+              'experimentation'=>'experimentation', 
+              'content analysis'=>'content analysis', 
+              'other'=>'other' 
+             })
+             
+             t.data_collection_context(:type=>'text', :multiple=>false)
+             t.data_collection_extent(:type=>'text_area', :multiple=>false, :required=>true)
+           
+             t.data_collection_documents_types(:type=>'checkbox',:collection => {
+               "collection"=>"collection", 
+               "dataset"=>"dataset", 
+               "still image"=>"still image", 
+               "interactive resource"=>"interactive resource", 
+               "moving image"=>"moving image", 
+               "physical object"=>"physical object", 
+               "software"=>"software", 
+               "sound"=>"sound", 
+               "text"=>"text"
+            })
+          
+
+           
+            
+               t.data_languages('type'=>'checkbox', :collection=> {
+              'fr_FR'=>'fr_FR', 
+              'en_EN'=>'en_EN', 
+           })
+          
+          
+           t.association(:name=>'interviewers', :label=>'interviewers'){
                t.property(:name=>'person_interviewers', :class_name=>'Person')
                t.property(:name=>'orgunit_interviewers', :class_name=>'Orgunit')          
             }
-        
-        
-        t.target_groups(:type=>'text', :multiple=>true)
-        
-        t.location_of_units_of_observations('type'=>'checkbox', :collection=>{
-           'international'=>'international', 
-           'national'=>'national', 
-           'infra-national'=>'infra-national' 
-         })
-         
-        t.data_languages('type'=>'checkbox', :collection=> {
-          'fr_FR'=>'fr_FR', 
-          'en_EN'=>'en_EN', 
-       })
-       
-        
-        
-        
-        
-      }
-      
-      t.step4{
-          
-          
-           t.coverage_spatial_countries('type'=>'country', 'multiple'=>false)
           
           t.softwares(:type=>'text', :multiple=>true, :required=>false)
     
@@ -214,16 +269,11 @@ class StudyMetadata < ActiveFedora::OmDatastream
           t.edition_first_date(:type=>'date', :required=>true)
           t.edition_last_date(:type=>'date', :required=>true)
           
-          t.documents_date_begin(:type=>'date', :required=>true)
-          t.documents_date_end(:type=>'date', :required=>true)
           
-          t.data_collection_date_begin(:type=>'date', :required=>false)
-          t.data_collection_date_end(:type=>'date', :required=>false)
           
-           t.data_collection_modes(:type=>'checkbox', :collection=>{'interview'=>'interview', 
-              'observation'=>'observation', 'content analysis'=>'content analysis', 
-              'questionnaire'=>'questionnaire', 'other'=>'other'}
-            )
+         
+          
+          
           
           
           #t.projects(:type=>'association', :class_name=>'Project')
@@ -238,45 +288,14 @@ class StudyMetadata < ActiveFedora::OmDatastream
           t.archive_location(:type=>'text', :multiple=>false, :required=>false)
           t.access_conditions(:type=>'text', :multiple=>true)
           
-          
-
+            
            
-            
-            t.data_collection_context(:type=>'text', :multiple=>false)
-            
-            t.data_collection_methods(:type=>'checkbox', :collection => {
-              'questionnaire'=>'questionnaire', 
-              'directive interview'=>'directive interview', 
-              'semi-directive interview'=>'semi-directive interview',
-              'none directive interview'=>'none directive interview', 
-              'participant observation'=>'participant observation', 
-              'experimentation'=>'experimentation', 
-              'content analysis'=>'content analysis', 
-              'other'=>'other' 
-             })
              
-              t.data_collection_samplings(:type=>'text', :multiple=>true)
+              
             
-            t.data_collection_time_dimensions(:type=>'checkbox', :collection=>{
-              'one time'=>'one time', 
-              'one time interview'=>'one time interview',
-              'repeated interview'=>'repeated interview', 
-              'observation ponctuelle'=>'observation ponctuelle', 
-              'observation systématique'=>'observation systématique', 
-              'other'=>'other' 
-            })
+           
              
-            t.documents_types(:type=>'checkbox',:collection => {
-               "collection"=>"collection", 
-               "dataset"=>"dataset", 
-               "still image"=>"still image", 
-               "interactive resource"=>"interactive resource", 
-               "moving image"=>"moving image", 
-               "physical object"=>"physical object", 
-               "software"=>"software", 
-               "sound"=>"sound", 
-               "text"=>"text"
-            })
+            
               
             t.publications(:type=>'text', :multiple=>true)
            
@@ -293,7 +312,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
             
             
             
-            t.observation_units(:type=>'text', :multiple=>true)
+            
             
             
             t.analysis_transcription(:type=>"radio_buttons")

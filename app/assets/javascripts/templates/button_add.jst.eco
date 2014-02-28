@@ -1,0 +1,1 @@
+<button id="add-<%=@name%>" data-action="add-<%=@type%>" type="button" class="btn add"> <i class="icon-plus"></i></button>

@@ -44,9 +44,11 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'hydra'
+gem "hydra", "~> 6.2.0.rc1"
 
-gem 'hydra-head'
+gem "hydra-head"
+
+#gem 'hydra-head'
 
 gem "bootstrap-sass"
 gem "devise"
@@ -61,11 +63,10 @@ group :development, :test do
 end
 
 
-gem 'blacklight'
+gem "blacklight"
 
 gem 'wicked'
 
-gem 'hydra-editor'
 
 gem 'jquery-rails'
 
@@ -85,7 +86,6 @@ gem "blacklight_advanced_search"
 
 gem 'carrierwave'
 
-gem "angularjs-rails", "~> 1.2.5"
 
 # Gemfile
 gem 'rabl'
@@ -104,7 +104,6 @@ gem 'countries'
 
 gem 'country_select'
 
-
 gem 'xml-simple'
 
 #gem 'jquery-ui-bootstrap-rails', :git => "git@github.com:kristianmandrup/jquery-ui-bootstrap-rails.git"
@@ -118,7 +117,6 @@ gem 'language_list', :git => 'git@github.com:scsmith/language_list.git'
 
 gem 'bootstrap-multiselect-rails', :git => 'git@github.com:benjamincanac/bootstrap-multiselect-rails.git'
 
-gem 'mustache-js-rails'
 
 gem 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
 
@@ -134,15 +132,14 @@ gem 'localized_language_select', :git=>'git@github.com:davec/localized_language_
 
 gem 'localized_country_select', :git => 'git@github.com:mlitwiniuk/localized_country_select.git'
 
-gem 'hpricot'
-
+gem "haml", "~> 4.0.5"
+gem 'html2haml'
 
 gem 'bootstrap-modal-rails'
-
-gem 'jquery-tmpl-rails'
 
 gem 'execjs'
 
 gem 'eco-source'
 
 gem "fs", "~> 0.2.1"
+

@@ -22,10 +22,14 @@
 fr:
   #GENERAL
   
+  help: "Aide"
   author: 'auteur'
   depositor: 'depositeur'
   distributor: 'distributeur'
   contact: 'contact'
+  
+  popover:
+    help:'Aide'
   
   type_something: "Saisissez un texte"
   
@@ -45,6 +49,7 @@ fr:
     project: 'projet'
     keyword: 'mot-clé'
     abstract: 'résumé'
+    description: 'description'
 
   
   
@@ -54,41 +59,45 @@ fr:
     new_study: "Nouvelle enquête"
   
   name: "Nom"
+  
+  
+  
+
 
   general:
     label: 'Général'
     
     rec_id:
       label: "Identifiant"
-      help: "Identifiant"
+      help: "Identifiant unique de l'enquête selon le format fixé par le plan de classement de beQuali"
     title: 
       label: "Titre de l'étude"
-      help: "Titre de l'étude"
+      help: "Titre officiel de  l'enquête ou sinon le titre donné par l'auteur"
     descriptions:
       label: "Résumés"
-      help: "Résumés"
+      help: "Résumé officiel sinon à faire en quelques lignes."
     disciplines:
       label: "Discipline"
-      help: "Discipline"
+      help: "Classification disciplinaire de l'enquête. Plusieurs valeurs possibles."
     classifications:
       label: "Classifications"
-      help: "Classifications"
+      help: "A définir"
     keywords:
       label: "Mots-clés"
-      help: "Mots-clés"
-      
+      help: ""
     coverage_temporal_begin:
       label: "Période couverte début"
-      help: "Période couverte début"
+      help: "Années de début et de fin de la période sur laquelle portent les phénomènes étudiés"
     coverage_temporal_end:
       label: "Période couverte fin"
-      help: "Période couverte fin"
+      help: "Années de début et de fin de la période sur laquelle portent les phénomènes étudiés"
     language:
       label: "Langage"
-      help: "Langage"
+      help: "Langue(s) des documents de l'enquête (plusieurs valeurs possibles)"
     value:
       label: "Contenu"
       help: "Contenu"
+      
   contributor:
     acronym:
       label: "Acronyme du projet"
@@ -110,23 +119,50 @@ fr:
       help: "Titre du projet"
     authors:
       label: "Auteur(s)"
-      help: "Auteur(s)"
+      help: "Indiquer les nom et prénom de l'auteur de l'enquête ainsi que son affiliation institutionnelle à l'époque de l'enquête"
     projects:
       label: "Agence de financement, Bourses"
       help: "Agence de financement, Bourses"
     depositors:
       label: "Déposant(s)"
-      help: "Déposant(s)"
+      help: "Nom de la personne ou de l'organisme qui a fourni les documents à l'organisme responsable de leur diffusion (en général sera le chercheur ou l'organisme de conservation des documents.)"
     distributors:
       label: "Diffuseur des données"
-      help: "Diffuseur des données"
+      help: "Organisme responsable de la diffusion des données sur le site de mise à disposition (a priori ce sera toujours le CDSP)"
     contacts:
       label: "Contact(s)"
-      help: "Contact(s)"
-    
+      help: "Contact pour tout renseignement complémentaire. Peut être celui du chercheur, de l'organisme qui conserve les documents , de l'organisme qui diffuse les données etc."
+    contact_description:
+      label:"Date et commentaire sur le contact"
+      help:"Plus de détail sur la collecte et l'entretien avec le chercheur pourront être rédigés dans le rapport de collecte. "
   
-  
- 
+
+
+  universe:
+    location_of_units_of_observations:
+      label: "Niveau d'observation"
+      help: "Echelle suivant laquelle la comparaison se fait (au niveau national, international, régional etc.) Par exemple pour l'enquête cdsp_bequali_sp1 on compare au niveau international (3 groupes dans 3 pays différents) "
+    coverage_spatial_countries:
+      label: "Couverture géographique (pays)"
+      help: "Pays dans lequel le terrain a été réalisé. Plsuieurs valeurs possibles."
+    coverage_spatial_geographics:
+      label: "Couverture géographique (région...)"
+      help: "Région dans laquelle a été réalisé le terrain"
+    coverage_spatial_units:
+      label: "Localité"
+      help: "Localité dans laquelle a été réalisé le terrain (ville, arrondissement etc.) "
+    observation_units:
+      label: "Unités d'observation"
+      help: "Echelle selon laquelle l'observation est faite (individus, groupe d'individu, institution, ville, etc.) "
+    target_groups:
+      label: "Groupes de population ciblés"
+      help: "Groupe de poulation visée par le postulat de départ (différent des groupes de cas/population qui sont faites ensuite dans l'enquête)"
+    documents_date_begin:
+      label: "Dates extrèmes du corpus"
+      help: "Dates extrêmes des documents qui constituent l'enquête entière (date du document le plus ancien - date du document le plus récent). Est différent des dates de début/fin du terrain."
+    documents_date_end:
+      label: "Dates extrèmes du corpus"
+      help: "Dates extrêmes des documents qui constituent l'enquête entière (date du document le plus ancien - date du document le plus récent). Est différent des dates de début/fin du terrain."
  
     
   orgunit:

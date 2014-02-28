@@ -1,0 +1,13 @@
+%p#notice= notice
+%p
+  %strong Title:
+  = @document.title
+%p
+  %strong Author:
+  = @document.author
+%p
+  %strong Research phase
+  = @document.research_phase
+= link_to 'Edit', edit_document_path(@document)
+|
+\#{link_to 'Back', documents_path}

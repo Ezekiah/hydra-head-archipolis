@@ -5,28 +5,54 @@ String::capitalize = ->
 s4 = ->
   Math.floor((1 + Math.random()) * 0x10004425470).toString(16).substring 1
 
+initialize_accordions = undefined
 initialize_accordions = ->
-  $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards").find("fieldset:first").each ->
-    uid2 = s4()
-    json = JSON.parse(
-      title: I18n.t($(this).parent().attr("id")) + " " + parseInt($(this).parent().find(".accordion-group").size() + 1)
-      content: $(this).html()
-      uid: s4()
-      uid2: uid2
-    )
-    tpl = JST["templates/accordion"](json)
-    alert "a[href='#" + uid2(+"']")
-    $(document).on "click", "a[href='#" + uid2(+"']", ->
-      $(this).toggleClass "icon-plus icon-minus"
+  $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards").each ->
+    sing = $(this).attr("data-singular-name")
+  
+    $(this).find("fieldset:first").each ->
+      
+      uid2 = s4()
+      json = eval(
+        title: sing + " " + parseInt($(this).find(".accordion-group").size() + 1)
+        content: $(this).html()
+        uid: s4()
+        uid2: uid2
+      )
+      accordion = $(JST["templates/accordion"](json))
+      $(document).on "click", "a[href='#" + uid2 + "']", ->
+        $(this).toggleClass "icon-plus icon-minus"
+        return
+      
+      accordion_events(accordion)
+      
+      $(this).parent().append accordion
+      $(this).remove()
       return
-    )
-    $(this).parent().append JST["templates/accordion"](json)
-    $(this).remove()
-    return
+    
 
-  return
+accordion_events = (accordion) ->
+  
+  console.log(accordion)
+  
+  accordion.find(".delete-accordion, .reduce-accordion").click(->
+    if $(this).hasClass("delete-accordion")
+      accordion.slideUp 300, ->
+        $(this).remove()
+        return       
+       
+    ).hover (->
+      $(this).toggleClass "icon-white"
+      
+      return
+    ), ->
+      $(this).toggleClass "icon-white"
+      return
+  
 
 launch_modal = (insert_zone, object, rec_class) ->
+  
+  
   
   sing_name = insert_zone.attr('data-singular-name')
   
@@ -37,7 +63,7 @@ launch_modal = (insert_zone, object, rec_class) ->
 
   bs_modal = bs_modal.modal({ keyboard: false, show: true })
   
-  bs_modal.find("button[data-toggle=\"tooltip\"]").tooltip()
+  bs_modal.find("span[data-toggle=\"tooltip\"]").popover()
   
 
   uid1 = s4()
@@ -87,14 +113,17 @@ launch_modal = (insert_zone, object, rec_class) ->
   bs_modal.find("button.cancel").unbind("click").click ->
     bs_modal.modal "hide"
 
-
+  
 
 $(document).ready ->
-
+  
+  initialize_accordions()
+  
   current_popup = ""
-  $("button[data-toggle=\"tooltip\"]").tooltip()
+  $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help')})
   $(".add_fields").hide()
   $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-editors, #add-contacts", ->
+
     className = undefined
     className = $(this).attr("id").replace("add-", "")
     
@@ -109,7 +138,9 @@ $(document).ready ->
       $("a[data-associations='orgunit_" + className.replace("add-", "") + "']").trigger "click"
       return false
       return
-
+    
+    
+    
     return
 
   $(document.body).on "click", "#add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names", ->
@@ -117,8 +148,13 @@ $(document).ready ->
    $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
 
   $(document.body).on("cocoon:after-insert", "div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object) ->
+    
+    
+    
     insert_zone = $(this)
     className = $(this).attr("id")
+    
+    
     bs_modal = launch_modal(insert_zone, parent_object.html(), parent_object.find("input[type=\"hidden\"]").val().toLowerCase())
     current_popup = bs_modal
     parent_object.remove()
@@ -151,40 +187,47 @@ $(document).ready ->
       uid2: uid2
     )
     accordion = $("<div/>").append(JST["templates/accordion"](json))
-    $(this).append accordion
-    accordion.find(".delete-accordion").click(->
-      accordion.remove()
-    ).hover ->
-
-    $(document).on "click", "#" + uid2, ->
-      $(this).find("i.reduce-accordion").toggleClass "icon-plus icon-minus"
-      accordion.find(".accordion-body").collapse "toggle"
-      return
-
-    return
-
+    $(this).append accordion.fadeIn 300
+    
+    accordion_events(accordion)
+    
+  
   return
 
 jQuery ($) ->
-
+  
+  $('select[multiple="multiple"]').multiselect();
+  
   handler = (e) ->
 
     jqEl = $(e.currentTarget)
     tag = jqEl.parent()
+    
+    console.log(tag.find('input'))
+    
     switch jqEl.attr("data-action")
-      when "add"
+      when "add-single"
         clone = tag.clone().css("display", "block")
+        
+        
+        
         clone.find("button").remove()
-        clone.find("input").val ""
-        clone.find("label").remove()
+        clone.find("input[type='text']").val ""
+        #clone.find("label").remove()
         clone.append "<button data-action=\"delete\" class=\"delete btn btn-medium\" ><i class=\"icon-minus\"></i></button>"
-        tag.parent().append clone
+          
+        console.log(clone.html())
+          
+        tag.parent().append clone.fadeIn 300
       when "delete"
-        tag.remove()
+        tag.slideUp 300, ->
+          tag.remove()
     false
 
   multiTags = $("form")
-  $(document).on "click", "button[data-action=add], button[data-action=delete] ", handler
+  $(document).on "click", "button[data-action=add-single], button[data-action=delete] ", handler
+  
+  
   $("#new_study").validate
     invalidHandler: (event, validator) ->
       errors = validator.numberOfInvalids()
