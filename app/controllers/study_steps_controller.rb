@@ -8,13 +8,17 @@ require 'datastreams/description_metadata'
 require 'datastreams/keyword_metadata'
 require 'datastreams/award_metadata'
 require 'datastreams/project_metadata'
+require 'datastreams/note_metadata'
+
 
 
 
 class StudyStepsController < ApplicationController
+    
+  layout 'study_steps'
   
   include Wicked::Wizard
-  steps :contributor, :universe, :etape3
+  steps :contributor, :universe, :method, :corpus, :analyse, :edition, :notes
   
    def show
     @study = Study.find(session[:study_id])
@@ -85,7 +89,10 @@ private
                  
                  rec_class = eval(v['rec_class'])
                  
+                
                  newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+                
+                 
             
              end
                         

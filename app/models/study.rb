@@ -30,21 +30,15 @@ class Study < ActiveFedora::Base
   
   
   has_attributes :documents_count, datastream: 'descMetadata', multiple: false
-  has_attributes :archive_extent, datastream: 'descMetadata', multiple: false
-  has_attributes :archive_location, datastream: 'descMetadata', multiple: false
+  
   has_attributes :access_conditions, datastream: 'descMetadata', multiple: false
   
   
   has_attributes :contacts, datastream: 'descMetadata', multiple: true
-  has_attributes :data_collection_modes, datastream: 'descMetadata', multiple: true
-  has_attributes :data_collection_context, datastream: 'descMetadata', multiple: false
-  has_attributes :data_collection_methods, datastream: 'descMetadata', multiple: true
-  has_attributes :data_collection_samplings, datastream: 'descMetadata', multiple: true
-  has_attributes :data_collection_time_dimensions, datastream: 'descMetadata', multiple: true
+ 
   has_attributes :publications, datastream: 'descMetadata', multiple: true
 
-  has_attributes :analysis_types, datastream: 'descMetadata', multiple: true
-  has_attributes :analysis_anonymization, datastream: 'descMetadata', multiple: false
+  
  
   
   has_attributes :disciplines, datastream: 'descMetadata', multiple: true
@@ -52,10 +46,11 @@ class Study < ActiveFedora::Base
   
   has_attributes :classifications, datastream: 'descMetadata', multiple: true
   has_attributes :observation_units, datastream: 'descMetadata', multiple: true
-  has_attributes :data_collection_date_begin, datastream: 'descMetadata', multiple: false
-  has_attributes :data_collection_date_end, datastream: 'descMetadata', multiple: false
+  
   has_attributes :documents_types, datastream: 'descMetadata', multiple: true
-  has_attributes :analysis_transcription, datastream: 'descMetadata', multiple: false
+  
+  
+  
   has_attributes :coverage_spatial_geographics, datastream: 'descMetadata', multiple: true
   has_attributes :coverage_spatial_units, datastream: 'descMetadata', multiple: true
   has_attributes :coverage_spatial_countries, datastream: 'descMetadata', multiple: true
@@ -63,8 +58,9 @@ class Study < ActiveFedora::Base
   has_attributes :coverage_temporal_end, datastream: 'descMetadata', multiple: false
   has_attributes :target_groups, datastream: 'descMetadata', multiple: true
   has_attributes :location_of_units_of_observations, datastream: 'descMetadata', multiple: true
-  has_attributes :data_languages, datastream: 'descMetadata', multiple: true
-  has_attributes :documentation_languages, datastream: 'descMetadata', multiple: true
+  
+  
+  
 
 
   has_attributes :documents_date_begin, datastream: 'descMetadata', multiple: false
@@ -72,18 +68,48 @@ class Study < ActiveFedora::Base
 
   has_attributes :documents_transc_count, datastream: 'descMetadata', multiple: false
   has_attributes :interviewers, datastream: 'descMetadata', multiple: true
+  
+  has_attributes :notes, datastream: 'descMetadata', multiple: true
+  has_attributes :tree, datastream: 'utilsMetadata', multiple: false
+  
+  
+  
+  #METHOD
+  has_attributes :data_collection_modes, datastream: 'descMetadata', multiple: true, type:'checkbox'
+  has_attributes :data_collection_context, datastream: 'descMetadata', multiple: false
+  has_attributes :data_collection_methods, datastream: 'descMetadata', multiple: true
+  has_attributes :data_collection_samplings, datastream: 'descMetadata', multiple: true
+  has_attributes :data_collection_time_dimensions, datastream: 'descMetadata', multiple: true
+  has_attributes :data_collection_extent, datastream: 'descMetadata', multiple: false
+  has_attributes :data_collection_has_media, datastream: 'descMetadata', multiple: false
+  has_attributes :data_collection_documents_types, datastream: 'descMetadata', multiple: true
+  has_attributes :data_collection_date_begin, datastream: 'descMetadata', multiple: false
+  has_attributes :data_collection_date_end, datastream: 'descMetadata', multiple: false
+  
+  
+  
+  #CORPUS
+  has_attributes :archive_extent, datastream: 'descMetadata', multiple: false
+  has_attributes :archive_location, datastream: 'descMetadata', multiple: false
   has_attributes :archive_completeness, datastream: 'descMetadata', multiple: false
   has_attributes :archive_arrangement_level, datastream: 'descMetadata', multiple: false
   has_attributes :archive_consentement, datastream: 'descMetadata', multiple: false
   has_attributes :archive_agreememt, datastream: 'descMetadata', multiple: false
-  has_attributes :notes, datastream: 'descMetadata', multiple: true
-  has_attributes :tree, datastream: 'utilsMetadata', multiple: false
+  has_attributes :archive_accessed, datastream: 'descMetadata', multiple: false 
+  has_attributes :archive_arrangement_level_description, datastream: 'descMetadata', multiple: false 
+  has_attributes :archive_preservation_level, datastream: 'descMetadata', multiple: false 
+  has_attributes :archive_preservation_level_description, datastream: 'descMetadata', multiple: false
   
-  has_attributes :data_collection_extent, datastream: 'descMetadata', multiple: false
-  has_attributes :data_collection_has_media, datastream: 'utilsMetadata', multiple: false
   
   
-     
+  #ANALYSE
+  has_attributes :analysis_transcription, datastream: 'descMetadata', multiple: false
+  has_attributes :analysis_has_transcription, datastream: 'descMetadata', multiple: false
+  has_attributes :data_languages, datastream: 'descMetadata', multiple: true
+  has_attributes :documentation_languages, datastream: 'descMetadata', multiple: true
+  has_attributes :analysis_types, datastream: 'descMetadata', multiple: true
+  has_attributes :analysis_anonymization, datastream: 'descMetadata', multiple: false
+  has_attributes :publication_citation, datastream: 'descMetadata', multiple: true 
   
   
   
@@ -113,6 +139,9 @@ class Study < ActiveFedora::Base
   has_many :orgunit_contacts, :class_name => 'Orgunit', :foreign_key => 'orgunit_contacts', :property => :is_part_of
   has_many :person_contacts, :class_name => 'Person', :foreign_key => 'person_contacts', :property => :is_part_of
   
+  has_many :orgunit_interviewers_unknown, :class_name => 'Orgunit', :foreign_key => 'orgunit_interviewers_unknown', :property => :is_part_of
+  has_many :person_interviewers_unknown, :class_name => 'Person', :foreign_key => 'person_interviewers_unknown', :property => :is_part_of
+  
   has_many :persons, :class_name => 'Person', :property => :is_part_of
   has_many :orgunits, :class_name => 'Orgunit', :property => :is_part_of
 
@@ -123,6 +152,9 @@ class Study < ActiveFedora::Base
   has_many :keywords, :class_name => 'Keyword', :property => :is_part_of
   
   has_many :projects, :class_name => 'Project', :property => :is_part_of
+  has_many :notes, :class_name => 'Note', :property => :is_part_of
+  
+  
   
   
   def editors
@@ -171,12 +203,16 @@ class Study < ActiveFedora::Base
   accepts_nested_attributes_for :person_depositors
   accepts_nested_attributes_for :orgunit_interviewers
   accepts_nested_attributes_for :person_interviewers
+  accepts_nested_attributes_for :orgunit_interviewers_unknown
+  accepts_nested_attributes_for :person_interviewers_unknown
   accepts_nested_attributes_for :orgunit_copyright_holders
   accepts_nested_attributes_for :person_copyright_holders
   accepts_nested_attributes_for :orgunit_authors
   accepts_nested_attributes_for :person_authors
   accepts_nested_attributes_for :orgunit_distributors
   accepts_nested_attributes_for :person_distributors
+  
+  
   
   accepts_nested_attributes_for :keywords
   

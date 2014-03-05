@@ -6,14 +6,16 @@ require 'datastreams/address_metadata'
 require 'datastreams/identifier_metadata'
 require 'datastreams/description_metadata'
 require 'datastreams/keyword_metadata'
+require 'datastreams/note_metadata'
 
 
 
 class StudiesController < ApplicationController
+    
   before_action :set_study, only: [:show, :edit, :update, :destroy]
   before_filter :export_i18n_messages
   
-  
+  layout 'study_steps'
  
   
   # GET /studies

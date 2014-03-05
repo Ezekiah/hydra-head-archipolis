@@ -8,6 +8,7 @@ class AddressMetadata < ActiveFedora::OmDatastream
         t.locality_city_town
         t.post_code
         t.street
+        t.rec_class
   end
   
   

@@ -5,11 +5,16 @@
     - tags = @xml.xpath(xpath).each do |node|
       - root_node = node.parent
       - root_node_name = root_node.name.to_s
-      - label = t(root_node.name.to_s+'.'+node.name.to_s+'.label')
-      - node_name = node.name.to_s
+      - node_name = node.name.to_s == 'association' ? node.attribute('name').to_s : node.name.to_s
+     
       - help = t(root_node_name+'.'+node_name+'.help')
-      - required = node.attribute('required')
-      - is_multiple = node.attribute('multiple').to_s == 'true' ? true : false
+      - required = !!node.attribute('required')
+      - label = ( t(root_node_name+'.'+node_name+'.label')).html_safe
+      - is_multiple = !!node.attribute('multiple') == true ? 'multiple' : false
+      - prompt = node.attribute('prompt') == nil ? t('Please select') : node.attribute('prompt')
+      - title_help = t(root_node_name+'.'+node_name+'.help')
+      - is_complex_assoc = node.search('.//property').size.to_s == '2'
+      
       
       
       - if node.attribute('display').to_s != 'private'
@@ -21,21 +26,25 @@
           -properties = node.xpath("properties//property")
           
           - node_name = node.attribute('name').to_s
-          - label = t(root_node_name+'.'+node.attribute('name')+'.label')
+          
            
-          - add_button_list = gen_add_button('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node.attribute('name')+'.help'),type:'association' })
+          - add_button_list = gen_add_button('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'),type:'association' })
+          - is_complex_assoc = node.search('.//property').size.to_s == '2'
+          - assoc_type = is_complex_assoc==true ? 'complex': 'simple'
+          - has_popup = node.attribute('popup').to_s == 'true' ? 'launch_popup' : 'no_popup'
           
-          
-          %div{:id=>node.attribute('name'), 'data-singular-name'=>t('edit-box.'+node_name.singularize)} 
+          %div{:id=>node.attribute('name'), 'data-singular-name'=>t('edit-box.'+node_name.singularize), 'data-required'=>required, :class=>'association_'+assoc_type+' '+has_popup}
             - class_name = node.search('.//property').attribute('class_name').to_s
             = f.input node_name, :wrapper => :append, :label => label do
               = #content_tag node_name,  label, class: "add-on"  
-              - if node.search('.//property').size.to_s == '2'
+              - if is_complex_assoc
                 != add_button_list
               - else
-                = button_tag(type: 'button', class:"btn add", 'id'=>'add-'+node_name, 'data-action'=>'add-association') do
-                  = content_tag(:i, '', class:"icon-plus")
+                != gen_add_button('button_add.jst.eco', {type:'association', name:node_name}).html_safe
               != gen_help_button({title_help:t(root_node_name+'.'+node.attribute('name')+'.help')} )
+            
+            
+            %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>required, :name=>'validation-'+node_name, :class=>'hidden-association'}
             
             - properties.each do |prop|
               - class_name=prop.attribute('class_name').to_s().downcase
@@ -53,25 +62,20 @@
               - if node.attribute('popup').to_s == 'false'
                 != a[0]['data-association-insertion-template']
                 
-              %div
-                =link
+              
+              =link
          
         - if node.attribute('type').to_s == 'text' 
         
-          = f.input node.name, :wrapper => :prepend_append, :label => label do
+          = f.input node.name, :wrapper => :prepend_append, :label => label, :required=>required do
             = #content_tag node.name,  label, class: "add-on"
             
-            
- 
            
-            = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'required'=>required, 'placeHolder'=>t("type_something")
+            = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something")
             
-            - if node.attribute('multiple').to_s == 'true'
-              = button_tag(type: 'button', class:"btn add", 'id'=>'add-'+node_name, 'data-action'=>'add-single') do
-                = content_tag(:i, '', class:"icon-plus")
-         
-            
-                
+            - if is_multiple
+              != gen_add_button('button_add.jst.eco', {type:'single', name:node_name})
+             
                 
             != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
                                              
@@ -80,41 +84,63 @@
           
           
           
-        - if node.attribute('type').to_s == 'checkbox'   
-          = f.input node_name, :wrapper => :prepend_append, :label => false do
+        - if node.attribute('type').to_s == 'checkbox'
+          -collection = Hash.new
+          -eval(node.attribute('collection')).each{|k,v| collection[k.to_s] = v.to_s}
+          - label =  node.name + '' +gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')}  ) 
+          
+          != f.input node.name,  :wrapper=>"prepend_append",:label=>label.html_safe, :collection => collection, :required=>required, input_html: { :required => required }, :as => :check_boxes
             
-            = f.input node.name, :required=>required, :label=>label, :collection => eval(node.attribute('collection').to_s), input_html: { :multiple => is_multiple }, :as => :check_boxes
-            != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
+            
+            
         
         - if node.attribute('type').to_s == 'radio_buttons'
-          = f.input node.name, :label=>label, :required=>required, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons
+          = f.input node.name, :required=>required, :label=>label, :required=>required, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons
         
         - if node.attribute('type').to_s == 'country'
           = f.input node_name, :label=>label,:required=>required, :input_html=>{'multiple'=>is_multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
-         
+          != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
+          
         
         - if node.attribute('type').to_s == 'date'
-          = f.input node_name, 
-            :label=>label, 
-            :input_html=>{'data-date-view-mode'=>node.attribute('viewMode'),
-            'data-date-min-view-mode'=>node.attribute('minViewMode'),  
-            'data-provide'=>'datepicker', 
-            'data-date-format'=>node.attribute('format'), 
-            'required'=>node.attribute('required'), 
-            'value'=>'', 'class'=>'span3', 'placeHolder'=>t("date_click")}                                         
-        
-        
+          = f.input node_name, :wrapper => :prepend_append, :required=>required, :label=>label do
+            
+            = f.text_field(node_name, options = {'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'value'=>'', 'class'=>'span3', 'placeHolder'=>t("date_click")} )
+
+            - if is_multiple
+              != gen_add_button('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+            
+            != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )    
+             
+              
         - if node.attribute('type').to_s == 'language_list'
-          = f.input node.name do
-            = gen_select(f, node, grouped_options_for_select(@LOCATIONS), t("choose_language"))
+          = f.input node.name, :wrapper=>'append', :required=>required do
+            = f.select node.name, grouped_options_for_select(@LOCATIONS), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+            !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )            
+  
+        
+        
+        - if node.attribute('type').to_s == 'select'
+          -collection = Hash.new
+          -eval(node.attribute('collection')).each{|k,v| collection[k.to_s] = v.to_s}
           
+
+          = f.input node.name, :wrapper => :prepend_append, :label => label do
+            = f.select node.name, collection, {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+            !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )  
+              
 
           
         - if node.attribute('type').to_s == 'text_area'
-          = f.input node.name do
+          - label =  node.name + gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} ) 
+           
+          = f.input node.name, :label=>label.html_safe do
+            
             = f.text_area node_name, :value=>'', :multiple=>is_multiple, :required=>node.attribute('required'), :class=>'span3',:placeHolder=>t("type_something")
+            
           
-          
+            - if is_multiple
+              != gen_add_button('button_add.jst.eco', {type:'single', name:node_name})
           
                          
                                      

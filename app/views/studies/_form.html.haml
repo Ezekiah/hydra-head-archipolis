@@ -3,6 +3,11 @@
   	background:#FB3500;
   	opacity:1
   }
+  
+%div
+  = render :partial=>'/study_steps/tab_steps'
+
+
 = simple_form_for(@study, html: {class: 'form-vertical' }) do |f|
   - if @study.errors.any?
     .error_messages
@@ -22,3 +27,4 @@
 #dialog-confirm{:style => ""}
   %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
   %p
+    

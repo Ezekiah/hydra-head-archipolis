@@ -51,7 +51,16 @@ HydraHead::Application.routes.draw do
      
     end
     
-    resources :study_steps
+    resources :study_steps do
+        post :contributor
+        post :method
+        post :corpus
+        post :universe
+        post :analyse
+        post :edition
+        post :notes
+        post :general
+    end
     
     
     

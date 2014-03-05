@@ -25,6 +25,11 @@ en:
   
   popover:
     help: "Help"
+    
+  'yes': "yes"
+  'no': "no"
+  'dont_know': "don't know"
+  'partial': "partially"
   
   edit-box:
     author: 'author'
@@ -36,6 +41,7 @@ en:
     keyword: 'keyword'
     abstract: 'abstract'
     description: 'description'
+    editor: 'editor'
   redux: "reduce"
   
   titles:
@@ -52,8 +58,6 @@ en:
   
 
   general:
-   
-    
     label: 'General'
     type_something: "Type something..."
     rec_id:
@@ -117,31 +121,181 @@ en:
       label: "Contact(s)"
       help: "Contact(s)"
    
+  
+   
   universe:
+    
+    label: 'Univers'
     location_of_units_of_observations:
       label: "Location of Units of Observation"
-      help: ""
+      help: 
     coverage_spatial_countries:
       label: "Covered countries"
-      help: ""
+      help: 
     coverage_spatial_geographics:
       label: "Geographic coverage"
-      help: ""
+      help: 
     coverage_spatial_units:
       label: "Spatial Units"
-      help: ""
+      help: 
     observation_units:
       label: "Observation Units"
-      help: ""
+      help: 
     target_groups:
       label: "Target Groups"
-      help: ""
+      help: 
     documents_date_begin:
       label: "Study documents date begin"
-      help: ""
+      help: 
     documents_date_end:
       label: "Study documents date end"
-      help: ""
+      help: 
+        
+        
+      
+  method:
+    label: 'Method'
+    data_collection_date_begin:
+      label: "Data collection dates"
+      help: 
+    data_collection_date_end:
+      label: "Data collection dates"
+      help: 
+    data_collection_time_dimensions:
+      label: "Time Dimension"
+      help: 
+    data_collection_modes:
+      label: "Mode of Data Collection"
+      help: 
+    data_collection_samplings:
+      label: "Sampling Procedure"
+      help: 
+    data_collection_methods:
+      label: "Research Instrument"
+      help: 
+    data_collection_context:
+      label: "Data collection context"
+      help: 
+    data_collection_extent:
+      label: "Data collection extent"
+      help: 
+    data_collection_documents_types:
+      label: "Data kind"
+      help: 
+    data_collection_has_media:
+      label: "Media records?"
+      help: 
+    interviewers_unknown:
+      label: "Other interviewers"
+      help: 
+    interviewers:
+      label: "Interviewers"
+      help: 
+  
+
+
+    
+  corpus:
+    label: 'Corpus'
+    archive_accessed:
+      label: "Archives completeness"
+      help: 
+    archive_completeness:
+      label: "Archives completeness"
+      help: 
+    archive_arrangement_level:
+      label: "Archive arrangement level"
+      help: 
+    archive_arrangement_level_description:
+      label: "Archive arrangement level description"
+      help: 
+    archive_preservation_level:
+      label: "Archive preservation level"
+      help: 
+    archive_preservation_level_description:
+      label: "Archive preservation level description"
+      help: 
+    archive_location:
+      label: "Archive localisation"
+      help: 
+    archive_extent:
+      label: "Archive extent"
+      help: 
+    archive_consentement:
+      label: "Reseracher's consentement ?"
+      help: 
+    archive_agreememt:
+      label: "Intervewees agreement?"
+      help: 
+  
+  
+
+  
+  analyse:
+    label: 'Analyse'
+    analysis_has_transcription:
+      label: "Has transcription ?"
+      help: 
+    analysis_transcription:
+      label: "Transcription"
+      help: 
+    analysis_anonymization:
+      label: "Anonymization"
+      help: 
+    analysis_types:
+      label: "Analysis"
+      help: 
+    data_languages:
+      label: "Data languages"
+      help: 
+    documentation_languages:
+      label: "Documentation languages"
+      help: 
+    publications_citations:
+      label: "Related publications"
+      help: 
+    publications:
+      label: "Publications"
+      help: 
+  
+  
+  
+
+
+
+
+
+  
+  edition:
+    label: 'Edition'
+    access_conditions:
+      label: "Access Conditions"
+      help: 
+    edition_first_date:
+      label: "Date First Edition"
+      help: 
+    edition_last_date:
+      label: "Date Latest Edition"
+      help: 
+    copyright_holders:
+      label: "Copyright"
+      help: 
+    softwares:
+      label: "Software"
+      help: 
+    editors:
+      label: "Editor"
+      help: 
+      
+  notes:
+    label: "Notes"
+    notes:
+      label: "Notes"
+      help: 
+
+    
+    
+    
         
       
       
@@ -239,6 +393,7 @@ en:
     
   address:
     label: 'address'
+    
     p_country:
       label: 'p_country'
       help: 'p_country'

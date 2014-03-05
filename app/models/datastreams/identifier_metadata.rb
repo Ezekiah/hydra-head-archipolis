@@ -4,6 +4,7 @@ class IdentifierMetadata < ActiveFedora::OmDatastream
      t.root(path: "metadatas")
      t.id_type
      t.value
+     t.rec_class
          
   end
   

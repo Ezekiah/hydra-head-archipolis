@@ -151,6 +151,8 @@ GEM
     execjs (2.0.2)
     fastercsv (1.5.5)
     ffi (1.9.3)
+    font-awesome-rails (4.0.3.1)
+      railties (>= 3.2, < 5.0)
     formtastic (2.2.1)
       actionpack (>= 3.0)
     fs (0.2.1)
@@ -406,6 +408,7 @@ DEPENDENCIES
   eco
   eco-source
   execjs
+  font-awesome-rails
   formtastic
   fs (~> 0.2.1)
   haml (~> 4.0.5)

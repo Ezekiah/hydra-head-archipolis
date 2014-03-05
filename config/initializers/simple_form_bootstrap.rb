@@ -15,6 +15,7 @@ SimpleForm.setup do |config|
     b.use :html5
     b.use :placeholder
     b.use :label
+    
     b.wrapper tag: 'div', class: 'controls' do |input|
       input.wrapper tag: 'div', class: 'input-prepend' do |prepend|
         prepend.use :input
@@ -28,6 +29,8 @@ SimpleForm.setup do |config|
       b.use :html5
       b.use :placeholder
       b.use :label
+      b.use :number, :wrap_with => { :tag => 'div', :class => 'span number'}
+
       b.wrapper :tag => 'div', :class => 'controls' do |input|
         input.wrapper :tag => 'div', :class => 'input-prepend input-append' do |pa|
           pa.use :input
@@ -73,4 +76,18 @@ end
   # to learn about the different styles for forms and inputs,
   # buttons and other elements.
   config.default_wrapper = :bootstrap
+  
+  
+  config.wrappers :with_numbers, :tag => 'div', :class => 'row', :error_class => 'error' do |b|
+    b.use :html5
+    b.use :number, :wrap_with => { :tag => 'div', :class => 'span1 number'}
+    b.wrapper :tag => 'div', :class => 'span8' do |ba|
+      ba.use :placeholder
+      ba.use :label
+      ba.use :input
+      ba.use :error, :wrap_with => { :tag => 'span', :class => 'help-inline' }
+      ba.use :hint,  :wrap_with => { :tag => 'p', :class => 'help-block' }
+    end
+  end
+  
 end

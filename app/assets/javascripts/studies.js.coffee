@@ -4,10 +4,22 @@ String::capitalize = ->
 
 s4 = ->
   Math.floor((1 + Math.random()) * 0x10004425470).toString(16).substring 1
+  
+
+check_hidden_assoc =  (zone, selector) ->
+  
+  if parseInt(zone.find(selector).size()) > 0
+    zone.find("#hidden-"+zone.attr('id')).val('filled')
+  else
+    zone.find("#hidden-"+zone.attr('id')).val('')
+
+  
+
 
 initialize_accordions = undefined
 initialize_accordions = ->
-  $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards").each ->
+  $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards, #notes, #funding_agent_names").each ->
+    zone = $(this)
     sing = $(this).attr("data-singular-name")
   
     $(this).find("fieldset:first").each ->
@@ -23,22 +35,26 @@ initialize_accordions = ->
       $(document).on "click", "a[href='#" + uid2 + "']", ->
         $(this).toggleClass "icon-plus icon-minus"
         return
-      
-      accordion_events(accordion)
-      
+
       $(this).parent().append accordion
+      
+      accordion_events(accordion, zone)
       $(this).remove()
       return
     
 
-accordion_events = (accordion) ->
+accordion_events = (accordion, zone) ->
   
-  console.log(accordion)
+  
+  check_hidden_assoc(zone, ".accordion-group")
   
   accordion.find(".delete-accordion, .reduce-accordion").click(->
     if $(this).hasClass("delete-accordion")
       accordion.slideUp 300, ->
         $(this).remove()
+        
+        
+        check_hidden_assoc(zone, ".accordion-group")
         return       
        
     ).hover (->
@@ -53,7 +69,6 @@ accordion_events = (accordion) ->
 launch_modal = (insert_zone, object, rec_class) ->
   
   
-  
   sing_name = insert_zone.attr('data-singular-name')
   
   
@@ -63,8 +78,7 @@ launch_modal = (insert_zone, object, rec_class) ->
 
   bs_modal = bs_modal.modal({ keyboard: false, show: true })
   
-  bs_modal.find("span[data-toggle=\"tooltip\"]").popover()
-  
+  bs_modal.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
 
   uid1 = s4()
   uid2 = s4()
@@ -72,11 +86,50 @@ launch_modal = (insert_zone, object, rec_class) ->
   bs_modal.find("button.save").unbind("click").click ->
     
     
-    $("#new_study").validate debug: true
-    bs_modal.wrap "<form id=\"temp_form_id\" />"
+    if $('#temp_form_id').length == 0
+      bs_modal.wrap "<form id=\"temp_form_id\" />"
+
+    $("#temp_form_id").validate
+  
+      ignore:'.ignore'
+  
+      showErrors: (errorMap, errorList) ->
+        $.each @validElements(), (index, element) ->
+          $element = undefined
+          $element = $(element)
+          
+          
+          
+          
+          
+          $element.parent().find('label.error').remove()
+
+          return
+    
+        $.each errorList, (index, error) ->
+          $element = undefined
+          $element = $(error.element)
+          
+          
+          console.log($element)
+          
+          $element.parent().find('label.error').remove()
+          
+      
+          error = $("<label class=\"error\"><span class=\"add-on\" data-toggle=\"tooltip\" data-placement=\"right\" title=\""+error.message+"\"><i style=\"color:red\" data-toggle=\"tooltip\" class=\"fa fa-exclamation-triangle\" title=\"tooltip\" ></i></label>")
+          error.find('span').tooltip({placement:'top', container:"body"})
+          
+          if $element.hasClass("hidden-association")
+            $element.parent().find('.input-append').append(error)
+          else
+            $element.parent().append(error)
+          
+          return
+    
     isValid = jQuery("#temp_form_id").valid()
-    bs_modal.unwrap()
-    if isValid = true
+    
+    if isValid
+      bs_modal.unwrap()
       bs_modal.modal "hide"
       
       insert_zone.append $("<div/>").css("display", "none").attr("id", uid1).append(bs_modal.find('select, input, textarea').clone())
@@ -102,16 +155,24 @@ launch_modal = (insert_zone, object, rec_class) ->
       $(document).on "click", "#" + uid2 + " button.delete", ->
         $("#" + uid2).remove()
         $("#" + uid1).remove()
+        check_hidden_assoc(insert_zone, ".edit-box")
+        
+        
 
+      insert_zone.find('label.error').remove()
+      
       insert_zone.append box_tpl.show()
-    bs_modal.find("button.cancel").unbind().click ->
-      bs_modal.modal "hide"
+      
+      check_hidden_assoc(insert_zone, ".edit-box")
+      
 
-    bs_modal.on "hidden.bs.modal", ->
-
+      
+    
 
   bs_modal.find("button.cancel").unbind("click").click ->
     bs_modal.modal "hide"
+    false
+
 
   
 
@@ -120,7 +181,7 @@ $(document).ready ->
   initialize_accordions()
   
   current_popup = ""
-  $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help')})
+  $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'), container:'body'})
   $(".add_fields").hide()
   $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-editors, #add-contacts", ->
 
@@ -143,18 +204,16 @@ $(document).ready ->
     
     return
 
-  $(document.body).on "click", "#add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names", ->
+  $(document.body).on "click", "div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
    className = $(this).attr("id")
    $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
 
   $(document.body).on("cocoon:after-insert", "div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object) ->
-    
-    
-    
+
     insert_zone = $(this)
     className = $(this).attr("id")
     
-    
+
     bs_modal = launch_modal(insert_zone, parent_object.html(), parent_object.find("input[type=\"hidden\"]").val().toLowerCase())
     current_popup = bs_modal
     parent_object.remove()
@@ -176,7 +235,7 @@ $(document).ready ->
     task.fadeOut "slow"
     return
 
-  $(document.body).on "cocoon:after-insert", "div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name", (e, parent_object) ->
+  $(document.body).on "cocoon:after-insert", "div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name, div#notes", (e, parent_object) ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
@@ -189,12 +248,17 @@ $(document).ready ->
     accordion = $("<div/>").append(JST["templates/accordion"](json))
     $(this).append accordion.fadeIn 300
     
-    accordion_events(accordion)
+    
+    accordion_events(accordion, $(this))
     
   
   return
 
 jQuery ($) ->
+  
+ 
+  
+  $('#nav-tabs a:last').tab('show');
   
   $('select[multiple="multiple"]').multiselect();
   
@@ -203,20 +267,16 @@ jQuery ($) ->
     jqEl = $(e.currentTarget)
     tag = jqEl.parent()
     
-    console.log(tag.find('input'))
     
     switch jqEl.attr("data-action")
       when "add-single"
         clone = tag.clone().css("display", "block")
         
-        
-        
-        clone.find("button").remove()
+        clone.find("button, span.add-on").remove()
         clone.find("input[type='text']").val ""
         #clone.find("label").remove()
         clone.append "<button data-action=\"delete\" class=\"delete btn btn-medium\" ><i class=\"icon-minus\"></i></button>"
           
-        console.log(clone.html())
           
         tag.parent().append clone.fadeIn 300
       when "delete"
@@ -228,21 +288,53 @@ jQuery ($) ->
   $(document).on "click", "button[data-action=add-single], button[data-action=delete] ", handler
   
   
-  $("#new_study").validate
-    invalidHandler: (event, validator) ->
-      errors = validator.numberOfInvalids()
-      if errors
-        message = ((if errors is 1 then "You missed 1 field. It has been highlighted" else "You missed " + errors + " fields. They have been highlighted"))
-        $("div.error span").html message
-        $("div.error").show()
-      else
-        $("div.error").hide()
-      return
+  
+  
+  $("form.simple_form").validate
+  
+    ignore:'.ignore'
 
-    errorPlacement: (error, element) ->
-      error.insertAfter element.parent()
-      return
+    showErrors: (errorMap, errorList) ->
+      $.each @validElements(), (index, element) ->
+        $element = undefined
+        $element = $(element)
+        $element.data("title", "").removeClass("error").tooltip "destroy"
 
-  $("#button_submit").on "click", ->
+        
+        
+        
+        $element.parent().find('label.error').remove()
+        return
+  
+      $.each errorList, (index, error) ->
+        $element = undefined
+        $element = $(error.element)
+        
+        
+        $element.parent().find('label.error').remove()
+        
+    
+        error = $("<label class=\"error\"><span class=\"add-on\" data-toggle=\"tooltip\" data-placement=\"right\" title=\""+error.message+"\"><i style=\"color:red\" data-toggle=\"tooltip\" class=\"fa fa-exclamation-triangle\" title=\"tooltip\" ></i></label>")
+        error.find('span').tooltip({placement:'top', container:"body"})
+        
+        if $element.hasClass("hidden-association")
+          $element.parent().find('.input-append').append(error)
+        else if $element.attr("type") == 'checkbox'
+        
+          $element.closest('.control-group').find('.control-label').append(error)
+          console.log($element.parents())
+          
+        else 
+          $element.parent().append(error)
+        
+          
+ 
+        
+        return
+        
+        
+        #$element.tooltip("destroy").data("title", error.message).addClass("error").tooltip()
+        return
 
-  return
+  
+

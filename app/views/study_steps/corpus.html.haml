@@ -1,0 +1,19 @@
+= simple_form_for(@study, url: wizard_path, :html => { :class => 'form-vertical' }) do |f|
+  - if @study.errors.any?
+    .error_messages
+      %h2
+        = pluralize(@study.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @study.errors.full_messages.each do |msg|
+          %li= msg
+  = yield f
+  %fieldset
+    = render :partial=>'/studies/display_fields', :locals => {:f=>f, :xml => StudyMetadata.xml_form.to_xml, :xpath=>"/study/corpus/*"}
+  #dialog-confirm{:style => ""}
+    %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
+    %p
+  / Button to trigger modal
+  %button.add.btn.btn-primary{:type => "submit"}
+    Next
+    %i.icon-white.icon-arrow-right

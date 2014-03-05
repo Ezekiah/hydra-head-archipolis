@@ -42,6 +42,7 @@
 //= require bootstrap-modal
 //= require bootstrap-tooltip
 //= require bootstrap-popover
+//= require bootstrap-tab
 
 //= require jquery.validate
 //= require jquery.validate.additional-methods

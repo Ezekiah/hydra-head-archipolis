@@ -10,8 +10,8 @@
     
     
     <div class="modal-footer">
-	    <button class="btn btn-danger cancel">Close</a>
-	    <button class="btn btn-primary save">Save changes</button>
+	    <button type="button" class="btn btn-danger cancel">Close</a>
+	    <button type="button" class="btn btn-primary save">Save changes</button>
     </div>
 	    
 </div>

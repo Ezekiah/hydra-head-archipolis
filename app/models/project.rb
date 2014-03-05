@@ -22,6 +22,9 @@ class Project < ActiveFedora::Base
     has_many :funding_agent_names, :class_name => 'Orgunit', :foreign_key => 'funding_agent_name', :property => :is_part_of
     
     
+    has_many :funding_agent_names, :class_name => 'Orgunit', :property => :is_part_of, :foreign_key => 'orgunit_funding_agent_names'
+    accepts_nested_attributes_for :funding_agent_names
+    
     accepts_nested_attributes_for :awards
     accepts_nested_attributes_for :descriptions
     accepts_nested_attributes_for :identifiers

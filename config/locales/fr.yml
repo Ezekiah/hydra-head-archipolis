@@ -28,6 +28,12 @@ fr:
   distributor: 'distributeur'
   contact: 'contact'
   
+  'yes': "oui"
+  'no': "non"
+  'dont_know': "Je ne sais pas"
+  'partial': "partiellement"
+  
+  
   popover:
     help:'Aide'
   
@@ -50,6 +56,7 @@ fr:
     keyword: 'mot-clé'
     abstract: 'résumé'
     description: 'description'
+    editor: 'editeur'
 
   
   
@@ -84,7 +91,7 @@ fr:
       help: "A définir"
     keywords:
       label: "Mots-clés"
-      help: ""
+      help: 
     coverage_temporal_begin:
       label: "Période couverte début"
       help: "Années de début et de fin de la période sur laquelle portent les phénomènes étudiés"
@@ -99,6 +106,7 @@ fr:
       help: "Contenu"
       
   contributor:
+    label: "Contributeurs"
     acronym:
       label: "Acronyme du projet"
       help: "Acronyme du projet"
@@ -139,6 +147,7 @@ fr:
 
 
   universe:
+    label: "Univers"
     location_of_units_of_observations:
       label: "Niveau d'observation"
       help: "Echelle suivant laquelle la comparaison se fait (au niveau national, international, régional etc.) Par exemple pour l'enquête cdsp_bequali_sp1 on compare au niveau international (3 groupes dans 3 pays différents) "
@@ -336,15 +345,163 @@ fr:
     id_type:
       label: 'id_type'
       help: 'id_type'
+      
+      
+ 
+
+
+
+
+
+
+
+
+
+
+  
+  
+  method:
+    label: "Méthode"
+    data_collection_date_begin:
+      label: "Dates de collecte des données"
+      help: "Dates du terrain"
+    data_collection_date_end:
+      label: "Dates de collecte des données"
+      help: "Dates du terrain"
+    data_collection_time_dimensions:
+      label: "Temporalité de collecte"
+      help: "Fréquence avec laquelle les données ont été collectées sur le terrain (en une fois, en plusieurs fois etc.). Plusieurs valeurs possibles."
+    data_collection_modes:
+      label: "Mode de collecte des données"
+      help: "Manière dont les donées ont été collectées. Plusieurs valeurs possibles"
+    data_collection_samplings:
+      label: "Procédure d'échantillonnage"
+      help: "Critère de sélection des enquêtés ou des cas d'observation (critère précis, aléatoire etc.) "
+    data_collection_methods:
+      label: "Protocole de collecte"
+      help: "Instrument qui a pu servir de support au chercheur pour interragir avec les enquêtés ou pour organiser ses observations. Plusieurs valeurs possibles"
+    data_collection_context:
+      label: "Contexte de la collecte"
+      help: "Description du contexte et des spécificités de la collecte (manière dont le chercheur a eu accès au terrain, segmentation de l'échantillon, nombre d'entretiens réalisés, spécificité du recrutement etc.)"
+    data_collection_extent:
+      label: "Nombre d'observations réalisés"
+      help: "Nombre d'entretiens ou d'observations réalisés. Peut être différent du nombre d'entretiens transcrits."
+    data_collection_documents_types:
+      label: "Types de matériaux"
+      help: "Type de matériaux collectés. Plusieurs valeurs possibles."
+    data_collection_has_media:
+      label: "Enregistrements audio-visuels ?"
+      help: "Les entretiens ont-ils été enregistrés? "
+    interviewers_unknown:
+      label: "Autres enquêteurs"
+      help: "Est-ce que les entretiens ou les observations ont été réalisés, en partie ou en totalité, par d'autres personnes que le(s) auteur(s)? "
+    interviewers:
+      label: "Enquêteur"
+      help: "Préciser le ou les noms des enquêteurs."
     
-   
+
+  
+  
+  corpus:
+    label: "Corpus"
+    archive_accessed:
+      label: "Accès aux documents ?"
+      help: "Préciser si la personne d'archiPolis a eu accès aux documents pour évaluer leur état, leur classement etc. ou si toute l'évaluation a été faite sur parole du chercheur."
+    archive_completeness:
+      label: "Niveau de conservation"
+      help: "Information sur ce qu'il reste de l'enquête, en distingant si c'est possible, ce qu'il reste des données, ce qu'il reste de la préparation de l'enquête et ce qu'il reste de l'analyse mise en oeuvre. Préciser aussi si possible le type de support (type de cassette, de papier etc) car cela pourra être utile pour la numérisation."
+    archive_arrangement_level:
+      label: "Niveau de classement"
+      help: "Est-ce que les documents ont été ordonnés selon des critères précis par le(s) auteur(s)? Le classement éventuellement suivi par le chercheurs n'est pas celui de beQuali."
+    archive_arrangement_level_description:
+      label: "Description du niveau de classement"
+      help: "Décrire plus précisément le classement des documents de l'enquête en distinguant si possible le classment des documents préparatoires, le classement des données et le classement des documents d'analyse."
+    archive_preservation_level:
+      label: "État de conservation"
+      help: "Est-ce que les documents sont en bon état? Evaluation nécessairement subjective."
+    archive_preservation_level_description:
+      label: "Description de l'état de conservation"
+      help: "Décrire plus précisément l'état de conservation des documents de l'enquête en distinguant si possible le classment des documents préparatoires, le classement des données et le classement des documents d'analyse. Préciser notamment la présence de moisissure, de déchirures, de documents froissé etc."
+    archive_location:
+      label: "Lieu de conservation"
+      help: "Lieu où sont conservés les documents sources de l'enquêtes  "
+    archive_extent:
+      label: "Volume des archives"
+      help: "A estimer comme vous pouvez : mètres linéaires, nombre de cartons d'archives, nombre total de pages, ou de disquettes / cassettes, etc."
+    archive_consentement:
+      label: "OK pour archivage numérique ?"
+      help: "Est-ce que le(s) chercheur(s) est/sont d'accord pour confier les documents relatifs à l'enquête au labo (pour le compte duquel vous faites l'inventaire) le temps de les classer sommairement et de les numériser? Les copies numériques seront archivées sous la responsabilité du laboratoire."
+    archive_agreememt:
+      label: "Autorisation fournie par les interviewés ?"
+      help: "Est-ce que les interviewés ont explicitement donné une autorisation relative à l'usage de leur entretien? Choisir une valeur dans la liste déroulante"
+  
+  
     
+
+
+  
+  analyse:
+    label: "Analyse"
+    analysis_has_transcription:
+      label: "analysis_has_transcription"
+      help: "Ont-ils été intégralement ou partiellement retranscrits? "
+    analysis_transcription:
+      label: "Transcription"
+      help: "Décrit si les entretiens ont été transcrits, si les notes ont été saisies sur un logiciel de traitement de texte ; préciser notamment la finesse de la transcription"
+    analysis_anonymization:
+      label: "Anonymisation"
+      help: "Décrit si les entretiens ont été anonymisés. Si non dire si on a les autorisation des enquêtés"
+    analysis_types:
+      label: "Analyse"
+      help: "Type/démarche d'analyse effectuée à partir des matériaux"
+    data_languages:
+      label: "Langues des données"
+      help: "Langue dans laquelle les entretiens ont été réalisée (peut être différent de la langue de rédaction des autres documents de l'enquêtes). "
+    documentation_languages:
+      label: "Langues de la documentation"
+      help: "Langue dans la quelle les documents constituant la documentation de l'enquête ont été réalisés. Peut être différent de la langue de réalisation des entretiens."
+    publications_citations:
+      label: "Publications associées"
+      help: "Réferences biliographiques des publications associées à l'enquête"
+    publications:
+      label: "Oh yeah!"
+      help: 'Next time baby'
+
+  
+  edition:
+    label: "Édition"
+    access_conditions:
+      label: "Conditions d'accès"
+      help: "Conditions d'accès aux documents sources de l'enquêtes (délais de communicabilité etc.)"
+    edition_first_date:
+      label: "Date de la première édition"
+      help: "Date de la première édition de mise à disposition de l'enquête."
+    edition_last_date:
+      label: "Date de la dernière édition"
+      help: "Date de la dernière édition de mise à disposition de l'enquête. Vide si une seule édition."
+    copyright_holders:
+      label: "Copyright"
+      help: "Nom de l'organisme qui possède le copyright de l'édition (en général sera CDSP)"
+    softwares:
+      label: "Logiciels"
+      help: "Noms des logiciels utilisés dans le traitement des documents pour l'édition de la mise à dispostion (ex : PowerGrep, eXmeralda etc.)"
+    editors:
+      label: "Éditeur"
+      help: "Nom de la ou les personne(s) qui ont fait le travail d'édition pour la mise à disposition"
+      
+  notes:
+    label: 'Notes'
+    notes:
+      label: "Notes"
+      help: "Texte libre"
+  
     
   #DESCRIPTION
   calendar: "Calendrier"
   
 
-  
+
+
   
   
 

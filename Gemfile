@@ -143,3 +143,5 @@ gem 'eco-source'
 
 gem "fs", "~> 0.2.1"
 
+gem "font-awesome-rails"
+
