@@ -15,7 +15,10 @@ class StudiesController < ApplicationController
   before_action :set_study, only: [:show, :edit, :update, :destroy]
   before_filter :export_i18n_messages
   
-  layout 'study_steps'
+  ezef55))
+  #layout:resolve_layout
+  
+  
  
   
   # GET /studies
@@ -41,6 +44,7 @@ class StudiesController < ApplicationController
 
   # GET /studies/new
   def new
+    
     @study = Study.new
     #Get datastream field
    
@@ -57,6 +61,7 @@ class StudiesController < ApplicationController
                    t('others') => 
                    @all_languages-@most_used_languages
     }
+    render :layout => 'study_steps' 
 
   end
   
@@ -202,7 +207,18 @@ class StudiesController < ApplicationController
      
      def export_i18n_messages
         SimplesIdeias::I18n.export!
-        end
+     end
+     
+     def resolve_layout
+	    case action_name
+	    when "new",
+	      "study_steps"
+	    when "index"
+	      "blacklight"
+	    else
+	      "application"
+	    end
+	  end
  
     
 end

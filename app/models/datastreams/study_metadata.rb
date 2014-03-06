@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 class StudyMetadata < ActiveFedora::OmDatastream
 
     @@collection_lang = {'fr_FR'=>'fr_FR', 'en_EN'=>'en_EN', }

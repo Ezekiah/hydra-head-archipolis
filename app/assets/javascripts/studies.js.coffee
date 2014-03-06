@@ -253,14 +253,14 @@ $(document).ready ->
     
   
   return
-
-jQuery ($) ->
+                                
+jQuery ($) ->                        
   
- 
+                                     
   
   $('#nav-tabs a:last').tab('show');
   
-  $('select[multiple="multiple"]').multiselect();
+  $('select[multiple="multiple"]').multiselect( {enableFiltering: true,maxHeight: 400});
   
   handler = (e) ->
 

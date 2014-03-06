@@ -71,7 +71,7 @@
             = #content_tag node.name,  label, class: "add-on"
             
            
-            = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something")
+            = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
             
             - if is_multiple
               != gen_add_button('button_add.jst.eco', {type:'single', name:node_name})
