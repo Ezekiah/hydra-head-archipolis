@@ -45,7 +45,7 @@ initialize_accordions = ->
 
 accordion_events = (accordion, zone) ->
   
-  
+  accordion.collapse('show')
   check_hidden_assoc(zone, ".accordion-group")
   
   accordion.find(".delete-accordion, .reduce-accordion").click(->
@@ -65,6 +65,14 @@ accordion_events = (accordion, zone) ->
       $(this).toggleClass "icon-white"
       return
   
+  $(document).on 'hidden.bs.collapse', accordion, ->
+   
+    return
+                           
+  $(document).on 'shown.bs.collapse', accordion, ->
+   
+    return
+    
 
 launch_modal = (insert_zone, object, rec_class) ->
   
@@ -97,11 +105,6 @@ launch_modal = (insert_zone, object, rec_class) ->
         $.each @validElements(), (index, element) ->
           $element = undefined
           $element = $(element)
-          
-          
-          
-          
-          
           $element.parent().find('label.error').remove()
 
           return
@@ -183,20 +186,25 @@ $(document).ready ->
   current_popup = ""
   $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'), container:'body'})
   $(".add_fields").hide()
-  $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-editors, #add-contacts", ->
-
-    className = undefined
-    className = $(this).attr("id").replace("add-", "")
+  $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-interviewers_unknowns, #add-editors, #add-contacts", ->
     
+   
+
+    className = $(this).attr("id").replace("add-", "")
+      
+    console.log($('a.add_fields'))
+      
+    console.log("person_" + className)
+    console.log($("a[data-associations='person_" + className + "']"))
     
     $(".choose_person").unbind().click ->
-      $("a[data-associations='person_" + className.replace("add-", "") + "']").trigger "click"
+      $("a[data-associations='person_" + className + "']").trigger "click"
       return false
         
       return
 
     $(".choose_orgunit").unbind().click ->
-      $("a[data-associations='orgunit_" + className.replace("add-", "") + "']").trigger "click"
+      $("a[data-associations='orgunit_" + className + "']").trigger "click"
       return false
       return
     
@@ -208,7 +216,7 @@ $(document).ready ->
    className = $(this).attr("id")
    $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
 
-  $(document.body).on("cocoon:after-insert", "div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object) ->
+  $(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object) ->
 
     insert_zone = $(this)
     className = $(this).attr("id")
@@ -256,14 +264,18 @@ $(document).ready ->
                                 
 jQuery ($) ->                        
   
-                                     
+   
   
+   
   $('#nav-tabs a:last').tab('show');
   
-  $('select[multiple="multiple"]').multiselect( {enableFiltering: true,maxHeight: 400});
+  
+  $('select[multiple="multiple"]').multiselect( {enableFiltering: true,maxHeight: 400},  onChange: (element, checked) ->
+    
+      
+  );
   
   handler = (e) ->
-
     jqEl = $(e.currentTarget)
     tag = jqEl.parent()
     

@@ -1,6 +1,6 @@
 %fieldset
+  -
   - @xml = Nokogiri::XML.parse(xml)
-  
   - builder = Nokogiri::HTML::Builder.new do |doc|
     - tags = @xml.xpath(xpath).each do |node|
       - root_node = node.parent
@@ -21,14 +21,11 @@
       
       
         - if node.name == 'association'
-        
+         
         
           -properties = node.xpath("properties//property")
-          
-          - node_name = node.attribute('name').to_s
-          
-           
-          - add_button_list = gen_add_button('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'),type:'association' })
+
+          - add_button_list = call_jst('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'),type:'association' })
           - is_complex_assoc = node.search('.//property').size.to_s == '2'
           - assoc_type = is_complex_assoc==true ? 'complex': 'simple'
           - has_popup = node.attribute('popup').to_s == 'true' ? 'launch_popup' : 'no_popup'
@@ -40,44 +37,105 @@
               - if is_complex_assoc
                 != add_button_list
               - else
-                != gen_add_button('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+                != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+              
               != gen_help_button({title_help:t(root_node_name+'.'+node.attribute('name')+'.help')} )
-            
-            
-            %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>required, :name=>'validation-'+node_name, :class=>'hidden-association'}
-            
-            - properties.each do |prop|
-              - class_name=prop.attribute('class_name').to_s().downcase
-              - metadata_class = class_name.capitalize+'Metadata'
-      
-              - link = link_to_add_association(' ', f, prop.attribute('name').to_s.to_sym, 
-                :partial=>'/studies/display_fields', 
-                :render_options => {:locals => {:xml=>Object.const_get(metadata_class).xml_form.to_xml, :xpath=>'/'+class_name.to_s.singularize+'/*'}, },:data => {"association-insertion-method" => "before" },)
-      
-              - html = Nokogiri::HTML(link)   
-              - a = html.css('a')
               
               
-                   
-              - if node.attribute('popup').to_s == 'false'
-                != a[0]['data-association-insertion-template']
+             
+
+              
+              - properties.each do |prop|
                 
+                - prop_name = prop.attribute('name').to_s
+             
+                - class_name=prop.attribute('class_name').to_s().downcase
+                - metadata_class = class_name.capitalize+'Metadata'
+                
+                = debug prop_name
+                
+                /#ADD EDIT-BOXES
+                - if fedora_object != false
+                
+                  -values = fedora_object.send(prop_name)
+                  
+                  -values.each_with_index do |value,index|
+                    != call_jst('edit-box.jst.eco', {uid2:SecureRandom.uuid, label_link:t('edit-box.'+node_name.singularize)+(index+1).to_s})
+                  
+                
+         
+                
+                  / Get values and display boxes
+                  - if (fedora_object.respond_to? node_name) && ( fedora_object.send(node_name).length > 0)
+                    -values.each do |value|
+    
+                      - link = link_to_add_association(' ', f, prop_name.to_sym, 
+                        :partial=>'/studies/display_fields', 
+                        :render_options => {:locals => {:xml=>Object.const_get(metadata_class).xml_form.to_xml, :fedora_object=>value, :xpath=>'/'+class_name.to_s.singularize+'/*'}, },:data => {"association-insertion-method" => "before" },)
+                  
+                      
+                      - html = Nokogiri::HTML(link)   
+                      - a = html.css('a')
+    
+                      %div.form-edit-box
+                        != a[0]['data-association-insertion-template']
+                        
+                      
+                      - link
+                
+                
+                - else
+                  = debug 'ok'
+                
+                - link = link_to_add_association(' ', f, prop_name.to_sym, 
+                  :partial=>'/studies/display_fields', 
+                  :render_options => {:locals => {:xml=>Object.const_get(metadata_class).xml_form.to_xml, :fedora_object=>false, :xpath=>'/'+class_name.to_s.singularize+'/*'}, },:data => {"association-insertion-method" => "before" },)
               
-              =link
+                - html = Nokogiri::HTML(link)   
+                - a = html.css('a')
+              
+                - if node.attribute('popup').to_s == 'false'
+                  != a[0]['data-association-insertion-template']
+                    
+               
+                =link
+            
+                %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>required, :name=>'validation-'+node_name, :class=>'hidden-association'}
+            
+           
          
         - if node.attribute('type').to_s == 'text' 
         
           = f.input node.name, :wrapper => :prepend_append, :label => label, :required=>required do
             = #content_tag node.name,  label, class: "add-on"
             
-           
-            = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
+            - if fedora_object != false
             
-            - if is_multiple
-              != gen_add_button('button_add.jst.eco', {type:'single', name:node_name})
+              - if fedora_object.class.method_defined? node_name 
+              
+                - values = [fedora_object.send(node_name)]
+                
+               
+              
+                - values.each_with_index do |value, index|
+                  
+                  %div{:class=>'input-append input-prepend', :style=>'display:block;'}
+                    = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>value, 'placeHolder'=>t("type_something"), :required=>required
+                    - if index == 0
+                      - if is_multiple
+                        != call_jst('button_add.jst.eco', {type:'single', name:node_name})
+                        != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
+                    - else
+                      != gen_remove_button('button_remove.jst.eco' )
+                    
+                   
+            -else
+              = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
+            
+            
              
                 
-            != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
+            
                                              
         - if node.attribute('type').to_s == 'hidden'          
           = f.input node.name, :input_html => { :value => node.attribute('value') }, :as => :hidden
@@ -108,7 +166,7 @@
             = f.text_field(node_name, options = {'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'value'=>'', 'class'=>'span3', 'placeHolder'=>t("date_click")} )
 
             - if is_multiple
-              != gen_add_button('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+              != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
             
             != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )    
              
@@ -140,7 +198,7 @@
             
           
             - if is_multiple
-              != gen_add_button('button_add.jst.eco', {type:'single', name:node_name})
+              != call_jst('button_add.jst.eco', {type:'single', name:node_name})
           
                          
                                      

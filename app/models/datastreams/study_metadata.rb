@@ -261,9 +261,11 @@ def self.xml_form
              })
               
             
-            t.data_collection_has_media(:type=>'select', :collection=>@@collection_dn, :required=>true)
+            t.data_collection_has_media(:type=>'select', :collection=>@@collection_dn, :required=>true,)
             
-            t.association(:name=>'interviewers', :label=>'interviewers', :required=>true){
+            
+
+            t.association(:name=>'interviewers', :label=>'interviewers', :required=>true,:popup=>'true'){
                 
                 t.properties{
                     t.property(:name=>'person_interviewers', :class_name=>'Person')
@@ -272,10 +274,10 @@ def self.xml_form
             }
                
               
-            t.association(:name=>'interviewers_unknown', :label=>'interviewers_unknown', :collection=>@@collection_un, :required=>true){
+            t.association(:name=>'interviewers_unknowns', :label=>'interviewers_unknowns', :collection=>@@collection_un, :required=>true, :popup=>'true'){
                 t.properties{
-                    t.property(:name=>'person_interviewers_unknown', :class_name=>'Person')
-                    t.property(:name=>'orgunit_interviewers_unknown', :class_name=>'Orgunit')          
+                    t.property(:name=>'person_interviewers_unknowns', :class_name=>'Person')
+                    t.property(:name=>'orgunit_interviewers_unknowns', :class_name=>'Orgunit')          
                 }
             }
            

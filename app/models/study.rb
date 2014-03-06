@@ -139,8 +139,8 @@ class Study < ActiveFedora::Base
   has_many :orgunit_contacts, :class_name => 'Orgunit', :foreign_key => 'orgunit_contacts', :property => :is_part_of
   has_many :person_contacts, :class_name => 'Person', :foreign_key => 'person_contacts', :property => :is_part_of
   
-  has_many :orgunit_interviewers_unknown, :class_name => 'Orgunit', :foreign_key => 'orgunit_interviewers_unknown', :property => :is_part_of
-  has_many :person_interviewers_unknown, :class_name => 'Person', :foreign_key => 'person_interviewers_unknown', :property => :is_part_of
+  has_many :orgunit_interviewers_unknowns, :class_name => 'Orgunit', :foreign_key => 'orgunit_interviewers_unknowns', :property => :is_part_of
+  has_many :person_interviewers_unknowns, :class_name => 'Person', :foreign_key => 'person_interviewers_unknowns', :property => :is_part_of
   
   has_many :persons, :class_name => 'Person', :property => :is_part_of
   has_many :orgunits, :class_name => 'Orgunit', :property => :is_part_of
@@ -157,34 +157,9 @@ class Study < ActiveFedora::Base
   
   
   
-  def editors
-    return self.orgunit_depositors + self.person_depositors
-  end
-  
-  
-  def depositors
-    return self.orgunit_depositors + self.person_depositors
-  end
-  
-  def interviewers
-    return self.orgunit_interviewers + self.person_interviewers
-  end
-  
-  def copyright_holders
-    return self.orgunit_copyright_holders + self.person_copyright_holders
-  end
-  
-  def authors
-    return self.orgunit_authors + self.person_authors
-  end
-  
-  def distributors
-    return self.orgunit_distributors + self.person_distributors
-  end
-  
+
   def self.data_collection_modes
     {'interview'=>'interview', 'observation'=>'observation', 'content analysis'=>'content analysis', 'questionnaire'=>'questionnaire', 'other'=>'other'}
-  
   end
   
   
@@ -194,17 +169,18 @@ class Study < ActiveFedora::Base
   
   accepts_nested_attributes_for :descriptions
   accepts_nested_attributes_for :affiliations
-  
   accepts_nested_attributes_for :projects
-  
   accepts_nested_attributes_for :collections
   accepts_nested_attributes_for :ressources
   accepts_nested_attributes_for :orgunit_depositors
   accepts_nested_attributes_for :person_depositors
+  
   accepts_nested_attributes_for :orgunit_interviewers
   accepts_nested_attributes_for :person_interviewers
-  accepts_nested_attributes_for :orgunit_interviewers_unknown
-  accepts_nested_attributes_for :person_interviewers_unknown
+  
+  accepts_nested_attributes_for :orgunit_interviewers_unknowns
+  accepts_nested_attributes_for :person_interviewers_unknowns
+  
   accepts_nested_attributes_for :orgunit_copyright_holders
   accepts_nested_attributes_for :person_copyright_holders
   accepts_nested_attributes_for :orgunit_authors

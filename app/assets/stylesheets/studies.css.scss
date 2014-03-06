@@ -159,7 +159,7 @@ div.control-group {
   
 }
 
-div.control-group .input-append {
+div.check_boxes .input-append {
   -moz-column-count:3; /* Firefox */
   -webkit-column-count:3; /* Safari and Chrome */
   column-count:3;
@@ -185,7 +185,5 @@ abbr{
   
 }
 
-.collapse{
-	overflow:visible;
-	
-}
+.accordion-body.in { overflow:visible; }
+

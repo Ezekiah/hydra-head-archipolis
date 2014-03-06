@@ -44,6 +44,9 @@ class PersonMetadata < ActiveFedora::OmDatastream
     t.rec_id
     
     t.rec_permission
+    
+    
+    t.phones
 
   end
   

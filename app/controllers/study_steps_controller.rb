@@ -39,13 +39,13 @@ class StudyStepsController < ApplicationController
 
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
-    @study = Study.find('changeme:58')
-    
+    @study = Study.find(session[:current_study_id])
+
     @study.update(sub_obj_non_attributes.to_h)
     
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
     
-    
+
     render_wizard @study
     
   end

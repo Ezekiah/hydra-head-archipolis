@@ -28,7 +28,7 @@
     /[if lt IE 9]
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
   %body{:class => render_body_class}
-    
+    = render :partial => 'study_steps/tab_steps'
     #ajax-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "modal menu", :role => "dialog", :tabindex => "-1"}
       .modal-dialog
         .modal-content

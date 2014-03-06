@@ -50,6 +50,11 @@ module StudiesHelper
         Eco.render(File.read(file), params)
     end
     
+    def call_jst(jst, params=false)
+        file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', jst )
+        Eco.render(File.read(file), params)
+    end
+    
     def gen_help_button( params=false)
         file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', 'button_help.jst.eco' )
         params['title']=t('help')

@@ -22,7 +22,7 @@
 fr:
   #GENERAL
   
-  help: "Aide"
+  
   author: 'auteur'
   depositor: 'depositeur'
   distributor: 'distributeur'
@@ -57,6 +57,7 @@ fr:
     abstract: 'résumé'
     description: 'description'
     editor: 'editeur'
+    interviewers_unknowns: 'Autre interviewers'
 
   
   
@@ -392,7 +393,7 @@ fr:
     data_collection_has_media:
       label: "Enregistrements audio-visuels ?"
       help: "Les entretiens ont-ils été enregistrés? "
-    interviewers_unknown:
+    interviewers_unknowns:
       label: "Autres enquêteurs"
       help: "Est-ce que les entretiens ou les observations ont été réalisés, en partie ou en totalité, par d'autres personnes que le(s) auteur(s)? "
     interviewers:

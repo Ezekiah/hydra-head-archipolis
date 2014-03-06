@@ -15,7 +15,7 @@ class StudiesController < ApplicationController
   before_action :set_study, only: [:show, :edit, :update, :destroy]
   before_filter :export_i18n_messages
   
-  ezef55))
+
   #layout:resolve_layout
   
   
@@ -50,10 +50,7 @@ class StudiesController < ApplicationController
    
     
     @study_base_collection = @study.collections
-    
 
-    
-    
     @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
     @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
     
@@ -95,7 +92,9 @@ class StudiesController < ApplicationController
     @study = Study.create(sub_obj_non_attributes.to_h)
     
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
-      
+    
+    
+    session[:current_study_id] = @study.id
       
   
     respond_to do |format|
@@ -201,6 +200,8 @@ class StudiesController < ApplicationController
          
         
       end
+      
+      
       
     end
     

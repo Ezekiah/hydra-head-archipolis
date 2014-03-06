@@ -20,6 +20,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  
+  
   #GENERAL
   general: "General"
   
@@ -42,6 +44,10 @@ en:
     abstract: 'abstract'
     description: 'description'
     editor: 'editor'
+    interviewer: 'interviewer'
+    interviewers_unknowns: 'interviewer unknown'
+    
+    
   redux: "reduce"
   
   titles:
@@ -185,7 +191,7 @@ en:
     data_collection_has_media:
       label: "Media records?"
       help: 
-    interviewers_unknown:
+    interviewers_unknowns:
       label: "Other interviewers"
       help: 
     interviewers:
