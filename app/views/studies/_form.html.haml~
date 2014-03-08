@@ -1,0 +1,30 @@
+:css
+  #wizard .input-error{
+  	background:#FB3500;
+  	opacity:1
+  }
+  
+%div
+  = render :partial=>'/study_steps/tab_steps'
+
+
+= simple_form_for(@study, html: {class: 'form-vertical' }) do |f|
+  - if @study.errors.any?
+    .error_messages
+      %h2
+        = pluralize(@study.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @study.errors.full_messages.each do |msg|
+          %li= msg
+  = yield f
+  %fieldset
+    %legend= t('general.label')
+    = render :partial=>'display_fields', :locals => {:f=>f, :xml => StudyMetadata.xml_form.to_xml, :xpath=>"/study/general/*"}
+    %button#button_submit.add.btn.btn-primary{:type => "submit"}
+      Next
+      %i.icon-white.icon-arrow-right
+#dialog-confirm{:style => ""}
+  %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
+  %p
+    
