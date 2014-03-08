@@ -89,7 +89,7 @@ class StudiesController < ApplicationController
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
     
-    @study = Study.create(sub_obj_non_attributes.to_h)
+    @study = Study.create(sub_obj_non_attributes)
     
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
     

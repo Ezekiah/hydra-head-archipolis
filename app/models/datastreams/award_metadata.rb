@@ -27,21 +27,7 @@ class AwardMetadata < ActiveFedora::OmDatastream
   end
   
   
-  def self.xml_form
-      
-      builder = Nokogiri::XML::Builder.new do |t|
-        
-        t.award{
-          t.language(:type=>'language_list', :multiple=>'false', :label=>'Language', :required=>true, :display=>'public')
-          t.value(:type=>'text_area', :label=>'Value', :required=>true, :display=>'public')
-          t.rec_class(:type=>'hidden', :value=>'Award', :display=>'public')
-        }
-       
-    end
-    
-    return builder.doc
-    
-  end
+  
   
   
   

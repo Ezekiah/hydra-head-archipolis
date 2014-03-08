@@ -198,13 +198,13 @@ $(document).ready ->
     console.log($("a[data-associations='person_" + className + "']"))
     
     $(".choose_person").unbind().click ->
-      $("a[data-associations='person_" + className + "']").trigger "click"
+      $("a[data-associations='" + className + "']").trigger "click"
       return false
         
       return
 
     $(".choose_orgunit").unbind().click ->
-      $("a[data-associations='orgunit_" + className + "']").trigger "click"
+      $("a[data-associations='" + className + "']").trigger "click"
       return false
       return
     

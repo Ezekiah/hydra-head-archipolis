@@ -1,3 +1,4 @@
+#encoding:utf-8
 require 'datastreams/orgunit_metadata'
 
 class Orgunit < ActiveFedora::Base
@@ -31,6 +32,60 @@ class Orgunit < ActiveFedora::Base
   accepts_nested_attributes_for :affiliations
   accepts_nested_attributes_for :addresses
   accepts_nested_attributes_for :identifiers
+  
+  def self.xml_form
+      
+      
+      
+      builder = Nokogiri::XML::Builder.new do |t|
+        
+            
+            
+          t.orgunit{
+            
+              t.name(:type=>'text', :value=>'', :label=>'Name', :display=>'public')
+              
+              t.rec_id(:type=>'text', :value=>'', :label=>'Identifier', :display=>'private')
+              
+              t.association(:name=>'addresses', :class_name=>'Address', :display=>'private')
+               
+              
+              t.association(:name=>'affiliations', :class_name=>'Affiliation', :display=>'private')
+               
+              
+              t.association(:name=>'identifiers',:class_name=>'Identifier', :display=>'private')
+               
+    
+              
+              
+            
+              t.emails(:type=>'text', :multiple=>'true', :label=>'Email', :display=>'private')
+              
+              
+              t.nationality(:type=>'country', :label=>'Nationality', :display=>'private')
+              t.rec_class(:type=>'hidden', :value=>'Orgunit', :display=>'public')
+              
+              
+              t.date_foundation(:type=>'date', :label=>'Foundation date', :display=>'private')
+              t.date_dissolution(:type=>'date', :label=>'Dissolution date', :display=>'private')
+              t.phones(:type=>'text', :multiple=>true, :label=>'Phone', :display=>'private')
+              
+              t.notes(:type=>'text', :multiple=>true, :label=>'Note', :display=>'private')
+              
+             
+                
+              t.urls(:type=>'text', :multiple=>true, :label=>'Web page', :display=>'private')
+              
+          }
+          
+         
+      
+    
+    end
+    
+    return builder.doc
+
+  end
 
   
 end

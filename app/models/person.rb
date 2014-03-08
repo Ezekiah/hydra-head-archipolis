@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 require 'datastreams/person_metadata'
 
 class Person < ActiveFedora::Base
@@ -45,8 +47,68 @@ class Person < ActiveFedora::Base
     
     
     
-  def as_json(options={})
-    {}
+  def self.xml_form
+    builder = Nokogiri::XML::Builder.new do |t|
+     
+         
+         t.person{
+
+             t.rec_id(:type=>'text', :value=>'', :label=>'Identifier', :required=>true, :display=>'private')
+             
+             t.association(:name=>'addresses', :label=>'Address', :display=>'private'){
+              t.properties{ t.property(:name=>'addresses', :class_name=>'Address')}
+              }
+              
+             
+              
+              t.association(:name=>'identifiers', :label=>'Identifier', :display=>'private'){
+               t.properties{t.property(:name=>'identifiers', :class_name=>'Identifier', :display=>'private')}
+              }
+            
+            
+            t.date_birth(:type=>'date', :label=>'Birth date', :required=>true, :display=>'private')
+            t.date_death(:type=>'date', :label=>'Date of death', :required=>true, :display=>'private')
+            t.emails(:type=>'text', :multiple=>'true', :label=>'Email', :required=>true, :display=>'private')
+            
+            t.gender(:type=>'radio_buttons', :collection=>{'homme'=>'0', 'femme'=>1}, :label=>'Sex', :display=>'private')
+            
+            t.name_family(:type=>'text', :label=>'Family name', :display=>'public')
+            t.name_nick(:type=>'text', :label=>'Surname', :display=>'private')
+            t.name_given(:type=>'text', :label=>'Given name', :display=>'public')
+            t.name_prefix(:type=>'text', :label=>'Particle non dropping', :display=>'private')
+            t.name_suffix(:type=>'text', :label=>'Terms of address', :display=>'private')
+            t.nationality(:type=>'country', :label=>'Nationality', :display=>'private')
+            
+            
+             t.association(:name=>'affiliations', :label=>'Affiliation', :display=>'public'){
+               t.properties{t.property(:name=>'affiliations', :class_name=>'Affiliation')}
+              }
+            
+            t.phones(:type=>'text', :label=>'Phone', :display=>'private')
+            
+            t.rec_class(:type=>'hidden', :value=>'Person', :display=>'public')
+           
+            
+            t.notes(:type=>'text', :multiple=>true, :label=>'Note', :display=>'private')
+            
+            t.study_role(:type=>'checkbox', :collection=>{'speaker'=>'speaker', 'investigator'=>'investigator', 
+              'protagonist'=>'protagonist', 'depositor'=>'depositor'}, :label=>'Study role', :display=>'private')
+              
+            t.study_role_description(:type=>'text', :multiple=>false, :label=>'Study role description', :display=>'private')
+            
+        }
+        
+       
+    
+    
+  end
+  
+  return builder.doc
+
+    
+    
+    
+    
   end
   
   

@@ -1,3 +1,5 @@
+#encoding:utf-8
+
 require 'datastreams/study_metadata'
 require 'datastreams/tree_metadata'
 
@@ -5,6 +7,18 @@ require 'datastreams/tree_metadata'
 
 
 class Study < ActiveFedora::Base
+  
+  
+  @@collection_lang = {'fr_FR'=>'fr_FR', 'en_EN'=>'en_EN', }
+      
+  @@collection_partial = {'yes'=>'yes', 'no'=>'no', 'partially'=>'partially'}
+             
+  @@collection_dn = {'yes'=>'yes', 'no'=>'no', 'Don\'t know'=>'dont_know'}
+    
+  @@collection_un = {'yes'=>'yes', 'no'=>'no', 'Unknown'=>'unknown'}
+  
+  
+  
   
   #attr_reader :title
   
@@ -118,33 +132,23 @@ class Study < ActiveFedora::Base
   has_many :ressources, :property => :is_part_of, :through=> :collections
   
   
-  has_many :orgunit_depositors, :class_name => 'Orgunit', :foreign_key => 'orgunit_depositors', :property => :is_part_of
-  has_many :person_depositors, :class_name => 'Person', :foreign_key => 'person_depositors', :property => :is_part_of
+  has_many :depositors, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :orgunit_interviewers, :class_name => 'Orgunit', :foreign_key => 'orgunit_interviewers', :property => :is_part_of
-  has_many :person_interviewers, :class_name => 'Person', :foreign_key => 'person_interviewers', :property => :is_part_of
+  has_many :interviewers, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :orgunit_copyright_holders, :class_name => 'Orgunit', :foreign_key => 'orgunit_depositors', :property => :is_part_of
-  has_many :person_copyright_holders, :class_name => 'Person', :foreign_key => 'person_depositors', :property => :is_part_of
+  has_many :copyright_holders, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :orgunit_authors, :class_name => 'Orgunit', :foreign_key => 'orgunit_authors', :property => :is_part_of
-  has_many :person_authors, :class_name => 'Person', :foreign_key => 'person_authors', :property => :is_part_of
+  has_many :authors, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :orgunit_distributors, :class_name => 'Orgunit', :foreign_key => 'orgunit_distributors', :property => :is_part_of
-  has_many :person_distributors, :class_name => 'Person', :foreign_key => 'person_distributors', :property => :is_part_of
+  has_many :distributors, :property => :is_part_of, :class_name=>"Agent"
  
-  has_many :orgunit_editors, :class_name => 'Orgunit', :foreign_key => 'orgunit_editors', :property => :is_part_of
-  has_many :person_editors, :class_name => 'Person', :foreign_key => 'person_editors', :property => :is_part_of
+  has_many :editors, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :orgunit_contacts, :class_name => 'Orgunit', :foreign_key => 'orgunit_contacts', :property => :is_part_of
-  has_many :person_contacts, :class_name => 'Person', :foreign_key => 'person_contacts', :property => :is_part_of
+  has_many :contacts, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :orgunit_interviewers_unknowns, :class_name => 'Orgunit', :foreign_key => 'orgunit_interviewers_unknowns', :property => :is_part_of
-  has_many :person_interviewers_unknowns, :class_name => 'Person', :foreign_key => 'person_interviewers_unknowns', :property => :is_part_of
+  has_many :interviewers_unknowns, :property => :is_part_of, :class_name=>"Agent"
   
-  has_many :persons, :class_name => 'Person', :property => :is_part_of
-  has_many :orgunits, :class_name => 'Orgunit', :property => :is_part_of
-
+ 
   has_many :affiliations, :class_name => 'Affiliation', :property => :is_part_of
   
   has_many :descriptions, :class_name => 'Description', :property => :is_part_of
@@ -172,39 +176,265 @@ class Study < ActiveFedora::Base
   accepts_nested_attributes_for :projects
   accepts_nested_attributes_for :collections
   accepts_nested_attributes_for :ressources
-  accepts_nested_attributes_for :orgunit_depositors
-  accepts_nested_attributes_for :person_depositors
+  accepts_nested_attributes_for :depositors
   
-  accepts_nested_attributes_for :orgunit_interviewers
-  accepts_nested_attributes_for :person_interviewers
+  accepts_nested_attributes_for :interviewers
+  accepts_nested_attributes_for :interviewers_unknowns
+
   
-  accepts_nested_attributes_for :orgunit_interviewers_unknowns
-  accepts_nested_attributes_for :person_interviewers_unknowns
-  
-  accepts_nested_attributes_for :orgunit_copyright_holders
-  accepts_nested_attributes_for :person_copyright_holders
-  accepts_nested_attributes_for :orgunit_authors
-  accepts_nested_attributes_for :person_authors
-  accepts_nested_attributes_for :orgunit_distributors
-  accepts_nested_attributes_for :person_distributors
-  
-  
+
+  accepts_nested_attributes_for :copyright_holders
+  accepts_nested_attributes_for :authors
+
+  accepts_nested_attributes_for :distributors
   
   accepts_nested_attributes_for :keywords
-  
-  accepts_nested_attributes_for :persons
-  accepts_nested_attributes_for :orgunits
-  
-  accepts_nested_attributes_for :person_contacts
+
+  accepts_nested_attributes_for :contacts
   
   
   
   
-  def as_json(options={})
-    { 
+  def self.xml_form
+    
+    
+    builder = Nokogiri::XML::Builder.new do |t|
+    
+    t.study{
+      
+      
+      
+        t.general{
+          
+       
+            t.rec_id(:type=>'text', :required=>true,  :display=>'public')
+           
+            t.title(:type=>'text', :multiple=>false, :required=>true, :label=>'Study title', :display=>'public')
+           
+          
+            t.association(:type=>'association',:name=>'descriptions', :class_name=>'Description', :required=>true, :display=>'public', :popup=>'false')
+          
+          
+            t.disciplines(:type=>'text', :multiple=>true, :required=>false,  :display=>'public')
+          
+            t.classifications(:type=>'text', :multiple=>true, :required=>false,  :display=>'public' )
+          
+            t.association(:type=>'association',:name=>'keywords', :class_name=>'Keyword', :required=>true, :display=>'public', :popup=>'false')
+            
+            t.coverage_temporal_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public')
+            t.coverage_temporal_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public')
+
+        }
+    
+      
+        t.contributor{
+          
+            t.association(:type=>'association',:name=>'authors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
+            
+            t.association(:type=>'association',:name=>'projects', :class_name=>'Project',  :required=>true, :display=>'public', :popup=>'true')
+
+            t.association(:type=>'association',:name=>'depositors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
+            
+            t.association(:type=>'association',:name=>'distributors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
+            
+            t.association(:type=>'association',:name=>'contacts', :class_name=>'Agent',  :display=>'public', :popup=>'true')
+
+        
+      }
      
+            
+
+        t.universe {
+        
+            t.location_of_units_of_observations('type'=>'checkbox', :collection=>[
+                    ['international','international'], 
+                    ['national','national'],
+                    ['infra-national','infra-national'],
+                    ['Spire identifier', 'hdl'],
+                ], :multiple=>false, :required=>true)
+            
+            t.coverage_spatial_countries('type'=>'country', 'multiple'=>true, :required=>true)
+              
+              
+            t.coverage_spatial_geographics(:type=>'text', :multiple=>true, :required=>true)
+            
+            t.coverage_spatial_units(:type=>'text', :multiple=>true,:required=>true)
+            
+            t.observation_units(:type=>'text', :multiple=>true, :required=>true)
+            
+            t.target_groups(:type=>'text', :multiple=>true, :required=>true)
+            
+            t.documents_date_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public', :required=>false)
+            t.documents_date_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public', :required=>false)
+
+        }
+      
+      
+              
+        t.method_{
+            t.data_collection_date_begin(:type=>'date', :required=>false)
+            t.data_collection_date_end(:type=>'date', :required=>false)
+          
+            t.data_collection_time_dimensions(:type=>'checkbox', :required=>true, :collection=>{
+                'one time'=>'one time', 
+                'one time interview'=>'one time interview',
+                'repeated interview'=>'repeated interview', 
+                'observation ponctuelle'=>'observation ponctuelle', 
+                'observation systématique'=>'observation systématique', 
+                'other'=>'other' 
+            })
+              
+            t.data_collection_modes(:type=>'checkbox', :required=>true, :collection=>{'interview'=>'interview', 
+                'observation'=>'observation', 'content analysis'=>'content analysis', 
+                'questionnaire'=>'questionnaire', 'other'=>'other'}
+            )
+                            
+            t.data_collection_samplings(:type=>'text', :multiple=>true, :required=>false)
+                
+               
+            t.data_collection_methods(:type=>'checkbox', :required=>true, :collection => {
+                'questionnaire'=>'questionnaire', 
+                'directive interview'=>'directive interview', 
+                'semi-directive interview'=>'semi-directive interview',
+                'none directive interview'=>'none directive interview', 
+                'participant observation'=>'participant observation', 
+                'experimentation'=>'experimentation', 
+                'content analysis'=>'content analysis', 
+                'other'=>'other' 
+             })
+             
+             t.data_collection_context(:type=>'text', :multiple=>false)
+             t.data_collection_extent(:type=>'text_area', :multiple=>false, :required=>true)
+               
+             t.data_collection_documents_types(:type=>'checkbox',:collection => {
+                "collection"=>"collection", 
+                "dataset"=>"dataset", 
+                "still image"=>"still image", 
+                "interactive resource"=>"interactive resource", 
+                "moving image"=>"moving image", 
+                "physical object"=>"physical object", 
+                "software"=>"software", 
+                "sound"=>"sound", 
+                "text"=>"text"
+             })
+              
+            
+            t.data_collection_has_media(:type=>'select', :collection=>@@collection_dn, :required=>true,)
+            
+            
+
+            t.association(:type=>'association',:name=>'interviewers', :class_name=>'Agent', :required=>true,:popup=>'true')
+               
+              
+            t.association(:type=>'association',:name=>'interviewers_unknowns', :class_name=>'Agent', :collection=>@@collection_un, :required=>true, :popup=>'true')
+           
+        
+        }
+      
+      
+        t.edition { 
+        
+            t.access_conditions(:type=>'text_area', :multiple=>true, :rows=>3)
+  
+            t.edition_first_date(:type=>'date', :required=>true)
+            t.edition_last_date(:type=>'date', :required=>false)
+          
+          
+          
+            t.association(:type=>'association',:name=>'copyright_holders', :class_name=>'Agent', :display=>'public', :popup=>'true')
+            
+            t.softwares(:type=>'text', :multiple=>true, :required=>false)
+                        
+            t.association(:type=>'association',:name=>'editors',  :display=>'public', :class_name=>'Agent', :popup=>'true')
+                      
+          
+        }
+      
+      
+        t.corpus{
+                  
+            t.archive_accessed(:type=>"select", :required=>true, :collection=>@@collection_partial, :required=>true)
+                      
+            t.archive_completeness(:type=>'text_area', :required=>true, :rows=>'3')
+                      
+            t.archive_arrangement_level(:type=>"select", :required=>true, :collection=>{
+                'classed'=>'classed', 
+                'Partially classed'=>'Partially classed',
+                'heterogeneous'=>'heterogeneous',
+                'bulk'=>'bulk'
+            })
+                    
+            t.archive_arrangement_level_description(:type=>'text_area', :multiple=>false, :required=>false)
+            
+            t.archive_preservation_level(:type=>'select', :required=>true, :collection=>{'good'=>'good', 
+                'average'=>'average', 'bad'=>'bad'})
+                        
+            t.archive_preservation_level_description(:type=>'text_area', :rows=>'3', :required=>false)
+            
+            t.archive_location(:type=>'text', :multiple=>false, :required=>true)
+            
+            t.archive_extent(:type=>'text_area', :multiple=>false, :required=>false)
+                    
+            t.archive_consentement(:type=>"select", :required=>true, :collection=>@@collection_partial.merge(Hash.new('reserves its response'=>'reserves its response')))
+                    
+            t.archive_agreememt(:type=>"select", :required=>true, :collection=>@@collection_dn)
+                    
+ 
+
+            #t.documents_count(:type=>'hidden')
+            
+                   
+        }
+          
+          
+          
+        t.analyse{
+            
+            t.analysis_has_transcription(:type=>'checkbox', :collection=>@@collection_dn, :required=>true)
+            
+            t.analysis_transcription(:type=>"text")
+            t.analysis_anonymization(:type=>'select', :collection=>@@collection_dn)
+            
+            t.analysis_types(:type=>'checkbox', :collection => {
+                'interpretative'=>'interpretative', 
+                'typilogical '=>'typilogical',
+                'lexicometric'=>'lexicometric', 
+                'coding'=>'coding', 
+                'qca'=>'qca', 
+                'other'=>'other' }, :multiple=>false
+            )
+            
+            
+            t.data_languages(:type=>'language_list', :multiple=>true,  :required=>true, :display=>'public') 
+
+            t.documentation_languages(:type=>'language_list', :multiple=>false,  :required=>true, :display=>'public', :multiple=>true) 
+            
+            t.publication_citation(:type=>'text_area', :multiple=>true, :rows=>3)
+            
+            t.publications(:type=>'text', :multiple=>true, :display=>'private')
+            
+                    
+            
+        
+        }
+       
+       
+       
+       t.notes{
+        
+          t.association(:type=>'association',:name=>'notes',  :display=>'public', :popup=>'false', :class_name=>'Note', :required=>true)
+       }
+      
       
     }
+     
+      
+      
+    
+    end
+    
+    return builder.doc
+    
   end
   
 end
