@@ -6,10 +6,11 @@
 
   
   - builder = Nokogiri::HTML::Builder.new do |doc|
+    
     - tags = @xml.xpath(xpath).each do |node|
       - root_node = node.parent
       - root_node_name = root_node.name.to_s
-      - node_name = node.name.to_s == 'association' ? node.attribute('name').to_s : node.attribute('name').to_s
+      - node_name = node.name.to_s == 'association' ? node.attribute('name').to_s : node.name.to_s
       - node_type = node.attribute('type').to_s
       - help = t(root_node_name+'.'+node_name+'.help')
       - required = !!node.attribute('required')
@@ -19,63 +20,81 @@
       - title_help = t(root_node_name+'.'+node_name+'.help')
       - is_complex_assoc = node.search('.//property').size.to_s == '2'
       - class_name = node.attribute('class_name').to_s
-
       
+      - edit_form = session[:current_study_id] != nil
+      
+
       - if node.attribute('display').to_s != 'private'
       
        
         - if node_type == 'association'
-          
-          
           - add_button_list = call_jst('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'), type:'association' })
           - is_complex_assoc = class_name.to_s == 'Agent' ? true : false
           - assoc_type = is_complex_assoc==true ? 'complex': 'simple'
           - has_popup = node.attribute('popup').to_s == 'true' ? 'launch_popup' : 'no_popup'
-         
-         
+          - link = link_to_add_association(' ', f, node_name.to_sym, 
+            :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>false, :xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
+          - link = Nokogiri::HTML(link)
+          - a = link.css('a[@class="add_fields"]').attribute('data-association-insertion-template')
+        
+        
+ 
+          - if edit_form && fedora_object != false
+            - values = fedora_object.send(node_name)
+            = debug(values)
+            - if ! values.empty?
+              
+              - values.each_with_index do |value, index|
+                
+                = call_jst('edit-box.jst.eco')
+             
+              != link = link_to_add_association(' ', f, node_name.to_sym, 
+                :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>value, :xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
+            - else
+              - link = link_to_add_association(' ', f, node_name.to_sym, 
+                  :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>false, :xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
+              - link = Nokogiri::HTML(link)
+              - a = link.css('a[@class="add_fields"]').attribute('data-association-insertion-template')
+          - else
+            - link = link_to_add_association(' ', f, node_name.to_sym, 
+                :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>false, :xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
+            = link = Nokogiri::HTML(link)
+            
+          
+          
+          
           %div{:id=>node.attribute('name'), 'data-singular-name'=>t('edit-box.'+node_name.singularize), 'data-required'=>required, :class=>'association_'+assoc_type+' '+has_popup}
             
-            = f.input node_name, :wrapper => :append, :label => label do
-              = #content_tag node_name,  label, class: "add-on"  
+            = f.input node_name, :wrapper => :append, :label => label, :required=>required do
               - if is_complex_assoc
                 != add_button_list
+                != Nokogiri::HTML(a.to_s).css('a[@class="add_fields"]').to_html
               - else
                 != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+                != link
+                
               
               != gen_help_button({title_help:t(root_node_name+'.'+node.attribute('name')+'.help')} )
-              
-            
-            - link = link_to_add_association(' ', f, node_name.to_sym, 
-              :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>false, :xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
 
-
-            - html = Nokogiri::HTML(link)   
-            - a = html.css('a')
-            
-            
-            
             %div.form-edit-box
               !=# a[0]['data-association-insertion-template']
               
-            
-            != link
-              
-
-            %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>required, :name=>'validation-'+node_name, :class=>'hidden-association'}
+            %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>required==true ? 'required' : '', :value=>'', :name=>'validation-'+node_name, :class=>'hidden-association'}
             
            
          
-        - if node.attribute('type').to_s == 'text' 
-        
+        - if node.attribute('type').to_s == 'text'
+          
           = f.input node.name, :wrapper => :prepend_append, :label => label, :required=>required do
-            = #content_tag node.name,  label, class: "add-on"
+            = #content_tag node.name, label, class: "add-on"
+            
+            
             
             - if fedora_object != false
             
-              - if fedora_object.class.method_defined? node_name 
+              - if fedora_object.class.method_defined? node_name
               
-                - values = [fedora_object.send(node_name)]
-                
+                - values = fedora_object.send(node_name)
                
               
                 - values.each_with_index do |value, index|
@@ -87,11 +106,12 @@
                         != call_jst('button_add.jst.eco', {type:'single', name:node_name})
                         != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
                     - else
-                      != gen_remove_button('button_remove.jst.eco' )
+                      != call_jst('button_remove.jst.eco' )
                     
                    
             -else
               = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
+           
             
             
              
@@ -117,10 +137,9 @@
           = f.input node.name, :required=>required, :label=>label, :required=>required, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons
         
         - if node.attribute('type').to_s == 'country'
-          = f.input node_name, :label=>label,:required=>required, :input_html=>{'multiple'=>is_multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
-          != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
-          
-        
+          - label =  node.name + '' + gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')}  ) 
+          = f.input node_name, :label=>label.html_safe,:required=>required, :input_html=>{'multiple'=>is_multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
+     
         - if node.attribute('type').to_s == 'date'
           = f.input node_name, :wrapper => :prepend_append, :required=>required, :label=>label do
             

@@ -11,6 +11,14 @@ require 'datastreams/project_metadata'
 require 'datastreams/note_metadata'
 
 
+@@collection_lang = {'fr_FR'=>'fr_FR', 'en_EN'=>'en_EN', }
+      
+@@collection_partial = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'partially'=>I18n.t('partially')}
+             
+@@collection_dn = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Don\'t know'=>I18n.t('dont_know')}
+    
+@@collection_un = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Unknown'=>I18n.t('unknown')}
+
 
 
 class StudyStepsController < ApplicationController
@@ -36,7 +44,7 @@ class StudyStepsController < ApplicationController
   end
   
   def update 
-
+    
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
     @study = Study.find(session[:current_study_id])
@@ -45,7 +53,9 @@ class StudyStepsController < ApplicationController
     
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
     
-
+    
+    
+    
     render_wizard @study
     
   end

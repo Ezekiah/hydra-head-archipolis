@@ -11,11 +11,11 @@ class Study < ActiveFedora::Base
   
   @@collection_lang = {'fr_FR'=>'fr_FR', 'en_EN'=>'en_EN', }
       
-  @@collection_partial = {'yes'=>'yes', 'no'=>'no', 'partially'=>'partially'}
+  @@collection_partial = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'partially'=>I18n.t('partially')}
              
-  @@collection_dn = {'yes'=>'yes', 'no'=>'no', 'Don\'t know'=>'dont_know'}
+  @@collection_dn = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Don\'t know'=>I18n.t('dont_know')}
     
-  @@collection_un = {'yes'=>'yes', 'no'=>'no', 'Unknown'=>'unknown'}
+  @@collection_un = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Unknown'=>I18n.t('unknown')}
   
   
   
@@ -231,13 +231,7 @@ class Study < ActiveFedora::Base
           
             t.association(:type=>'association',:name=>'authors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
             
-            t.association(:type=>'association',:name=>'projects', :class_name=>'Project',  :required=>true, :display=>'public', :popup=>'true')
-
-            t.association(:type=>'association',:name=>'depositors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
             
-            t.association(:type=>'association',:name=>'distributors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
-            
-            t.association(:type=>'association',:name=>'contacts', :class_name=>'Agent',  :display=>'public', :popup=>'true')
 
         
       }

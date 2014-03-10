@@ -108,6 +108,9 @@ class StudiesController < ApplicationController
         format.json { render json: @study.errors, status: :unprocessable_entity }
       end
     end
+    
+    
+    
   end
 
   # PATCH/PUT /studies/1

@@ -191,20 +191,17 @@ $(document).ready ->
    
 
     className = $(this).attr("id").replace("add-", "")
-      
-    console.log($('a.add_fields'))
-      
-    console.log("person_" + className)
-    console.log($("a[data-associations='person_" + className + "']"))
+    zone = $('#'+className)
+    
     
     $(".choose_person").unbind().click ->
-      $("a[data-associations='" + className + "']").trigger "click"
+      zone.find("a[data-associations='persons']").trigger "click"
       return false
         
       return
 
     $(".choose_orgunit").unbind().click ->
-      $("a[data-associations='" + className + "']").trigger "click"
+      zone.find("a[data-associations='orgunits']").trigger "click"
       return false
       return
     
@@ -334,13 +331,21 @@ jQuery ($) ->
         else if $element.attr("type") == 'checkbox'
         
           $element.closest('.control-group').find('.control-label').append(error)
-          console.log($element.parents())
           
+          
+        else if $element.attr("type") == 'text'
+         $element.parent().append(error)
         else 
           $element.parent().append(error)
         
+          <input type="text" value="[]" required="required" placeholder="Type something..." 
+          name="study[observation_units][]" 
+          multiple="multiple" id="study_observation_units" class="string required" data-original-title="" title="">
           
- 
+          
+          <input type="text" value="" required="required" placeholder="Click and choose a date" 
+          name="study[documents_date_begin]" id="study_documents_date_begin" 
+          data-provide="datepicker" data-date-view-mode="years" data-date-min-view-mode="years" data-date-format="yyyy" class="span3">
         
         return
         
