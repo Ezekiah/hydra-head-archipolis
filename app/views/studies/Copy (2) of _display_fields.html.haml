@@ -1,0 +1,207 @@
+%fieldset
+  -
+  - @xml = Nokogiri::XML.parse(xml)
+  - builder = Nokogiri::HTML::Builder.new do |doc|
+    - tags = @xml.xpath(xpath).each do |node|
+      - root_node = node.parent
+      - root_node_name = root_node.name.to_s
+      - node_name = node.name.to_s == 'association' ? node.attribute('name').to_s : node.name.to_s
+     
+      - help = t(root_node_name+'.'+node_name+'.help')
+      - required = !!node.attribute('required')
+      - label = ( t(root_node_name+'.'+node_name+'.label')).html_safe
+      - is_multiple = !!node.attribute('multiple') == true ? 'multiple' : false
+      - prompt = node.attribute('prompt') == nil ? t('Please select') : node.attribute('prompt')
+      - title_help = t(root_node_name+'.'+node_name+'.help')
+      - is_complex_assoc = node.search('.//property').size.to_s == '2'
+      
+      
+      
+      - if node.attribute('display').to_s != 'private'
+      
+      
+        - if node.name == 'association'
+         
+        
+          -properties = node.xpath("properties//property")
+
+          - add_button_list = call_jst('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'),type:'association' })
+          - is_complex_assoc = node.search('.//property').size.to_s == '2'
+          - assoc_type = is_complex_assoc==true ? 'complex': 'simple'
+          - has_popup = node.attribute('popup').to_s == 'true' ? 'launch_popup' : 'no_popup'
+          
+          %div{:id=>node.attribute('name'), 'data-singular-name'=>t('edit-box.'+node_name.singularize), 'data-required'=>required, :class=>'association_'+assoc_type+' '+has_popup}
+            - class_name = node.search('.//property').attribute('class_name').to_s
+            = f.input node_name, :wrapper => :append, :label => label do
+              = #content_tag node_name,  label, class: "add-on"  
+              - if is_complex_assoc
+                != add_button_list
+              - else
+                != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+              
+              != gen_help_button({title_help:t(root_node_name+'.'+node.attribute('name')+'.help')} )
+              
+              
+             
+
+              
+              - properties.each do |prop|
+                
+                - prop_name = prop.attribute('name').to_s
+             
+                - class_name=prop.attribute('class_name').to_s().downcase
+                - metadata_class = class_name.capitalize+'Metadata'
+                
+                
+                
+                = debug metadata_class
+                
+                /#ADD EDIT-BOXES
+                - if fedora_object != false
+                
+                  -values = fedora_object.send(prop_name)
+                  
+                  -values.each_with_index do |value,index|
+                    != call_jst('edit-box.jst.eco', {uid2:SecureRandom.uuid, label_link:t('edit-box.'+node_name.singularize)+(index+1).to_s})
+                  
+                
+         
+                
+                  / Get values and display boxes
+                  - if (fedora_object.respond_to? node_name) && ( fedora_object.send(node_name).length > 0)
+                    -values.each do |value|
+    
+                      - link = link_to_add_association(' ', f, prop_name.to_sym, 
+                        :partial=>'/studies/display_fields', 
+                        :render_options => {:locals => {:xml=>Object.const_get(metadata_class).xml_form.to_xml, :fedora_object=>value, :xpath=>'/'+class_name.to_s.singularize+'/*'}, },:data => {"association-insertion-method" => "before" },)
+                  
+                      
+                      - html = Nokogiri::HTML(link)   
+                      - a = html.css('a')
+    
+                      %div.form-edit-box
+                        != a[0]['data-association-insertion-template']
+                        
+                      
+                      - link
+                
+                
+                - else
+                  
+                
+                - link = link_to_add_association(' ', f, prop_name.to_sym, 
+                  :partial=>'/studies/display_fields', 
+                  :render_options => {:locals => {:xml=>Object.const_get(metadata_class).xml_form.to_xml, :fedora_object=>false, :xpath=>'/'+class_name.to_s.singularize+'/*'}, },:data => {"association-insertion-method" => "before" },)
+              
+                - html = Nokogiri::HTML(link)   
+                - a = html.css('a')
+              
+                - if node.attribute('popup').to_s == 'false'
+                  != a[0]['data-association-insertion-template']
+                    
+               
+                =link
+            
+                %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>required, :name=>'validation-'+node_name, :class=>'hidden-association'}
+            
+           
+         
+        - if node.attribute('type').to_s == 'text' 
+        
+          = f.input node.name, :wrapper => :prepend_append, :label => label, :required=>required do
+            = #content_tag node.name,  label, class: "add-on"
+            
+            - if fedora_object != false
+            
+              - if fedora_object.class.method_defined? node_name 
+              
+                - values = [fedora_object.send(node_name)]
+                
+               
+              
+                - values.each_with_index do |value, index|
+                  
+                  %div{:class=>'input-append input-prepend', :style=>'display:block;'}
+                    = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>value, 'placeHolder'=>t("type_something"), :required=>required
+                    - if index == 0
+                      - if is_multiple
+                        != call_jst('button_add.jst.eco', {type:'single', name:node_name})
+                        != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
+                    - else
+                      != gen_remove_button('button_remove.jst.eco' )
+                    
+                   
+            -else
+              = f.input_field node.name, 'multiple'=>is_multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
+            
+            
+             
+                
+            
+                                             
+        - if node.attribute('type').to_s == 'hidden'          
+          = f.input node.name, :input_html => { :value => node.attribute('value') }, :as => :hidden
+          
+          
+          
+        - if node.attribute('type').to_s == 'checkbox'
+          -collection = Hash.new
+          -eval(node.attribute('collection')).each{|k,v| collection[k.to_s] = v.to_s}
+          - label =  node.name + '' +gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')}  ) 
+          
+          != f.input node.name,  :wrapper=>"prepend_append",:label=>label.html_safe, :collection => collection, :required=>required, input_html: { :required => required }, :as => :check_boxes
+            
+            
+            
+        
+        - if node.attribute('type').to_s == 'radio_buttons'
+          = f.input node.name, :required=>required, :label=>label, :required=>required, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons
+        
+        - if node.attribute('type').to_s == 'country'
+          = f.input node_name, :label=>label,:required=>required, :input_html=>{'multiple'=>is_multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
+          != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
+          
+        
+        - if node.attribute('type').to_s == 'date'
+          = f.input node_name, :wrapper => :prepend_append, :required=>required, :label=>label do
+            
+            = f.text_field(node_name, options = {'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'value'=>'', 'class'=>'span3', 'placeHolder'=>t("date_click")} )
+
+            - if is_multiple
+              != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
+            
+            != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )    
+             
+              
+        - if node.attribute('type').to_s == 'language_list'
+          = f.input node.name, :wrapper=>'append', :required=>required do
+            = f.select node.name, grouped_options_for_select(@LOCATIONS), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+            !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )            
+  
+        
+        
+        - if node.attribute('type').to_s == 'select'
+          -collection = Hash.new
+          -eval(node.attribute('collection')).each{|k,v| collection[k.to_s] = v.to_s}
+          
+
+          = f.input node.name, :wrapper => :prepend_append, :label => label do
+            = f.select node.name, collection, {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+            !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )  
+              
+
+          
+        - if node.attribute('type').to_s == 'text_area'
+          - label =  node.name + gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} ) 
+           
+          = f.input node.name, :label=>label.html_safe do
+            
+            = f.text_area node_name, :value=>'', :multiple=>is_multiple, :required=>node.attribute('required'), :class=>'span3',:placeHolder=>t("type_something")
+            
+          
+            - if is_multiple
+              != call_jst('button_add.jst.eco', {type:'single', name:node_name})
+          
+                         
+                                     
+                                      

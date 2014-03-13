@@ -1,0 +1,1 @@
+<button class="delete btn btn-medium" data-action="delete"> <i class="fa fa-minus"></i></button>
