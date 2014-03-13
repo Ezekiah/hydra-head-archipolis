@@ -10,6 +10,15 @@
 # windows doesn't properly require hydra-head (from the gemfile), so we need to require it explicitly here:
 require 'hydra/head' unless defined? Hydra
 
+
+class String
+    def to_bool
+        return true if self == true || self =~ (/(true|t|yes|y|1)$/i)
+        return false if self == false || self.blank? || self =~ (/(false|f|no|n|0)$/i)
+        raise ArgumentError.new("invalid value for Boolean: \"#{self}\"")
+    end
+end
+
 if Hydra.respond_to?(:configure)
   Hydra.configure(:shared) do |config|
     # This specifies the solr field names of permissions-related fields.

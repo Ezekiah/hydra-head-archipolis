@@ -1,5 +1,6 @@
 #encoding:utf-8
 require 'datastreams/orgunit_metadata'
+require 'datastreams/metadatas.rb'
 
 class Orgunit < ActiveFedora::Base
   
@@ -19,8 +20,9 @@ class Orgunit < ActiveFedora::Base
   has_attributes :phones, datastream: 'descMetadata', multiple: true
   has_attributes :urls, datastream: 'descMetadata', multiple: true
   
-  has_attributes :rec_class, datastream: 'descMetadata', multiple: false
-  has_attributes :rec_id, datastream: 'descMetadata', multiple: false
+  
+  
+  include Common_metadata
   
   has_attributes :notes, datastream: 'descMetadata', multiple: true
  
@@ -64,6 +66,7 @@ class Orgunit < ActiveFedora::Base
               
               t.nationality(:type=>'country', :label=>'Nationality', :display=>'private')
               t.rec_class(:type=>'hidden', :value=>'Orgunit', :display=>'public')
+              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
               
               
               t.date_foundation(:type=>'date', :label=>'Foundation date', :display=>'private')
@@ -75,6 +78,7 @@ class Orgunit < ActiveFedora::Base
              
                 
               t.urls(:type=>'text', :multiple=>true, :label=>'Web page', :display=>'private')
+              
               
           }
           

@@ -26,6 +26,10 @@ en:
       orgunit: "orgunit"
       project: "projet"
       
+      author: author
+      depositor: depositor
+      
+      
       
       text: "text"
       lang: "lang"

@@ -10,6 +10,8 @@ require 'datastreams/award_metadata'
 require 'datastreams/project_metadata'
 require 'datastreams/note_metadata'
 
+require 'datastreams/metadatas.rb'
+
 
 @@collection_lang = {'fr_FR'=>'fr_FR', 'en_EN'=>'en_EN', }
       
@@ -47,6 +49,9 @@ class StudyStepsController < ApplicationController
     
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
+    
+    
+    
     @study = Study.find(session[:current_study_id])
 
     @study.update(sub_obj_non_attributes.to_h)
@@ -70,9 +75,7 @@ private
 
       #recover all _attributes (nested forms)
       obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
-      
-
-      
+  
       #foreach association
       obj_attributes.each do |key,value|
          
@@ -91,30 +94,51 @@ private
            sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
            
            
-
+           debugger
+           
            if !sub_obj_non_attributes.empty?
              
-             #debugger
+    
              if v.has_key?("rec_class")
                  
-                 rec_class = eval(v['rec_class'])
+                 rec_class = Object.const_get(v['rec_class'])
                  
-                
-                 newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
-                
                  
+                 
+                 if v.has_key?("rec_id") && v["rec_id"]!=""
+                     updateObject = Object.const_get(v['rec_class']).find(v['rec_id'])
+                     updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+                     
+                     debugger
+                     
+                     
+                     if !sub_obj_attributes.empty?
+               
+                        traverse_study_attr(sub_obj_attributes, updateObject)
+                       
+                       
+                     end
+                 
+                 else
+                    
+                    newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+                    object.send(model_property) << newObject
+                    
+                    debugger
+                    
+                    if !sub_obj_attributes.empty?
+               
+                        traverse_study_attr(sub_obj_attributes, newObject)
+                       
+                       
+                     end
+                 end
+
             
              end
                         
 
-             object.send(model_property) << newObject
-            
-             if !sub_obj_attributes.empty?
-               
-                traverse_study_attr(sub_obj_attributes, newObject)
-               
-               
-             end
+             
             
             
            end

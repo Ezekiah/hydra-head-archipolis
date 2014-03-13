@@ -1,4 +1,6 @@
 require 'datastreams/affiliation_metadata'
+require 'datastreams/metadatas.rb'
+
 
 class Affiliation < ActiveFedora::Base
     has_metadata 'descMetadata', type:AffiliationMetadata
@@ -6,8 +8,8 @@ class Affiliation < ActiveFedora::Base
     has_attributes :acronym, datastream: 'descMetadata', multiple: false
     has_attributes :name, datastream: 'descMetadata', multiple: false
     
-    has_attributes :rec_id, datastream: 'descMetadata', multiple: false
-    has_attributes :rec_class, datastream: 'descMetadata', multiple: false
+    include Common_metadata
+    
     has_attributes :role, datastream: 'descMetadata', multiple: false
 
     belongs_to :Person, :property => :is_member_of_collection
@@ -30,6 +32,7 @@ class Affiliation < ActiveFedora::Base
               t.role(:type=>'text', :label=>'Role', :display=>'public')
              
               t.rec_class(:type=>'hidden', :value=>'Affiliation', :display=>'public')
+              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
           
           }
        

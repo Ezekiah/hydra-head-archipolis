@@ -1,4 +1,5 @@
 require 'datastreams/project_metadata'
+require 'datastreams/metadatas.rb'
 
 class Project < ActiveFedora::Base
   
@@ -9,7 +10,8 @@ class Project < ActiveFedora::Base
     has_attributes :acronym, datastream: 'descMetadata', multiple: false
     has_attributes :date_begin, datastream: 'descMetadata', multiple: false
     has_attributes :date_end, datastream: 'descMetadata', multiple: false
-    has_attributes :rec_class, datastream: 'descMetadata', multiple: false
+    
+    include Common_metadata
     
     belongs_to :study, :property=>:is_part_of
     
@@ -65,6 +67,7 @@ class Project < ActiveFedora::Base
               
               t.date_begin(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
               t.date_end(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
+              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
               
 
            }

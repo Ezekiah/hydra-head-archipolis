@@ -11,6 +11,7 @@ class ProjectMetadata < ActiveFedora::OmDatastream
     t.date_begin
     t.date_end
     t.funding_agent_names
+    t.rec_id
 
 
   end

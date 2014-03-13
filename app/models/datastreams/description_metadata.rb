@@ -5,6 +5,7 @@ class DescriptionMetadata < ActiveFedora::OmDatastream
          t.language
          t.value
          t.rec_class
+         t.rec_id
 
   end
   

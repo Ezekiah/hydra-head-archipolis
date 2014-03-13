@@ -1,4 +1,6 @@
 require 'datastreams/ressource_metadata'
+require 'datastreams/metadatas.rb'
+
 
 class Ressource < ActiveFedora::Base
     has_metadata 'descMetadata', type:RessourceMetadata
@@ -30,7 +32,9 @@ class Ressource < ActiveFedora::Base
     has_attributes :processing_software_name, datastream: 'descMetadata', multiple: false
     has_attributes :rec_created_date, datastream: 'descMetadata', multiple: false
 
-    has_attributes :rec_id, datastream: 'descMetadata', multiple: false
+    include Common_metadata
+    
+    
     has_attributes :rec_modified_date, datastream: 'descMetadata', multiple: false
     has_attributes :rec_type, datastream: 'descMetadata', multiple: false
     has_attributes :subject_country, datastream: 'descMetadata', multiple: false

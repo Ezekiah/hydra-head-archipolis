@@ -1,5 +1,5 @@
 #encoding:utf-8
-
+require 'datastreams/metadatas.rb'
 require 'datastreams/person_metadata'
 
 class Person < ActiveFedora::Base
@@ -29,9 +29,10 @@ class Person < ActiveFedora::Base
   
     has_many :studies, :property=>:is_member_of_collection
     
-    has_attributes :rec_class, datastream: 'descMetadata', multiple: false
-    has_attributes :rec_id, datastream: 'descMetadata', multiple: false
-   
+    include Common_metadata
+    
+    
+    
     has_attributes :rec_permission, datastream: 'descMetadata', multiple: true
     
     belongs_to :study, :property=>'is_member_of_collection'
@@ -87,6 +88,7 @@ class Person < ActiveFedora::Base
             t.phones(:type=>'text', :label=>'Phone', :display=>'private')
             
             t.rec_class(:type=>'hidden', :value=>'Person', :display=>'public')
+            t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
            
             
             t.notes(:type=>'text', :multiple=>true, :label=>'Note', :display=>'private')

@@ -123,7 +123,9 @@ class Study < ActiveFedora::Base
   has_attributes :documentation_languages, datastream: 'descMetadata', multiple: true
   has_attributes :analysis_types, datastream: 'descMetadata', multiple: true
   has_attributes :analysis_anonymization, datastream: 'descMetadata', multiple: false
-  has_attributes :publication_citation, datastream: 'descMetadata', multiple: true 
+  has_attributes :publication_citation, datastream: 'descMetadata', multiple: true
+  
+  has_attributes :rec_id, datastream: 'descMetadata', multiple: false 
   
   
   
@@ -132,21 +134,21 @@ class Study < ActiveFedora::Base
   has_many :ressources, :property => :is_part_of, :through=> :collections
   
   
-  has_many :depositors, :property => :is_part_of, :class_name=>"Agent"
+  has_many :depositors, :property => :is_part_of, :class_name=>"Depositor"
   
-  has_many :interviewers, :property => :is_part_of, :class_name=>"Agent"
+  has_many :interviewers, :property => :is_part_of, :class_name=>"Interviewer"
   
-  has_many :copyright_holders, :property => :is_part_of, :class_name=>"Agent"
+  has_many :copyright_holders, :property => :is_part_of, :class_name=>"Copyright_holder"
   
-  has_many :authors, :property => :is_part_of, :class_name=>"Agent"
+  has_many :authors, :property => :is_part_of, :class_name=>"Author"
   
-  has_many :distributors, :property => :is_part_of, :class_name=>"Agent"
+  has_many :distributors, :property => :is_part_of, :class_name=>"Distributor"
  
-  has_many :editors, :property => :is_part_of, :class_name=>"Agent"
+  has_many :editors, :property => :is_part_of, :class_name=>"Editor"
   
-  has_many :contacts, :property => :is_part_of, :class_name=>"Agent"
+  has_many :contacts, :property => :is_part_of, :class_name=>"Contact"
   
-  has_many :interviewers_unknowns, :property => :is_part_of, :class_name=>"Agent"
+  has_many :interviewers_unknowns, :property => :is_part_of, :class_name=>"Interviewerun"
   
  
   has_many :affiliations, :class_name => 'Affiliation', :property => :is_part_of
@@ -167,8 +169,7 @@ class Study < ActiveFedora::Base
   end
   
   
-  
-  
+
   
   
   accepts_nested_attributes_for :descriptions
@@ -227,14 +228,27 @@ class Study < ActiveFedora::Base
         }
     
       
-        t.contributor{
+         t.contributor{
           
-            t.association(:type=>'association',:name=>'authors', :class_name=>'Agent',  :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association',:name=>'authors', :class_name=>'Author', :required=>true, :display=>'public', :popup=>'true')
+             
             
             
+            t.association(:type=>'association',:name=>'projects', :class_name=>'Project', :required=>true, :display=>'public', :popup=>'true')
+              
+            
+            
+            t.association(:type=>'association',:name=>'depositors', :class_name=>'Depositor', :required=>true, :display=>'public', :popup=>'true')
+               
+            
+             t.association(:type=>'association',:name=>'distributors', :class_name=>'Distributor', :required=>true, :display=>'public', :popup=>'true')
+      
+            
+            t.association(:type=>'association',:name=>'contacts', :class_name=>'Contact', :display=>'public', :popup=>'true')
 
         
       }
+     
      
             
 
@@ -297,8 +311,8 @@ class Study < ActiveFedora::Base
                 'other'=>'other' 
              })
              
-             t.data_collection_context(:type=>'text', :multiple=>false)
-             t.data_collection_extent(:type=>'text_area', :multiple=>false, :required=>true)
+             t.data_collection_extent(:type=>'text', :multiple=>false)
+             t.data_collection_context(:type=>'text_area', :multiple=>false, :required=>true)
                
              t.data_collection_documents_types(:type=>'checkbox',:collection => {
                 "collection"=>"collection", 
@@ -317,10 +331,10 @@ class Study < ActiveFedora::Base
             
             
 
-            t.association(:type=>'association',:name=>'interviewers', :class_name=>'Agent', :required=>true,:popup=>'true')
+            t.association(:type=>'association',:name=>'interviewers', :class_name=>'Interviewer', :required=>true,:popup=>'true')
                
               
-            t.association(:type=>'association',:name=>'interviewers_unknowns', :class_name=>'Agent', :collection=>@@collection_un, :required=>true, :popup=>'true')
+            t.association(:type=>'association',:name=>'interviewers_unknowns', :class_name=>'Interviewerun', :collection=>@@collection_un, :required=>true, :popup=>'true')
            
         
         }

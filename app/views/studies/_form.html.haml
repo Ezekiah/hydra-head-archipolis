@@ -21,7 +21,7 @@
   = yield f
   %fieldset
     %legend= t('general.label')
-    = render :partial=>'display_fields', :locals => {:f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/general/*", :fedora_object=>false}
+    = render :partial=>'display_fields', :locals => {:edit=>false, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/general/*", :fedora_object=>false}
     %button#button_submit.add.btn.btn-primary{:type => "submit"}
       Next
       %i.icon-white.icon-arrow-right

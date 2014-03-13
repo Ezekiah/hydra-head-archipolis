@@ -1,11 +1,12 @@
 require 'datastreams/description_metadata'
+require 'datastreams/metadatas.rb'
 
 class Keyword < ActiveFedora::Base
     has_metadata 'descMetadata', type:KeywordMetadata
     
     has_attributes :language, datastream: 'descMetadata', multiple: false
     has_attributes :value, datastream: 'descMetadata', multiple: false
-    has_attributes :rec_class, datastream: 'descMetadata', multiple: false
+    include Common_metadata
     
     belongs_to :Study, :property => :is_member_of_collection
     
@@ -20,6 +21,7 @@ class Keyword < ActiveFedora::Base
             t.language(:type=>'language_list', :multiple=>'false', :required=>true, :label=>'Language')
             t.value(:type=>'text_area', :required=>true, :label=>'Keyword')
             t.rec_class(:type=>'hidden', :value=>'Keyword')
+            t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
             
         }
           

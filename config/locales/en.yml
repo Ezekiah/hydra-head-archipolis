@@ -46,8 +46,71 @@ en:
     editor: 'editor'
     interviewer: 'interviewer'
     interviewers_unknowns: 'interviewer unknown'
+    person: "Individual"
+    orgunit: "Legal person"
     
-    
+  
+  
+  depositor:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+      
+  
+  author:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+      
+  contact:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+  
+  copyright_holder:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual' 
+  
+  
+  distributor:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+  
+  
+  editor:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+  
+  interviewer:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+  
+  interviewer_unknown:
+    orgunits:
+      label: 'Legal person'
+      
+    persons:
+      label: 'Individual'
+  
+  
   redux: "reduce"
   
   titles:
@@ -62,7 +125,7 @@ en:
   choose_language: "Choose a language"
   date_click: "Click and choose a date"
   
-
+  
   general:
     label: 'General'
     type_something: "Type something..."
@@ -303,22 +366,23 @@ en:
     
     
         
-      
-      
-   
+ 
 
 
-
-
-
-
-       
+  agent:
+    persons:
+      label: "Individuals"
+    orgunits:
+      label: "Legal persons"
+    
+    
+    
   orgunit:
     label: "Legal person"
     name:
       label: 'Name'
       help: 'Name'
-      
+    
   person:
     label: "Individual"
     rec_id:

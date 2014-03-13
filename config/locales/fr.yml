@@ -34,6 +34,67 @@ fr:
   'partial': "partiellement"
   
   
+  
+  depositor:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+      
+  
+  author:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+      
+  contact:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+  
+  copyright_holder:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique' 
+  
+  
+  distributor:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+  
+  
+  editor:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+  
+  interviewer:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+  
+  interviewer_unknown:
+    orgunits:
+      label: 'Personne morale'
+      
+    persons:
+      label: 'Personne physique'
+  
+  
   popover:
     help:'Aide'
   
@@ -44,7 +105,13 @@ fr:
   choose_language: "Choisir une langue"
   add: Ajouter
   
-  new: 'nouvelle'
+  new: 'nouveau'
+  
+  agent:
+    persons:
+      label: "Personnes physiques"
+    orgunits:
+      label: "Personnes morales"
   
   edit-box:
     author: 'auteur'
@@ -58,6 +125,8 @@ fr:
     description: 'description'
     editor: 'editeur'
     interviewers_unknowns: 'Autre interviewers'
+    person: "Personne physique"
+    orgunit: "Personne morale"
 
   
   

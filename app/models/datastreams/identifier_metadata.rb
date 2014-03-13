@@ -5,6 +5,7 @@ class IdentifierMetadata < ActiveFedora::OmDatastream
      t.id_type
      t.value
      t.rec_class
+     t.rec_id
          
   end
   

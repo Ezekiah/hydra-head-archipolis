@@ -74,13 +74,32 @@ accordion_events = (accordion, zone) ->
     return
     
 
+
+edit_modal = (bs_modal) ->
+  
+
+  bs_modal = bs_modal.modal({ keyboard: false, show: true })
+  
+  bs_modal.find('button.cancel').remove()
+  
+  bs_modal.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
+  
+  
+  
+  bs_modal.find("button.save").unbind("click").click ->
+
+    
+    bs_modal.modal "hide"
+     
+    
+    
+
 launch_modal = (insert_zone, object, rec_class) ->
   
   
   sing_name = insert_zone.attr('data-singular-name')
   
-  
-  json = eval({title:I18n.t("js.popup.new").capitalize() + " " + I18n.t("js.popup." + rec_class), content:object})
+  json = eval({title: rec_class, content:object})
 
   bs_modal = $(JST["templates/modal"](json))
 
@@ -96,7 +115,10 @@ launch_modal = (insert_zone, object, rec_class) ->
     
     if $('#temp_form_id').length == 0
       bs_modal.wrap "<form id=\"temp_form_id\" />"
-
+    
+    
+    
+    ###
     $("#temp_form_id").validate
   
       ignore:'.ignore'
@@ -130,8 +152,10 @@ launch_modal = (insert_zone, object, rec_class) ->
           return
     
     isValid = jQuery("#temp_form_id").valid()
-    
-    if isValid
+    ###
+    if isValid = true
+      
+
       bs_modal.unwrap()
       bs_modal.modal "hide"
       
@@ -181,27 +205,52 @@ launch_modal = (insert_zone, object, rec_class) ->
 
 $(document).ready ->
   
+  
+
+  
+  $('.edit-box').each ->
+    
+    id = $(this).attr('id')
+    insert_zone = $('#'+$('#content-'+id).attr('data-insert-zone'))
+    sing = $('#content-'+id).attr('data-singular-name')
+    bs_modal = $('#content-'+id)
+    
+    box = $(this)
+    
+    $(this).find('button.edit').click ->
+      edit_modal(bs_modal)
+    
+
+    $(this).find('button.delete').click ->
+      bs_modal.remove()
+      box.remove()
+     
+      
+      
+      
+      
+      
+  
   initialize_accordions()
   
   current_popup = ""
   $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'), container:'body'})
   $(".add_fields").hide()
-  $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-interviewers_unknowns, #add-editors, #add-contacts", ->
-    
-   
+  $(document.body).on "click", " #add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-interviewers_unknowns, #add-editors, #add-contacts", ->
 
     className = $(this).attr("id").replace("add-", "")
     zone = $('#'+className)
     
+    zone.find("a[data-associations='"+className+"']").trigger "click"
     
     $(".choose_person").unbind().click ->
-      zone.find("a[data-associations='persons']").trigger "click"
+      zone.find("a[data-associations='"+className+"']").trigger "click"
       return false
         
       return
 
     $(".choose_orgunit").unbind().click ->
-      zone.find("a[data-associations='orgunits']").trigger "click"
+      zone.find("a[data-associations='"+className+"']").trigger "click"
       return false
       return
     
@@ -209,17 +258,17 @@ $(document).ready ->
     
     return
 
-  $(document.body).on "click", "div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
+  $(document.body).on "click", "#add-persons, #add-orgunits,div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
    className = $(this).attr("id")
    $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
 
   $(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object) ->
-
+    
     insert_zone = $(this)
     className = $(this).attr("id")
     
-
-    bs_modal = launch_modal(insert_zone, parent_object.html(), parent_object.find("input[type=\"hidden\"]").val().toLowerCase())
+    bs_modal = launch_modal(insert_zone, parent_object.html(), $(this).attr('data-plural-name') )
+    
     current_popup = bs_modal
     parent_object.remove()
     return
@@ -240,11 +289,11 @@ $(document).ready ->
     task.fadeOut "slow"
     return
 
-  $(document.body).on "cocoon:after-insert", "div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name, div#notes", (e, parent_object) ->
+  $(document.body).on "cocoon:after-insert", "div#persons, div#orgunits,div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name, div#notes", (e, parent_object) ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
-      title: $(this).attr("id") + " " + parseInt($(this).find(".accordion-group").size() + 1)
+      title: $(this).attr("data-singular-name") + " " + parseInt($(this).find(".accordion-group").size() + 1)
       content: parent_object.html()
       uid: s4()
       redux_link: I18n.t("redux")
@@ -267,10 +316,7 @@ jQuery ($) ->
   $('#nav-tabs a:last').tab('show');
   
   
-  $('select[multiple="multiple"]').multiselect( {enableFiltering: true,maxHeight: 400},  onChange: (element, checked) ->
-    
-      
-  );
+  #$('select[multiple="multiple"]').multiselect( {enableFiltering: true,maxHeight: 400},  onChange: (element, checked) ->);
   
   handler = (e) ->
     jqEl = $(e.currentTarget)
@@ -298,7 +344,7 @@ jQuery ($) ->
   
   
   
-  
+  ###
   $("form.simple_form").validate
   
     ignore:'.ignore'
@@ -331,21 +377,13 @@ jQuery ($) ->
         else if $element.attr("type") == 'checkbox'
         
           $element.closest('.control-group').find('.control-label').append(error)
+          console.log($element.parents())
           
-          
-        else if $element.attr("type") == 'text'
-         $element.parent().append(error)
         else 
           $element.parent().append(error)
         
-          <input type="text" value="[]" required="required" placeholder="Type something..." 
-          name="study[observation_units][]" 
-          multiple="multiple" id="study_observation_units" class="string required" data-original-title="" title="">
           
-          
-          <input type="text" value="" required="required" placeholder="Click and choose a date" 
-          name="study[documents_date_begin]" id="study_documents_date_begin" 
-          data-provide="datepicker" data-date-view-mode="years" data-date-min-view-mode="years" data-date-format="yyyy" class="span3">
+ 
         
         return
         
@@ -353,5 +391,5 @@ jQuery ($) ->
         #$element.tooltip("destroy").data("title", error.message).addClass("error").tooltip()
         return
 
-  
+ ### 
 
