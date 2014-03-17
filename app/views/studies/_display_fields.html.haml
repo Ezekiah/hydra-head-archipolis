@@ -2,6 +2,8 @@
 - require 'securerandom'
 
 
+
+
 %fieldset
   
   - @xml = Nokogiri::XML.parse(xml)
@@ -30,7 +32,9 @@
       
       - edit_form = session[:current_study_id] != nil
       
-
+      
+      
+          
       - if node.attribute('display').to_s != 'private'
       
        
@@ -41,6 +45,10 @@
           - has_popup = node.attribute('popup').to_s == 'true' ? 'launch_popup' : 'no_popup'
           
           
+        
+          
+          
+              
         
           - link = link_to_add_association(' ', f, node_name.to_sym, 
             :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=> edit == false ? false : fedora_object , :edit=>true,:rec_type=>node_name, :xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
@@ -63,68 +71,65 @@
                 
               
               != gen_help_button({title_help:t(root_node_name+'.'+node.attribute('name')+'.help')} )
-              
           
+          
+
+            - if fedora_object != false
+              -accordion_nodes = ['identifiers', 'affiliations', 'keywords', 'descriptions', 'awards', 'addresses', 'orgunits', 'persons']
+              -box_nodes = ['authors', 'contacts', 'copyright_holders', 'depositors', 'distributors', 'editors', 'interviewers_unknowns', 'interviewers', 'projects']
+            
+              
+              - datas = fedora_object.send(node_name)
+              - datas.each_with_index do |data, index|
+                
+                - link = link_to_add_association(' ', f, node_name.to_sym, :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>data, :rec_type=>node_name, :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
+                - link = Nokogiri::HTML(link)
+                
+                
+                -uid2 = SecureRandom.uuid
+                -uid = SecureRandom.uuid
+                - tpl_link = Nokogiri::HTML(link.css('a[@class="add_fields"]').attribute('data-association-insertion-template').to_s)
+                
+    
+                - if node_name.in? accordion_nodes
+                  != call_jst('accordion.jst.eco',  {uid:SecureRandom.uuid, uid2:SecureRandom.uuid, content:tpl_link.to_html, title:node_name.singularize+' '+ (index+1).to_s})
+                
+                - else
+     
+                  != call_jst('edit-box.jst.eco',  {uid2:uid2, label_link:node_name.singularize+' '+ (index+1).to_s})
+                  
+  
+                  - regex = Regexp.new('new_[a-z]+')
+                  
+                  - tpl_string = link.css('a[@class="add_fields"]').attribute('data-association-insertion-template').to_s
+                  
+                  
+                  - doc1 = Nokogiri::HTML.fragment(tpl_string)
+                  - doc2 = Nokogiri::HTML.fragment(tpl_string)
+                  
+                  - doc1.css('a[@class="add_fields"]').remove
+                  - add_fields = doc2.css('a[@class="add_fields"]')
+
+                  
+                  - match_array = tpl_string.scan(regex).uniq.each do |reg|
+                    - doc1 = doc1.to_s.gsub(reg, Random.rand(100000...100000000000).to_s )
+                  
+                  - doc1 = Nokogiri::HTML(doc1)
+      
+                  
+                  
+                 
+                  - add_fields.each do |field|
+                    - doc1.at_css('#add-'+field.attribute('data-associations')).after(field)
+ 
+                  - tpl_link = Nokogiri::HTML(tpl_string)
+                  != call_jst('modal.jst.eco',  {id:'content-'+uid2, title:class_name, content:doc1.to_html})
           -if required
             %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>'required', :name=>'validation-'+node_name, :class=>'hidden-association'}
           -else
             %input{:type=>'hidden', :id=>'hidden-'+node_name, :name=>'validation-'+node_name, :class=>'hidden-association'}
              
-          
-          
-          
-          %div.form-edit-box
-            !=# a[0]['data-association-insertion-template']
-            
-          - if fedora_object != false
-            -accordion_nodes = ['identifiers', 'affiliations', 'keywords', 'descriptions', 'awards', 'addresses', 'orgunits', 'persons']
-            -box_nodes = ['authors', 'contacts', 'copyright_holders', 'depositors', 'distributors', 'editors', 'interviewers_unknowns', 'interviewers', 'projects']
-          
-            
-            - datas = fedora_object.send(node_name)
-            - datas.each_with_index do |data, index|
-              
-              - link = link_to_add_association(' ', f, node_name.to_sym, :partial=>'/studies/display_fields', :render_options => {:locals => {:fedora_object=>data, :rec_type=>node_name, :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}, },:data => {"association-insertion-method" => "before" },)
-              - link = Nokogiri::HTML(link)
-              
-              
-              -uid2 = SecureRandom.uuid
-              -uid = SecureRandom.uuid
-              - tpl_link = Nokogiri::HTML(link.css('a[@class="add_fields"]').attribute('data-association-insertion-template').to_s)
-              
-  
-              - if node_name.in? accordion_nodes
-                != call_jst('accordion.jst.eco',  {uid:SecureRandom.uuid, uid2:SecureRandom.uuid, content:tpl_link.to_html, title:node_name.singularize+' '+ (index+1).to_s})
-              
-              - else
-   
-                != call_jst('edit-box.jst.eco',  {uid2:uid2, label_link:node_name.singularize+' '+ (index+1).to_s})
-                
 
-                - regex = Regexp.new('new_[a-z]+')
-                
-                - tpl_string = link.css('a[@class="add_fields"]').attribute('data-association-insertion-template').to_s
-                
-                - add_fields = Nokogiri::XML.fragment(tpl_string).css('a[@class="add_fields"]')
-                - no_add_fields = Nokogiri::HTML.fragment(tpl_string).search('//a').remove
-                
-                = debug no_add_fields.to_html.html_safe
-                
-                - match_array = tpl_string.scan(regex)
-                
-                
-                - match_array.uniq.each do |match|
-                  - tpl_string = tpl_string.gsub(match, SecureRandom.uuid )
-          
-                - tpl_link = Nokogiri::HTML(tpl_string)
-                != call_jst('modal.jst.eco',  {id:'content-'+uid2, title:class_name, content:tpl_link.to_html})
-                
-                
-              
-       
-                
-                
-         
         - if node.attribute('type').to_s == 'text'
         
           
@@ -156,8 +161,7 @@
                       - else
                         != call_jst('button_remove.jst.eco' )
                       
-                    study[interviewers_unknowns_attributes][0726ea44-2d71-4419-92c3-99ebd781307d_unknowns][orgunits_attributes][64428a33-adf9-47ef-b7fe-3c0434d9a367][name]  
-                    study[interviewers_unknowns_attributes][0726ea44-2d71-4419-92c3-99ebd781307d_unknowns][orgunits_attributes][64428a33-adf9-47ef-b7fe-3c0434d9a367][name]
+                   
                 -else
                   = f.input_field node.name, 'multiple'=>multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
                   

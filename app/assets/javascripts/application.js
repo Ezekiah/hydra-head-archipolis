@@ -34,7 +34,7 @@
 //= require_tree .
 
 
-//= require cocoon
+//= require cocoon.js
 
 
 //= require bootstrap-multiselect
