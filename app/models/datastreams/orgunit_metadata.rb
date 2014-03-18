@@ -4,7 +4,7 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     t.root(path: "metadatas")
     
     t.acronym
-    
+    t.rec_delete
     t.addresses{
       t.country
       t.geo_latitude

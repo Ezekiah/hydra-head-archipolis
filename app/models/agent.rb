@@ -28,6 +28,7 @@ class Agent < ActiveFedora::Base
           t.association(:type=>'association', :name=>'persons',  :display=>'public', :class_name=>'Person')
           t.rec_class(:type=>'hidden', :value=>'Agent')
           t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+          t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
        
        }  
           

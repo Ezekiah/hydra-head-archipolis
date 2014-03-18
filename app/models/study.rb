@@ -230,21 +230,21 @@ class Study < ActiveFedora::Base
       
          t.contributor{
           
-            t.association(:type=>'association',:name=>'authors', :class_name=>'Author', :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'authors', :class_name=>'Author', :required=>true, :display=>'public', :popup=>'true')
              
             
             
-            t.association(:type=>'association',:name=>'projects', :class_name=>'Project', :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :name=>'projects', :class_name=>'Project', :required=>true, :display=>'public', :popup=>'true')
               
             
             
-            t.association(:type=>'association',:name=>'depositors', :class_name=>'Depositor', :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'depositors', :class_name=>'Depositor', :required=>true, :display=>'public', :popup=>'true')
                
             
-             t.association(:type=>'association',:name=>'distributors', :class_name=>'Distributor', :required=>true, :display=>'public', :popup=>'true')
+             t.association(:type=>'association', :complex=>'true',:name=>'distributors', :class_name=>'Distributor', :required=>true, :display=>'public', :popup=>'true', )
       
             
-            t.association(:type=>'association',:name=>'contacts', :class_name=>'Contact', :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'contacts', :class_name=>'Contact', :display=>'public', :popup=>'true')
 
         
       }
@@ -331,10 +331,10 @@ class Study < ActiveFedora::Base
             
             
 
-            t.association(:type=>'association',:name=>'interviewers', :class_name=>'Interviewer', :required=>true,:popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'interviewers', :class_name=>'Interviewer', :required=>true,:popup=>'true')
                
               
-            t.association(:type=>'association',:name=>'interviewers_unknowns', :class_name=>'Interviewerun', :collection=>@@collection_un, :required=>true, :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'interviewers_unknowns', :class_name=>'Interviewerun', :collection=>@@collection_un, :required=>true, :popup=>'true')
            
         
         }
@@ -349,11 +349,11 @@ class Study < ActiveFedora::Base
           
           
           
-            t.association(:type=>'association',:name=>'copyright_holders', :class_name=>'Agent', :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'copyright_holders', :class_name=>'Agent', :display=>'public', :popup=>'true')
             
             t.softwares(:type=>'text', :multiple=>true, :required=>false)
                         
-            t.association(:type=>'association',:name=>'editors',  :display=>'public', :class_name=>'Agent', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'editors',  :display=>'public', :class_name=>'Agent', :popup=>'true')
                       
           
         }

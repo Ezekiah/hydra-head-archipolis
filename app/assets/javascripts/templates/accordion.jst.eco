@@ -13,7 +13,7 @@
 		
 		<div id="<%=@uid%>" class="accordion-body collapse in">
 			<div class="accordion-inner">
-				<%- @content%>
+				<%- @content %>
 			</div>
 		</div>
 	

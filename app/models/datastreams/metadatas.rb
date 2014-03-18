@@ -6,6 +6,7 @@ module Agent_metadata
         
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       has_attributes :rec_id, datastream: 'descMetadata', multiple: false
+      has_attributes :rec_delete, datastream: 'descMetadata', multiple: false
       
       has_many :orgunits, :property=>:is_part_of, :class_name=>"Orgunit"
       has_many :persons, :property=>:is_part_of, :class_name=>"Person"
@@ -29,6 +30,7 @@ module Agent_metadata
               t.association(:type=>'association', :name=>'persons',  :display=>'public', :class_name=>'Person')
               t.rec_class(:type=>'hidden', :value=>self.name)
               t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
               
               
            }  
@@ -48,6 +50,7 @@ module Common_metadata
   included do
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       has_attributes :rec_id, datastream: 'descMetadata', multiple: false
+      has_attributes :rec_delete, datastream: 'descMetadata', multiple: false
 
   end
 

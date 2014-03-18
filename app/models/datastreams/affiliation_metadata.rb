@@ -7,6 +7,7 @@ class AffiliationMetadata < ActiveFedora::OmDatastream
          t.rec_id
          t.role
          t.rec_class
+         t.rec_delete
          
   end
   

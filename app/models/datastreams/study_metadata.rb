@@ -86,6 +86,7 @@ class StudyMetadata < ActiveFedora::OmDatastream
         
         t.publication_citation
         t.documents_types
+        t.rec_delete
         
         
       

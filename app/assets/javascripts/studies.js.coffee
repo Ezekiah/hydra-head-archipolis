@@ -38,7 +38,7 @@ initialize_accordions = ->
 
       $(this).parent().append accordion
       
-      accordion_events(accordion, zone)
+      #accordion_events(accordion, zone)
       $(this).remove()
       return
     
@@ -111,7 +111,7 @@ launch_modal = (insert_zone, object, rec_class) ->
   uid2 = s4()
   uid3 = s4()
   bs_modal.find("button.save").unbind("click").click ->
-    
+   
     
     if $('#temp_form_id').length == 0
       bs_modal.wrap "<form id=\"temp_form_id\" />"
@@ -175,13 +175,18 @@ launch_modal = (insert_zone, object, rec_class) ->
 
       $(document).on "click", "#" + uid2 + " button.edit", ->
         bs_modal.modal "show"
+ 
         bs_modal.find("button.save, button.cancel").unbind("click").click ->
           bs_modal.modal "hide"
 
 
       $(document).on "click", "#" + uid2 + " button.delete", ->
-        $("#" + uid2).remove()
-        $("#" + uid1).remove()
+        
+        #$("#" + uid2).remove()
+        #$("#" + uid1).remove()
+        
+        #$("#" + uid2).wrap('<del/>')
+        
         check_hidden_assoc(insert_zone, ".edit-box")
         
         
@@ -222,14 +227,12 @@ $(document).ready ->
     
 
     $(this).find('button.delete').click ->
-      bs_modal.remove()
-      box.remove()
-     
+      bs_modal.find("input[data-name='rec_delete']").val('true')
+
+      box.find('span').css('text-decoration', 'line-through')
       
-      
-      
-      
-      
+
+  person_type = ""    
   
   initialize_accordions()
   
@@ -241,16 +244,18 @@ $(document).ready ->
     className = $(this).attr("id").replace("add-", "")
     zone = $('#'+className)
     
-    zone.find("a[data-associations='"+className+"']").trigger "click"
+   
     
     $(".choose_person").unbind().click ->
-      zone.find("a[data-associations='"+className+"']").trigger "click"
+      person_type='person'
+      zone.find("a[data-associations='"+className+"']").trigger "click", ['person']
       return false
         
       return
 
     $(".choose_orgunit").unbind().click ->
-      zone.find("a[data-associations='"+className+"']").trigger "click"
+      person_type='orgunit'
+      zone.find("a[data-associations='"+className+"']").trigger "click", ['orgunit']
       return false
       return
     
@@ -262,12 +267,20 @@ $(document).ready ->
    className = $(this).attr("id")
    $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
 
-  $(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object) ->
-    
+  $(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object, type) ->
+    console.log(person_type)  
     insert_zone = $(this)
     className = $(this).attr("id")
+    agent_rec = parent_object.find('input[type="hidden"]')
+
+    changed_parent_object =  $(parent_object.find('a[data-association="'+person_type+'"]').attr('data-association-insertion-template')).append(agent_rec)
     
-    bs_modal = launch_modal(insert_zone, parent_object.html(), $(this).attr('data-plural-name') )
+    if(className != 'projects')
+      html = changed_parent_object.html()
+    else
+      html = parent_object.html()
+    
+    bs_modal = launch_modal(insert_zone, html, $(this).attr('data-plural-name') )
     
     current_popup = bs_modal
     parent_object.remove()
@@ -303,7 +316,7 @@ $(document).ready ->
     $(this).append accordion.fadeIn 300
     
     
-    accordion_events(accordion, $(this))
+    #accordion_events(accordion, $(this))
     
   
   return
@@ -321,8 +334,7 @@ jQuery ($) ->
   handler = (e) ->
     jqEl = $(e.currentTarget)
     tag = jqEl.parent()
-    
-    
+ 
     switch jqEl.attr("data-action")
       when "add-single"
         clone = tag.clone().css("display", "block")

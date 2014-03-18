@@ -32,7 +32,8 @@ class Identifier < ActiveFedora::Base
               t.value(:type=>'text_area', :multiple=>'false', :display=>'public')
               
               t.rec_class(:type=>'hidden', :value=>'Identifier', :display=>'public')
-              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')    
+              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
           }  
 
             

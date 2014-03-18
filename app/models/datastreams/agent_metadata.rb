@@ -8,6 +8,7 @@ class AgentMetadata < ActiveFedora::OmDatastream
     t.persons
     t.rec_id
     t.rec_class
+    t.rec_delete
     
 
 

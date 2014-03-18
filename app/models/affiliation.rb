@@ -33,6 +33,7 @@ class Affiliation < ActiveFedora::Base
              
               t.rec_class(:type=>'hidden', :value=>'Affiliation', :display=>'public')
               t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
           
           }
        

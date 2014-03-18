@@ -78,6 +78,7 @@ class Orgunit < ActiveFedora::Base
              
                 
               t.urls(:type=>'text', :multiple=>true, :label=>'Web page', :display=>'private')
+              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
               
               
           }

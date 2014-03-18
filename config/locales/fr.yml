@@ -22,6 +22,7 @@
 fr:
   #GENERAL
   
+  help: 'Aide'
   
   author: 'auteur'
   depositor: 'depositeur'
@@ -38,62 +39,65 @@ fr:
   depositor:
     orgunits:
       label: 'Personne morale'
+      help: ''
       
     persons:
       label: 'Personne physique'
+      help: ''
       
   
   author:
     orgunits:
       label: 'Personne morale'
+      help: ''
       
     persons:
       label: 'Personne physique'
-      
+      help: ''
   contact:
     orgunits:
       label: 'Personne morale'
-      
+      help: ''
     persons:
       label: 'Personne physique'
-  
+      help: ''
   copyright_holder:
     orgunits:
       label: 'Personne morale'
-      
+      help: ''
     persons:
       label: 'Personne physique' 
-  
+      help: ''
   
   distributor:
     orgunits:
       label: 'Personne morale'
-      
+      help: ''
     persons:
       label: 'Personne physique'
-  
+      help: ''
   
   editor:
     orgunits:
       label: 'Personne morale'
-      
+      help: ''
     persons:
       label: 'Personne physique'
-  
+      help: ''
   interviewer:
     orgunits:
       label: 'Personne morale'
-      
+      help: ''
     persons:
       label: 'Personne physique'
-  
+      help: ''
   interviewer_unknown:
     orgunits:
       label: 'Personne morale'
-      
+      help: ''
     persons:
       label: 'Personne physique'
-  
+      help: ''
   
   popover:
     help:'Aide'
@@ -110,15 +114,17 @@ fr:
   agent:
     persons:
       label: "Personnes physiques"
+      help: ''
     orgunits:
       label: "Personnes morales"
+      help: ''
   
   edit-box:
     author: 'auteur'
     distributor: 'distributeur'
     contact: 'contact'
     depositor: 'depositeur'
-    funding_agency_name: 'funding agency name'
+    
     project: 'projet'
     keyword: 'mot-clé'
     abstract: 'résumé'
@@ -127,7 +133,8 @@ fr:
     interviewers_unknowns: 'Autre interviewers'
     person: "Personne physique"
     orgunit: "Personne morale"
-
+    identifier: 'Identifiant'
+    funding_agent_name: 'Agence de financement'
   
   
   date_click: "Cliquer pour choisir une date"
@@ -405,6 +412,7 @@ fr:
       
     funding_agent_names:
       label: "Source de financement"
+      help: ""
       
   identifier:
     label: 'identifier'
@@ -417,16 +425,6 @@ fr:
       help: 'id_type'
       
       
- 
-
-
-
-
-
-
-
-
-
 
   
   

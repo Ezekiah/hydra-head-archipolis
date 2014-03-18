@@ -29,4 +29,8 @@ HydraHead::Application.configure do
   config.assets.debug = true
   
   config.middleware.use PrettyJsonResponse
+  
+  
+  
+  
 end

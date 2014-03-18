@@ -23,6 +23,9 @@ en:
   
   
   #GENERAL
+  
+  help: 'Help'
+  
   general: "General"
   
   popover:
@@ -38,7 +41,7 @@ en:
     distributor: 'distributor'
     contact: 'contact'
     depositor: 'depositor'
-    funding_agency_name: 'funding agency name'
+    
     project: 'project'
     keyword: 'keyword'
     abstract: 'abstract'
@@ -49,66 +52,87 @@ en:
     person: "Individual"
     orgunit: "Legal person"
     
+    identifier: 'Identifiant'
+    funding_agent_name: 'Agence de financement'
+    
+  
+  
+  
   
   
   depositor:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
-      
+      help: ''
   
   author:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
+      help: ''
       
   contact:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
+      help: ''
   
   copyright_holder:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
-      label: 'Individual' 
+      label: 'Individual'
+      help: ''
   
   
   distributor:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
+      help: ''
   
   
   editor:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
+      help: ''
   
   interviewer:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
+      help: ''
   
   interviewer_unknown:
     orgunits:
       label: 'Legal person'
+      help: ''
       
     persons:
       label: 'Individual'
+      help: ''
   
   
   redux: "reduce"
@@ -339,28 +363,28 @@ en:
     label: 'Edition'
     access_conditions:
       label: "Access Conditions"
-      help: 
+      help: ''
     edition_first_date:
       label: "Date First Edition"
-      help: 
+      help: ''
     edition_last_date:
       label: "Date Latest Edition"
-      help: 
+      help: ''
     copyright_holders:
       label: "Copyright"
-      help: 
+      help: ''
     softwares:
       label: "Software"
-      help: 
+      help: ''
     editors:
       label: "Editor"
-      help: 
+      help: ''
       
   notes:
     label: "Notes"
     notes:
       label: "Notes"
-      help: 
+      help: ''
 
     
     
@@ -372,8 +396,10 @@ en:
   agent:
     persons:
       label: "Individuals"
+      help: ''
     orgunits:
       label: "Legal persons"
+      help: ''
     
     
     

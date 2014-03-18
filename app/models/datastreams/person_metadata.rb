@@ -47,6 +47,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
     
     
     t.phones
+    t.rec_delete
 
   end
   
