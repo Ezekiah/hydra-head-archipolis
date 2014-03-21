@@ -64,6 +64,13 @@ module StudiesHelper
     
    
     
+    
+    
+  def render_as_str(partial, params)
+    
+    render_to_string(:partial=>partial, :locals=>params)
+    
+  end
 
 	def display_form(xml, f, xpath_str, str=false)
 

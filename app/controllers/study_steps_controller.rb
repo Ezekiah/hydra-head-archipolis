@@ -55,7 +55,9 @@ class StudyStepsController < ApplicationController
   private
 
   def traverse_study_attr(params, object)
-
+    
+    
+    debugger
     #recover all _attributes (nested forms)
     obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
 

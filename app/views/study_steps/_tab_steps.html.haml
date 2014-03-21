@@ -9,28 +9,28 @@
         =t('titles.new_study')
       .nav-collapse
         %ul.nav
-          %li.active
-            =link_to '<span class="icon-home icon-white"></span> '.html_safe+t("general.label"), '/studies/new'
+          %li
+            =link_to '<span class="icon-home icon-white"></span> '.html_safe+t("general.label"), study_path+'/'+session['current_study_id']
            
              
-          %li
+          %li.contributor
             =link_to t('contributor.label'), study_steps_path+'/contributor'
-          %li
+          %li.universe
             =link_to t('universe.label'), study_steps_path+'/universe'
-          %li
+          %li.method
             =link_to t('method.label'), study_steps_path+'/method'
 
           
-          %li
+          %li.corpus
             =link_to t('corpus.label'), study_steps_path+'/corpus'
             
-          %li
+          %li.analyse
             =link_to t('analyse.label'), study_steps_path+'/analyse'
-          %li
+          %li.edition
             =link_to t('edition.label'), study_steps_path+'/edition'
           
-          %li
-            =link_to t('notes.label'), study_steps_path+'/contributor'
+          %li.note
+            =link_to t('notes.label'), study_steps_path+'/note'
 
      
 

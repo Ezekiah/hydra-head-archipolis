@@ -8,7 +8,6 @@
   = render :partial=>'/study_steps/tab_steps'
 
 
-
 = simple_form_for(@study, html: {class: 'form-vertical' }) do |f|
   - if @study.errors.any?
     .error_messages
@@ -19,9 +18,12 @@
         - @study.errors.full_messages.each do |msg|
           %li= msg
   = yield f
+  
+ 
+  
   %fieldset
     %legend= t('general.label')
-    = render :partial=>'display_fields', :locals => {:edit=>false, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/general/*", :fedora_object=>false}
+    = render :partial=>'display_fields', :locals => {:edit=>false, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/general/*", :fedora_object=>@study}
     %button#button_submit.add.btn.btn-primary{:type => "submit"}
       Next
       %i.icon-white.icon-arrow-right

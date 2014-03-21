@@ -3,7 +3,8 @@ module Agent_metadata
 
   included do
       has_metadata 'descMetadata', type:AgentMetadata
-        
+      
+      has_attributes :id, datastream: 'descMetadata', multiple: false
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       has_attributes :rec_id, datastream: 'descMetadata', multiple: false
       has_attributes :rec_delete, datastream: 'descMetadata', multiple: false

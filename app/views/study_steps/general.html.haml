@@ -10,10 +10,7 @@
   = yield f
   %fieldset
     = render :partial=>'/studies/display_fields', :locals => {:f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/general/*"}
-  #dialog-confirm{:style => ""}
-    %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
-    %p
-  / Button to trigger modal
+    
   %button.add.btn.btn-primary{:type => "submit"}
     Next
     %i.icon-white.icon-arrow-right

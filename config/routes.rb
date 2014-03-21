@@ -1,6 +1,8 @@
 
 HydraHead::Application.routes.draw do
   
+  resources :descriptions
+
   resources :contributors
 
   resources :orgunits

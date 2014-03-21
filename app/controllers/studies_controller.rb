@@ -34,13 +34,18 @@ class StudiesController < ApplicationController
   def show
     
     @study = Study.find(params[:id])
-    @documents = @study.documents
-    @document = Document.new
     
     @study_base_collection = @study.collections
 
-    @studyMetaXML = Study.find(params[:id]).descMetadata.to_xml
-    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
+    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
+    
+    @LOCATIONS = { t('most_used') => @most_used_languages,
+                   t('others') => 
+                   @all_languages-@most_used_languages
+    }
+    render :layout => 'study_steps' 
+    
     
   end
 
