@@ -14,7 +14,7 @@ class Collection < ActiveFedora::Base
     belongs_to :collection, :property => :is_member_of_collection
     belongs_to :study, :property => :is_member_of_collection
     
-    accepts_nested_attributes_for :ressources
+    accepts_nested_attributes_for :ressources, allow_destroy: true
     
     has_many :files
     

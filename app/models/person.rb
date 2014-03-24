@@ -42,9 +42,9 @@ class Person < ActiveFedora::Base
     has_many :addresses, :property=>:is_member_of_collection
     has_many :identifiers, :property=>:is_member_of_collection
     
-    accepts_nested_attributes_for :affiliations
-    accepts_nested_attributes_for :addresses
-    accepts_nested_attributes_for :identifiers
+    accepts_nested_attributes_for :affiliations, allow_destroy: true
+    accepts_nested_attributes_for :addresses, allow_destroy: true
+    accepts_nested_attributes_for :identifiers, allow_destroy: true
     
     
     

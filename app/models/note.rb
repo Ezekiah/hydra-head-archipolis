@@ -11,6 +11,7 @@ class Note < ActiveFedora::Base
     belongs_to :Study, :property => :is_member_of_collection
     
     
+    
     def self.xml_form
       
       builder = Nokogiri::XML::Builder.new do |t|

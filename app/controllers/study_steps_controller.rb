@@ -23,7 +23,24 @@ class StudyStepsController < ApplicationController
   layout 'study_steps'
 
   include Wicked::Wizard
-  steps :contributor, :universe, :method, :corpus, :analyse, :edition, :notes
+  steps :contributor, :universe, :method, :corpus, :analyse, :edition, :note
+  
+  
+  def edit
+    @study = Study.find(session[:study_id])
+
+    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
+
+    @LOCATIONS = { t('most_used') => @most_used_languages,
+                   t('others') =>
+                   @all_languages-@most_used_languages
+    }
+
+    render_wizard
+  end
+  
+  
   def show
     @study = Study.find(session[:study_id])
 
@@ -45,6 +62,8 @@ class StudyStepsController < ApplicationController
     @study = Study.find(session[:current_study_id])
     
     
+    
+    
     if ! sub_obj_non_attributes.empty?
       @study.update(sub_obj_non_attributes.to_h)
     end
@@ -58,9 +77,7 @@ class StudyStepsController < ApplicationController
   private
 
   def traverse_study_attr(params, object)
-    
-    
-    
+
     #recover all _attributes (nested forms)
     obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
 
@@ -87,16 +104,16 @@ class StudyStepsController < ApplicationController
 
             rec_class = Object.const_get(v['rec_class'])
 
-            if v.has_key?("rec_id") && v["rec_id"]!=""
+            if v.has_key?("id") && v["id"]!=""
 
-              updateObject = Object.const_get(v['rec_class']).find(v['rec_id'])
+              updateObject = Object.const_get(v['rec_class']).find(v['id'])
 
               if  v.has_key?("rec_delete") && v["rec_delete"]=="true"
                 updateObject.delete()
 
               else
-
-                updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+                
+                updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
 
                 
 
@@ -110,10 +127,10 @@ class StudyStepsController < ApplicationController
 
             else
 
-              newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
+              newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
               object.send(model_property) << newObject
 
-              
+               debugger
 
               if !sub_obj_attributes.empty?
 

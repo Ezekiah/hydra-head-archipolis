@@ -32,8 +32,7 @@
       
       - edit_form = session[:current_study_id] != nil
       
-      
-      
+
           
       - if node.attribute('display').to_s != 'private'
         
@@ -51,14 +50,16 @@
           - link = Nokogiri::HTML.fragment(link)
           - a = link.css('a[@class="add_fields"]').attribute('data-association-insertion-template')
           
+          
+          
 
           %div{:id=>node.attribute('name'), 'data-label'=>label, 'data-plural-name'=>t('edit-box.'+node_name.singularize).pluralize, 'data-singular-name'=>t('edit-box.'+node_name.singularize).capitalize, 'data-required'=>required, :class=>'association_'+assoc_type+' '+has_popup}
 
             = f.input node_name, :wrapper => :append, :label => label, :required=>required do
               - if is_complex_assoc
-
+                
                 != call_jst('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'),type:'association' })
-
+                != #call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
                 != link
               - else
                 != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
@@ -76,107 +77,91 @@
           - datas = f.object.send(node_name)
           
           
-          -uid2 = SecureRandom.uuid
-          -uid = SecureRandom.uuid
+          
           
           - if ! datas.empty?
            
             - index = 0
 
-            = f.fields_for node_name do |ff|
+            = f.fields_for node_name.to_sym, datas do |ff|
+              -uid2 = SecureRandom.uuid
+              -uid = SecureRandom.uuid
               
               - index = index + 1
               
               - if node_name.in? accordion_nodes
-                -#
-                  = render(:partial=>'/shared/accordion', :locals=>{:uid=>SecureRandom.uuid, 
-                  :uid2=>SecureRandom.uuid, 
-                  :title=>node_name.singularize+' '+ (index).to_s,
-                  :content=>render(:partial=>'/studies/display_fields', :locals=>{:f=>ff, :rec_type=>node_name, 
-                  :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
-                  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'})})
+                
+                = render(:partial=>'/shared/accordion', :locals=>{:uid=>SecureRandom.uuid, 
+                :uid2=>SecureRandom.uuid, 
+                :title=>node_name.singularize+' '+ (index).to_s,
+                :content=>render(:partial=>'/studies/display_fields', :locals=>{:f=>ff, :rec_type=>node_name, 
+                :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
+                :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'})})
                 
 
               - else
 
                 =render(:partial=>'/shared/edit_box', :locals=>{:uid2=>uid2, :label_link=>node_name.singularize+' '+ (index).to_s})
-            
-              
-                != call_jst('modal.jst.eco',  {id:'content-'+uid2, title:class_name, content:render(:partial=>'/studies/display_fields', :locals=>{:f=>ff, :rec_type=>node_name, 
-                :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
-                :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'})})
                 
-        
-          -if required
-            %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>'required', :name=>'validation-'+node_name, :class=>'hidden-association'}
-          -else
-            %input{:type=>'hidden', :id=>'hidden-'+node_name, :name=>'validation-'+node_name, :class=>'hidden-association'}
-             
+                
+                
+                - modal = render(:partial=>'/studies/display_fields', 
+                :locals=>{:f=>ff, :rec_type=>node_name, 
+                :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
+                :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'})
+                
+                
+                - modal = Nokogiri::HTML.fragment(modal)
+                
+                - if node_name.in? box_nodes
+                  
+                  - modal.css('#persons').remove
+                
+                  - modal.css('#orgunits').remove
+                  
+                 
+                
+              
+                != call_jst('modal.jst.eco',  {id:'content-'+uid2, title:class_name, content:modal.to_html})
+                
+          -#
+            -if required
+              %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>'required', :name=>'validation-'+node_name, :class=>'hidden-association'}
+            -else
+              %input{:type=>'hidden', :id=>'hidden-'+node_name, :name=>'validation-'+node_name, :class=>'hidden-association'}
+               
 
         - if node.attribute('type').to_s == 'text'
         
+          - datas = f.object.send(node_name)
+
+          - if datas.blank?
+            - datas = ['']
           
-        
+          - if ! datas.respond_to?('each')
+            
+            - datas = [datas]
+          
+
+          
           = f.input node.name, :wrapper => :prepend_append, :label => label, :required=>required do
-            = #content_tag node.name, label, class: "add-on"
-            = f.input_field node.name, 'multiple'=>multiple, 'placeHolder'=>t("type_something"), :required=>required
-            != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )            
-            - if is_multiple
-              != call_jst('button_add.jst.eco', {type:'single', name:node_name})
-            
-            
-            -#
-            
-              - if fedora_object != false
-                
-                - if fedora_object.class.method_defined? node_name
-                  
-                  - values = fedora_object.send(node_name)
-                  
-                  - if ! values.blank?
-                    
-                    - if values.kind_of?(String)
-                      - values = [values]
-                
-                    - values.each_with_index do |value, index|
-                      
-                      %div{:class=>'input-append input-prepend', :style=>'display:block;'}
-                        = f.input_field node.name, 'multiple'=>multiple, 'value'=>value, 'placeHolder'=>t("type_something"), :required=>required
-                        - if index == 0
-                          - if is_multiple
-                            != call_jst('button_add.jst.eco', {type:'single', name:node_name})
-                          != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )   
-                        - else
-                          != call_jst('button_remove.jst.eco' )
-                        
-                     
-                  -else
-                    = f.input_field node.name, 'multiple'=>multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
-                    != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )            
-                    - if is_multiple
-                      != call_jst('button_add.jst.eco', {type:'single', name:node_name})
-                    
-                -else
-                  = f.input_field node.name, 'multiple'=>multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
-                  != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )            
+            - datas.each_with_index do |data, index|
+              
+              %div{:class=>'input-append input-prepend', :style=>'display:block;'}
+                = f.input_field node.name, 'multiple'=>multiple, 'value'=>data, 'placeHolder'=>t("type_something"), :required=>required
+                - if index == 0
                   - if is_multiple
                     != call_jst('button_add.jst.eco', {type:'single', name:node_name})
+                  != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )   
+                - else
+                  != call_jst('button_remove.jst.eco' )
                   
                   
-              -else
-            
-                = f.input_field node.name, 'multiple'=>multiple, 'value'=>'', 'placeHolder'=>t("type_something"), :required=>required
-                != gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )            
-                - if is_multiple
-                  != call_jst('button_add.jst.eco', {type:'single', name:node_name})
-                
-             
-            
-                        
+                  
         - if node.attribute('type').to_s == 'hidden'
-
-          = f.input node_name, :input_html => { :value => node.attribute('value'), 'data-name'=>node_name }, :as => :hidden
           
+          = f.input node_name, :input_html => { :value => node.attribute('value'), 'data-name'=>node_name }, :as => :hidden
+        
           
           
         - if node.attribute('type').to_s == 'checkbox'
@@ -197,9 +182,12 @@
           = f.input node_name, :label=>label.html_safe,:required=>required, :input_html=>{'multiple'=>multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
      
         - if node.attribute('type').to_s == 'date'
+          
+          - data = f.object.send(node_name)
+
           = f.input node_name, :wrapper => :prepend_append, :required=>required, :label=>label do
             
-            = f.text_field(node_name, options = {'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'value'=>'', 'class'=>'span3', 'placeHolder'=>t("date_click")} )
+            = f.text_field(node_name, options = {'value'=>data, 'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'class'=>'span3', 'placeHolder'=>t("date_click")} )
 
             - if is_multiple
               != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
@@ -231,36 +219,22 @@
         
       
         - if node.attribute('type').to_s == 'select'
+
+          - values = f.object.send(node_name)
+          - if values.kind_of?(String)
+            - values = [values]
+
           -collection = Hash.new
           -eval(node.attribute('collection')).each{|k,v| collection[k.to_s] = v.to_s}
           = f.input node_name, :wrapper => :prepend_append, :label => label do
-            = f.select node_name, options_for_select(collection), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+            = f.select node_name, options_for_select(collection, values), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
             !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )  
-          -#
-            - if fedora_object != false
-                  
-                - if fedora_object.class.method_defined? node_name
-                    
-                  - values = fedora_object.send(node_name)
-                  - if values.kind_of?(String)
-                    - values = [values]
-                    
           
-                  = f.input node_name, :wrapper => :prepend_append, :label => label do
-                    = f.select node_name, options_for_select(collection, values), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
-                    !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )  
-    
-              - else
-                = f.input node_name, :wrapper => :prepend_append, :label => label do
-                  = f.select node_name, options_for_select(collection), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
-                  !=gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )  
-                  
 
           
         - if node.attribute('type').to_s == 'text_area'
           
           - label =  node.name + gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
-          
           
           = f.input node.name, :label=>label.html_safe do
             = f.text_area node_name, :multiple=>multiple, :required=>node.attribute('required'), :class=>'span3',:placeHolder=>t("type_something")

@@ -14,9 +14,7 @@ class Keyword < ActiveFedora::Base
    def self.xml_form
       
       builder = Nokogiri::XML::Builder.new do |t|
-          
-     
-        
+
         t.keyword{
             t.language(:type=>'language_list', :multiple=>'false', :required=>true, :label=>'Language')
             t.value(:type=>'text_area', :required=>true, :label=>'Keyword')

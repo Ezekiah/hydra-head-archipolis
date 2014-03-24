@@ -31,9 +31,9 @@ class Orgunit < ActiveFedora::Base
   has_many :addresses, :property=>:is_part_of
   has_many :identifiers, :property=>:is_part_of
   
-  accepts_nested_attributes_for :affiliations
-  accepts_nested_attributes_for :addresses
-  accepts_nested_attributes_for :identifiers
+  accepts_nested_attributes_for :affiliations, allow_destroy: true
+  accepts_nested_attributes_for :addresses, allow_destroy: true
+  accepts_nested_attributes_for :identifiers, allow_destroy: true
   
   def self.xml_form
       

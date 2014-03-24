@@ -1,5 +1,3 @@
-   
-
 .navbar.navbar-fixed-top
   .navbar-inner
     .container
@@ -7,13 +5,12 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.brand{href: "#"} 
+      %a.brand{href: "#"}
         =t('titles.new_study')
       .nav-collapse
         %ul.nav
           %li
-           
-           
+            = link_to "General",  :controller => "studies", :action=>'show', :id=>session['current_study_id']
              
           %li.contributor
             =link_to t('contributor.label'), study_steps_path+'/contributor'

@@ -21,16 +21,17 @@ class Project < ActiveFedora::Base
     
     has_many :orgunits, :property=>:is_part_of
     
-    has_many :funding_agent_names, :class_name => 'Orgunit', :foreign_key => 'funding_agent_name', :property => :is_part_of
+    #has_many :funding_agent_names, :class_name => 'Orgunit', :foreign_key => 'funding_agent_name', :property => :is_part_of
     
     
-    has_many :funding_agent_names, :class_name => 'Orgunit', :property => :is_part_of, :foreign_key => 'orgunit_funding_agent_names'
-    accepts_nested_attributes_for :funding_agent_names
+    #has_many :funding_agent_names, :class_name => 'Orgunit', :property => :is_part_of, :foreign_key => 'orgunit_funding_agent_names'
     
-    accepts_nested_attributes_for :awards
-    accepts_nested_attributes_for :descriptions
-    accepts_nested_attributes_for :identifiers
-    accepts_nested_attributes_for :orgunits
+    
+    #accepts_nested_attributes_for :funding_agent_names, allow_destroy: true
+    accepts_nested_attributes_for :awards, allow_destroy: true
+    accepts_nested_attributes_for :descriptions, allow_destroy: true
+    accepts_nested_attributes_for :identifiers, allow_destroy: true
+    accepts_nested_attributes_for :orgunits, allow_destroy: true
     
     
     
@@ -52,22 +53,22 @@ class Project < ActiveFedora::Base
               t.title(:type=>'text', :value=>'', :label=>'Identifier', :required=>true, :display=>'public')
               
               
-              t.association(:type=>'association', :name=>'awards', :class_name=>'Award', :required=>false, :display=>'private')
+              #t.association(:type=>'association', :name=>'awards', :class_name=>'Award', :required=>false, :display=>'private')
                 
               
-              t.association(:type=>'association', :name=>'descriptions', :class_name=>'Description', :required=>true, :display=>'public')
-              
+              #t.association(:type=>'association', :name=>'descriptions', :class_name=>'Description', :required=>true, :display=>'public')
+              t.association(:type=>'association', :name=>'orgunits', :class_name=>'Orgunit', :required=>true, :display=>'public')
               t.association(:type=>'association', :name=>'identifiers', :class_name=>'Identifier', :required=>true, :display=>'public')
               
-              t.association(:type=>'association', :name=>'funding_agent_names', :class_name=>'Orgunit', :required=>true, :display=>'public')
+              
                
               
     
               t.rec_class(:type=>'hidden', :value=>'Project')
               
-              t.date_begin(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
-              t.date_end(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
-              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+              #t.date_begin(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
+              #t.date_end(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
+              #t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
               t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
               
 

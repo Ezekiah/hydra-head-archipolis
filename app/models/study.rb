@@ -172,12 +172,12 @@ class Study < ActiveFedora::Base
 
   
   
-  accepts_nested_attributes_for :descriptions
-  accepts_nested_attributes_for :affiliations
-  accepts_nested_attributes_for :projects
-  accepts_nested_attributes_for :collections
-  accepts_nested_attributes_for :ressources
-  accepts_nested_attributes_for :depositors
+  accepts_nested_attributes_for :descriptions, allow_destroy: true
+  accepts_nested_attributes_for :affiliations, allow_destroy: true
+  accepts_nested_attributes_for :projects, allow_destroy: true
+  accepts_nested_attributes_for :collections, allow_destroy: true
+  accepts_nested_attributes_for :ressources, allow_destroy: true
+  accepts_nested_attributes_for :depositors, allow_destroy: true
   
   accepts_nested_attributes_for :interviewers
   accepts_nested_attributes_for :interviewers_unknowns
@@ -437,7 +437,7 @@ class Study < ActiveFedora::Base
     }
      
       
-      
+    
     
     end
     

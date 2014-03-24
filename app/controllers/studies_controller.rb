@@ -20,7 +20,8 @@ class StudiesController < ApplicationController
 
   #layout:resolve_layout
   
-  
+  include Wicked::Wizard
+  steps :general, :contributor, :universe, :method, :corpus, :analyse, :edition, :note  
  
   
   # GET /studies
@@ -124,15 +125,26 @@ class StudiesController < ApplicationController
   # PATCH/PUT /studies/1
   # PATCH/PUT /studies/1.json debugger
   def update
-    respond_to do |format|
-      if @study.update(study_params)
-        format.html { redirect_to @study, notice: 'Study was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @study.errors, status: :unprocessable_entity }
-      end
+    
+    
+    
+    sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
+
+    @study = Study.find(session[:current_study_id])
+    
+    
+    
+    
+    if ! sub_obj_non_attributes.empty?
+      @study.update(sub_obj_non_attributes.to_h)
     end
+    
+    traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
+
+    render_wizard @study
+    
+    
+    
   end
 
   # DELETE /studies/1
@@ -156,65 +168,80 @@ class StudiesController < ApplicationController
       params[:study]
     end
     
-    def traverse_study_attr(params, object)
+    private
 
-      #recover all _attributes (nested forms)
-      obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
-      
+  def traverse_study_attr(params, object)
 
-      
-      #foreach association
-      obj_attributes.each do |key,value|
-         
-         
-         #Store model name ***_attributes
-         
-         #remove _attributes from key to get the association name
-         model_property = key.to_s.gsub(/_attributes/, '')
-         
-         
-         value.each do |k,v|
-           
-           #Check if sub associations exists
-           sub_obj_attributes = v.select { |key| key.to_s.match(/_attributes$/) }
-           #recover simple properties
-           sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
-           
-           
+    #recover all _attributes (nested forms)
+    obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
 
-           if !sub_obj_non_attributes.empty?
-             
-             #debugger
-             if v.has_key?("rec_class")
-                 
-                 rec_class = eval(v['rec_class'])
-                 
-                 newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
-            
-             end
-                        
+    #foreach association
+    obj_attributes.each do |key,value|
 
-             object.send(model_property) << newObject
-            
-             if !sub_obj_attributes.empty?
-               
-                traverse_study_attr(sub_obj_attributes, newObject)
-               
-               
-             end
-            
-            
-           end
-            
-          end
-         
-         
+    #Store model name ***_attributes
+
+    #remove _attributes from key to get the association name
+      model_property = key.to_s.gsub(/_attributes/, '')
+
+      value.each do |k,v|
+
+      #Check if sub associations exists
+        sub_obj_attributes = v.select { |key| key.to_s.match(/_attributes$/) }
+        #recover simple properties
+        sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
+
         
+
+        if !sub_obj_non_attributes.empty?
+
+          if v.has_key?("rec_class")
+
+            rec_class = Object.const_get(v['rec_class'])
+
+            if v.has_key?("id") && v["id"]!=""
+
+              updateObject = Object.const_get(v['rec_class']).find(v['id'])
+
+              if  v.has_key?("rec_delete") && v["rec_delete"]=="true"
+                updateObject.delete()
+
+              else
+                
+                updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
+
+                
+
+                if !sub_obj_attributes.empty?
+
+                  traverse_study_attr(sub_obj_attributes, updateObject)
+
+                end
+
+              end
+
+            else
+
+              newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
+              object.send(model_property) << newObject
+
+               debugger
+
+              if !sub_obj_attributes.empty?
+
+                traverse_study_attr(sub_obj_attributes, newObject)
+
+              end
+            end
+
+          end
+
+        end
+
       end
-      
-      
-      
+
     end
+
+  end
     
      
      def export_i18n_messages
