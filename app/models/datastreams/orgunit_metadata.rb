@@ -51,6 +51,7 @@ class OrgunitMetadata < ActiveFedora::OmDatastream
     
     t.rec_class
     t.rec_id
+    t.id
 
 
   end

@@ -1,0 +1,10 @@
+.row{:id => "accordion-#{uid}"}
+  .accordion-group.span4
+    .accordion-heading
+      %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "##{uid}", :id => uid2}
+        = title
+        %i.icon-remove.delete-accordion{:style => "margin-left:5px;margin-right:-10px;float:right"}
+        %i.icon-minus.reduce-accordion{:style => "float:right"}
+    .accordion-body.collapse.in{:id => uid}
+      .accordion-inner
+        != content

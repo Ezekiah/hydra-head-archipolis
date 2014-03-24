@@ -42,7 +42,7 @@ class PersonMetadata < ActiveFedora::OmDatastream
     
     t.rec_class
     t.rec_id
-    
+    t.id
     t.rec_permission
     
     

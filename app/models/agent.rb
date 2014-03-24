@@ -6,8 +6,7 @@ class Agent < ActiveFedora::Base
   
   has_metadata 'descMetadata', type:AgentMetadata
     
-  has_attributes :rec_class, datastream: 'descMetadata', multiple: false
-  has_attributes :rec_id, datastream: 'descMetadata', multiple: false
+  include Common_metadata
   
   has_many :orgunits, :property=>:is_part_of, :class_name=>"Orgunit"
   has_many :persons, :property=>:is_part_of, :class_name=>"Person"

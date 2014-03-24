@@ -43,9 +43,12 @@ class StudyStepsController < ApplicationController
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
 
     @study = Study.find(session[:current_study_id])
-
-    @study.update(sub_obj_non_attributes.to_h)
-
+    
+    
+    if ! sub_obj_non_attributes.empty?
+      @study.update(sub_obj_non_attributes.to_h)
+    end
+    
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
 
     render_wizard @study
@@ -57,7 +60,7 @@ class StudyStepsController < ApplicationController
   def traverse_study_attr(params, object)
     
     
-    debugger
+    
     #recover all _attributes (nested forms)
     obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
 
@@ -76,7 +79,7 @@ class StudyStepsController < ApplicationController
         #recover simple properties
         sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
 
-        debugger
+        
 
         if !sub_obj_non_attributes.empty?
 
@@ -95,7 +98,7 @@ class StudyStepsController < ApplicationController
 
                 updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
 
-                debugger
+                
 
                 if !sub_obj_attributes.empty?
 
@@ -110,7 +113,7 @@ class StudyStepsController < ApplicationController
               newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy$/) })
               object.send(model_property) << newObject
 
-              debugger
+              
 
               if !sub_obj_attributes.empty?
 

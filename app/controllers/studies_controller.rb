@@ -34,6 +34,7 @@ class StudiesController < ApplicationController
   def show
     
     @study = Study.find(params[:id])
+    session[:current_study_id] =params[:id]
     
     @study_base_collection = @study.collections
 
@@ -54,7 +55,7 @@ class StudiesController < ApplicationController
     
     @study = Study.new
     #Get datastream field
-   
+    session[:current_study_id] = false
     
     @study_base_collection = @study.collections
 

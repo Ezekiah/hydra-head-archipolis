@@ -85,21 +85,21 @@
 
             = f.fields_for node_name do |ff|
               
-              - index++
+              - index = index + 1
               
               - if node_name.in? accordion_nodes
-              
-                = render(:partial=>'/shared/accordion', :locals=>{:uid=>SecureRandom.uuid, 
-                :uid2=>SecureRandom.uuid, 
-                :title=>node_name.singularize+' '+ (index+1).to_s,
-                :content=>render(:partial=>'/studies/display_fields', :locals=>{:f=>ff, :rec_type=>node_name, 
-                :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
-                :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'})})
-              
+                -#
+                  = render(:partial=>'/shared/accordion', :locals=>{:uid=>SecureRandom.uuid, 
+                  :uid2=>SecureRandom.uuid, 
+                  :title=>node_name.singularize+' '+ (index).to_s,
+                  :content=>render(:partial=>'/studies/display_fields', :locals=>{:f=>ff, :rec_type=>node_name, 
+                  :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
+                  :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'})})
+                
 
               - else
 
-                =render(:partial=>'/shared/edit_box', :locals=>{:uid2=>uid2, :label_link=>node_name.singularize+' '+ (index+1).to_s})
+                =render(:partial=>'/shared/edit_box', :locals=>{:uid2=>uid2, :label_link=>node_name.singularize+' '+ (index).to_s})
             
               
                 != call_jst('modal.jst.eco',  {id:'content-'+uid2, title:class_name, content:render(:partial=>'/studies/display_fields', :locals=>{:f=>ff, :rec_type=>node_name, 

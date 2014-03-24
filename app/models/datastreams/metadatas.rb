@@ -49,6 +49,7 @@ module Common_metadata
   extend ActiveSupport::Concern
 
   included do
+      has_attributes :id, datastream: 'descMetadata', multiple: false
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       has_attributes :rec_id, datastream: 'descMetadata', multiple: false
       has_attributes :rec_delete, datastream: 'descMetadata', multiple: false

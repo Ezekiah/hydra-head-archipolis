@@ -11,6 +11,7 @@ class AddressMetadata < ActiveFedora::OmDatastream
         t.rec_class
         t.rec_id
         t.rec_delete
+        t.id
   end
   
   
