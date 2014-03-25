@@ -10,7 +10,7 @@
       .nav-collapse
         %ul.nav
           %li
-            = link_to "General",  :controller => "studies", :action=>'show', :id=>session['current_study_id']
+            = link_to "General",  :controller => "studies"
              
           %li.contributor
             =link_to t('contributor.label'), study_steps_path+'/contributor'
@@ -38,6 +38,7 @@
           %input.search-query.span2{placeholder: "Search", type: "text"}/
       / /.nav-collapse
       = lang_switcher
+
     / /.container
    
   / /.navbar-inner

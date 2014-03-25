@@ -52,7 +52,7 @@ en:
     person: "Individual"
     orgunit: "Legal person"
     
-    identifier: 'Identifiant'
+    identifier: 'Identifier'
     funding_agent_name: 'Agence de financement'
     
   
@@ -571,7 +571,7 @@ en:
       label: 'date_end'
       help: 'date_end'
       
-    funding_agent_names:
+    orgunits:
       label: "Funding source"
       help: 'Funding source'
     

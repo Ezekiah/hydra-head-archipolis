@@ -410,7 +410,7 @@ fr:
       label: 'Date de fin'
       help: 'Date de fin'
       
-    funding_agent_names:
+    orgunits:
       label: "Source de financement"
       help: ""
       

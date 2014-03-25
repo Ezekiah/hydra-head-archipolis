@@ -217,6 +217,8 @@ $(document).ready ->
     
     id = $(this).attr('id')
     insert_zone = $('#'+$('#content-'+id).attr('data-insert-zone'))
+    
+    console.log insert_zone.html()
     sing = $('#content-'+id).attr('data-singular-name')
     bs_modal = $('#content-'+id)
     

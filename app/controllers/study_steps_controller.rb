@@ -42,17 +42,26 @@ class StudyStepsController < ApplicationController
   
   
   def show
-    @study = Study.find(session[:study_id])
+    
+    if !!session[:current_study_id] == false
+      redirect_to(:back)
+      
+    else
+      @study = Study.find(session[:study_id])
 
-    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
-    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
-
-    @LOCATIONS = { t('most_used') => @most_used_languages,
-                   t('others') =>
-                   @all_languages-@most_used_languages
-    }
-
-    render_wizard
+      @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+      @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
+      
+      @LOCATIONS = { t('most_used') => @most_used_languages,
+                     t('others') =>
+                     @all_languages-@most_used_languages
+      }
+      
+      render_wizard
+      
+    end
+    
+    
   end
 
   def update
