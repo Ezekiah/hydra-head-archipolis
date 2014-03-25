@@ -9,7 +9,12 @@ class Keyword < ActiveFedora::Base
     include Common_metadata
     
     belongs_to :Study, :property => :is_member_of_collection
-    
+   
+   
+
+   def get_title
+      return "#{LanguageList::LanguageInfo.find(self.language).name} #{truncate(self.value.to_s, :length => 17, :separator => '...')}"
+   end
     
    def self.xml_form
       

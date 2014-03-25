@@ -1,22 +1,18 @@
-<div class="row" id="accordion-<%=@uid%>">
-
-	<div class="accordion-group span4">
-		<div class="accordion-heading ">
-			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#<%=@uid%>" id="<%=@uid2%>">
-				<%=@title%>
-				<i style="margin-left:5px;margin-right:-10px;float:right" class="icon-remove delete-accordion" ></i> 
-				<i style="float:right" class="icon-minus reduce-accordion" ></i>
-			</a>
-		</div>
-		
-		
-		
-		<div id="<%=@uid%>" class="accordion-body collapse in">
-			<div class="accordion-inner">
-				<%- @content %>
-			</div>
-		</div>
+<div class="accordion-group span4">
+	<div class="accordion-heading ">
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#<%=@uid_accordion%>" href="#<%=@uid%>" id="<%=@uid2%>">
+			<%=@title%>
+			<i style="margin-left:5px;margin-right:-10px;float:right" class="icon-remove delete-accordion" ></i> 
+			<i style="float:right" class="icon-minus reduce-accordion" ></i>
+		</a>
+	</div>
 	
+	
+	
+	<div id="<%=@uid%>" class="accordion-body collapse out">
+		<div class="accordion-inner">
+			<%- @content %>
+		</div>
 	</div>
 
 </div>

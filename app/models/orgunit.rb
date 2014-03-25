@@ -66,7 +66,7 @@ class Orgunit < ActiveFedora::Base
               
               t.nationality(:type=>'country', :label=>'Nationality', :display=>'private')
               t.rec_class(:type=>'hidden', :value=>'Orgunit', :display=>'public')
-              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+              
               
               
               t.date_foundation(:type=>'date', :label=>'Foundation date', :display=>'private')

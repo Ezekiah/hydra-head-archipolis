@@ -16,7 +16,18 @@ module Agent_metadata
       accepts_nested_attributes_for :orgunits, allow_destroy: true
       accepts_nested_attributes_for :persons, allow_destroy: true
       
-      
+      def get_title
+        
+        if !self.orgunits.empty?
+          return self.orgunits.first.name
+          
+        else
+          return "#{self.persons.first.name_family} #{self.persons.first.name_given}"
+        end
+        
+        
+        
+      end
 
   end
 
@@ -51,7 +62,7 @@ module Common_metadata
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       
       has_attributes :rec_delete, datastream: 'descMetadata', multiple: false
-
+      
   end
 
   

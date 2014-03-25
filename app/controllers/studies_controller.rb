@@ -20,8 +20,7 @@ class StudiesController < ApplicationController
 
   #layout:resolve_layout
   
-  include Wicked::Wizard
-  steps :general, :contributor, :universe, :method, :corpus, :analyse, :edition, :note  
+  
  
   
   # GET /studies
@@ -125,26 +124,15 @@ class StudiesController < ApplicationController
   # PATCH/PUT /studies/1
   # PATCH/PUT /studies/1.json debugger
   def update
-    
-    
-    
-    sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
-
-    @study = Study.find(session[:current_study_id])
-    
-    
-    
-    
-    if ! sub_obj_non_attributes.empty?
-      @study.update(sub_obj_non_attributes.to_h)
+    respond_to do |format|
+      if @study.update(study_params)
+        format.html { redirect_to @study, notice: 'Study was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @study.errors, status: :unprocessable_entity }
+      end
     end
-    
-    traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
-
-    render_wizard @study
-    
-    
-    
   end
 
   # DELETE /studies/1

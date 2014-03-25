@@ -11,6 +11,10 @@ class Note < ActiveFedora::Base
     belongs_to :Study, :property => :is_member_of_collection
     
     
+    def get_title
+      return "#{LanguageList::LanguageInfo.find(object.language).name} #{truncate(object.value.to_s, :length => 17, :separator => '...')}"
+    end  
+    
     
     def self.xml_form
       

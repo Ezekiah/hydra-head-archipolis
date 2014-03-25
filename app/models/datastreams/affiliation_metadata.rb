@@ -4,11 +4,9 @@ class AffiliationMetadata < ActiveFedora::OmDatastream
          t.root(path: "metadatas")
          t.name
          t.acronym
-         t.rec_id
          t.role
          t.rec_class
          t.rec_delete
-         t.id
          
   end
   

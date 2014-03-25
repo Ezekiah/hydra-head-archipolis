@@ -15,6 +15,10 @@ class Identifier < ActiveFedora::Base
     belongs_to :Project, :property => :is_part_of
     
     
+    def get_title
+      return "#{self.id_type} #{truncate(self.value.to_s, :length => 17, :separator => '...')}"
+    end
+    
     def self.xml_form
     
         builder = Nokogiri::XML::Builder.new do |t|
@@ -32,7 +36,7 @@ class Identifier < ActiveFedora::Base
               t.value(:type=>'text', :multiple=>'true', :display=>'public')
               
               t.rec_class(:type=>'hidden', :value=>'Identifier', :display=>'public')
-              t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+              
               t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
           }  
 

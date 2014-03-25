@@ -21,6 +21,12 @@ class Address < ActiveFedora::Base
     belongs_to :Person, :property => :is_member_of_collection
     belongs_to :Orgunit, :property => :is_member_of_collection
     
+    
+    def get_title
+      return self.street
+    end
+     
+    
     def self.xml_form
       
       builder = Nokogiri::XML::Builder.new do |t|
@@ -35,7 +41,7 @@ class Address < ActiveFedora::Base
                 t.post_code(:type=>'text', :value=>'', :label=>'Post code', :display=>'public')
                 t.rec_class(:type=>'hidden', :value=>'Address', :label=>'', :display=>'public')
                 t.street(:type=>'text_area', :value=>'', :label=>'Street', :display=>'public')
-                t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+                
                 t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
                 
             }

@@ -45,7 +45,7 @@ class Study < ActiveFedora::Base
   
   has_attributes :documents_count, datastream: 'descMetadata', multiple: false
   
-  has_attributes :access_conditions, datastream: 'descMetadata', multiple: false
+  has_attributes :access_conditions, datastream: 'descMetadata', multiple: true
   
   
   has_attributes :contacts, datastream: 'descMetadata', multiple: true
@@ -179,19 +179,20 @@ class Study < ActiveFedora::Base
   accepts_nested_attributes_for :ressources, allow_destroy: true
   accepts_nested_attributes_for :depositors, allow_destroy: true
   
-  accepts_nested_attributes_for :interviewers
-  accepts_nested_attributes_for :interviewers_unknowns
+  accepts_nested_attributes_for :interviewers, allow_destroy: true
+  accepts_nested_attributes_for :interviewers_unknowns, allow_destroy: true
 
   
 
-  accepts_nested_attributes_for :copyright_holders
-  accepts_nested_attributes_for :authors
+  accepts_nested_attributes_for :copyright_holders, allow_destroy: true
+  accepts_nested_attributes_for :authors, allow_destroy: true
 
-  accepts_nested_attributes_for :distributors
+  accepts_nested_attributes_for :distributors, allow_destroy: true
   
-  accepts_nested_attributes_for :keywords
+  accepts_nested_attributes_for :keywords, allow_destroy: true
 
-  accepts_nested_attributes_for :contacts
+  accepts_nested_attributes_for :contacts, allow_destroy: true
+  accepts_nested_attributes_for :editors, allow_destroy: true
   
   
   

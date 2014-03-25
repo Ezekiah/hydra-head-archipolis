@@ -40,6 +40,55 @@ module StudiesHelper
 	end
 
 
+  def generate_title(object)
+    
+    class_name = object.class.to_s
+    
+    first_arg = ''
+    second_arg = ''
+    
+    if class_name == 'Identifier'
+      first_arg = object.id_type.to_s
+      second_arg = truncate(object.value.to_s, :length => 17, :separator => '...')
+    
+    
+    elsif class_name == 'Description' or class_name == 'Note' or class_name == 'Keyword' or class_name == 'Award'
+      first_arg = LanguageList::LanguageInfo.find(object.language).name
+      second_arg = truncate(object.value.to_s, :length => 17, :separator => '...')
+    
+    
+    elsif class_name == 'Address'
+      first_arg = object.street
+    
+    
+    elsif class_name == 'Affiliation'
+      first_arg = object.rec_id
+      second_arg = object.name
+    
+
+    elsif class_name == 'Project'
+      first_arg = object.title
+    
+    
+    elsif class_name == 'Person'
+      first_arg = "#{object.name_family} #{object.name_given}"
+      
+    elsif class_name == 'Orgunit'
+      first_arg = object.name
+      
+    else
+      first_arg = object.get_title
+      
+    
+    end
+    
+    
+    title = "#{first_arg} #{second_arg}"
+
+    title
+    
+  end
+  
 
     def gen_select (f, node, collection, prompt)
         return f.select node.name, collection, :input_html => { :required => node.attribute('required') }, :prompt => prompt

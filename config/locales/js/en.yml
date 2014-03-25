@@ -5,6 +5,7 @@ en:
   
   
   js:
+    cancel_suppression: 'Cancel suppression'
     redux_link: "reduce"
     popup:
       title-delete-item: "Delete ?"

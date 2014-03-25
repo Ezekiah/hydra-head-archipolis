@@ -88,7 +88,7 @@ class Person < ActiveFedora::Base
             t.phones(:type=>'text', :label=>'Phone', :display=>'private')
             
             t.rec_class(:type=>'hidden', :value=>'Person', :display=>'public')
-            t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
+            
            
             
             t.notes(:type=>'text', :multiple=>true, :label=>'Note', :display=>'private')

@@ -63,6 +63,31 @@ class StudyStepsController < ApplicationController
     
     
   end
+  
+  
+  def edit
+    
+    if !!session[:current_study_id] == false
+      redirect_to(:back)
+      
+    else
+      @study = Study.find(session[:study_id])
+
+      @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+      @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
+      
+      @LOCATIONS = { t('most_used') => @most_used_languages,
+                     t('others') =>
+                     @all_languages-@most_used_languages
+      }
+      
+      render_wizard
+      
+    end
+    
+    
+  end
+  
 
   def update
 
@@ -108,13 +133,15 @@ class StudyStepsController < ApplicationController
         
 
         if !sub_obj_non_attributes.empty?
+          
+          
 
           if v.has_key?("rec_class")
 
             rec_class = Object.const_get(v['rec_class'])
 
             if v.has_key?("id") && v["id"]!=""
-
+              debugger
               updateObject = Object.const_get(v['rec_class']).find(v['id'])
 
               if  v.has_key?("rec_delete") && v["rec_delete"]=="true"
@@ -123,7 +150,7 @@ class StudyStepsController < ApplicationController
               else
                 
                 updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
-
+                
                 
 
                 if !sub_obj_attributes.empty?
@@ -135,11 +162,10 @@ class StudyStepsController < ApplicationController
               end
 
             else
-
+              
               newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
               object.send(model_property) << newObject
 
-               debugger
 
               if !sub_obj_attributes.empty?
 

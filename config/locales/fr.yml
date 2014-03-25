@@ -21,7 +21,8 @@
 
 fr:
   #GENERAL
-  
+  cancel_suppression: 'Annuler la suppression'
+
   help: 'Aide'
   
   author: 'auteur'

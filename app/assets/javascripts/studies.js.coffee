@@ -18,7 +18,23 @@ check_hidden_assoc =  (zone, selector) ->
 
 initialize_accordions = undefined
 initialize_accordions = ->
+  
+  $('.accordion-group').each ->
+    #accordion_events(accordion, zone)
+    
+    ###
+    
+    $(document).on "click", $(this), ->
+      $(this).toggleClass "icon-plus icon-minus"
+      return
+    
+    accordion_events($(this), $(this).parent())
+    
+    console.log($(this).parents().find('')
+  
+  
   $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards, #notes, #funding_agent_names").each ->
+    
     zone = $(this)
     sing = $(this).attr("data-singular-name")
   
@@ -38,10 +54,10 @@ initialize_accordions = ->
 
       $(this).parent().append accordion
       
-      #accordion_events(accordion, zone)
+      accordion_events(accordion, zone)
       $(this).remove()
       return
-    
+    ###
 
 accordion_events = (accordion, zone) ->
   
@@ -166,7 +182,7 @@ launch_modal = (insert_zone, object, rec_class) ->
       
       json = eval({
         title:I18n.t("js.popup.new").capitalize() + " " + sing_name, 
-        label_link:sing_name + ' ' +parseInt(insert_zone.find(".edit-box").size() + 1), 
+        label_link:bs_modal.find('input:first').val(), 
         uid2:uid2})
       
       box_tpl = $(JST["templates/edit-box"](json))
@@ -182,8 +198,8 @@ launch_modal = (insert_zone, object, rec_class) ->
 
       $(document).on "click", "#" + uid2 + " button.delete", ->
         
-        #$("#" + uid2).remove()
-        #$("#" + uid1).remove()
+        $("#" + uid2).remove()
+        $("#" + uid1).remove()
         
         #$("#" + uid2).wrap('<del/>')
         
@@ -193,7 +209,7 @@ launch_modal = (insert_zone, object, rec_class) ->
 
       insert_zone.find('label.error').remove()
       
-      insert_zone.append box_tpl.show()
+      insert_zone.find('.container-edit-box').prepend box_tpl.show()
       
       check_hidden_assoc(insert_zone, ".edit-box")
       
@@ -210,9 +226,7 @@ launch_modal = (insert_zone, object, rec_class) ->
 
 $(document).ready ->
   
-  
 
-  
   $('.edit-box').each ->
     
     id = $(this).attr('id')
@@ -230,7 +244,14 @@ $(document).ready ->
 
     $(this).find('button.delete').click ->
       bs_modal.find("input[data-name='rec_delete']").val('true')
-
+      
+      $(this).parent().append(
+        $('<i class="add-on" style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</i>').click ->
+          bs_modal.find("input[data-name='rec_delete']").val('false')
+          box.find('span').css('text-decoration', 'none')
+          $(this).remove()
+      )
+      
       box.find('span').css('text-decoration', 'line-through')
       
 
@@ -308,15 +329,21 @@ $(document).ready ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
-      title: $(this).attr("data-singular-name") + " " + parseInt($(this).find(".accordion-group").size() + 1)
+      title: 'New '+$(this).attr("data-singular-name")
       content: parent_object.html()
       uid: s4()
       redux_link: I18n.t("redux")
       uid2: uid2
+      uid_accordion:$(this).find('.accordion-container').attr('id')
     )
-    accordion = $("<div/>").append(JST["templates/accordion"](json))
-    $(this).append accordion.fadeIn 300
+    accordion = $(JST["templates/accordion"](json))
     
+    console.log($(this))
+    $(this).find('.accordion-container').prepend accordion.fadeIn 300
+    
+    
+    
+    accordion.find('a:first').trigger "click"
     
     #accordion_events(accordion, $(this))
     
@@ -343,6 +370,7 @@ jQuery ($) ->
         
         clone.find("button, span.add-on").remove()
         clone.find("input[type='text']").val ""
+        clone.find("textarea").text ""
         #clone.find("label").remove()
         clone.append "<button data-action=\"delete\" class=\"delete btn btn-medium\" ><i class=\"icon-minus\"></i></button>"
           

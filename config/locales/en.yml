@@ -36,6 +36,10 @@ en:
   'dont_know': "don't know"
   'partial': "partially"
   
+  
+  cancel_suppression: 'Cancel suppression'
+  
+  
   edit-box:
     author: 'author'
     distributor: 'distributor'
