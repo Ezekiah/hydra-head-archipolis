@@ -1,5 +1,5 @@
 require 'datastreams/affiliation_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 
 class Affiliation < ActiveFedora::Base

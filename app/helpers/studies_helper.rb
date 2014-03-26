@@ -53,8 +53,8 @@ module StudiesHelper
     
     
     elsif class_name == 'Description' or class_name == 'Note' or class_name == 'Keyword' or class_name == 'Award'
-      first_arg = LanguageList::LanguageInfo.find(object.language).name
-      second_arg = truncate(object.value.to_s, :length => 17, :separator => '...')
+      first_arg = object.language
+      second_arg = object.value
     
     
     elsif class_name == 'Address'
@@ -75,7 +75,7 @@ module StudiesHelper
       
     elsif class_name == 'Orgunit'
       first_arg = object.name
-      
+
     else
       first_arg = object.get_title
       

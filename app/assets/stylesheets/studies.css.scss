@@ -195,5 +195,29 @@ div.container-edit-box{
 
 div.container-edit-box .edit-box{
   margin-top:10px;
+  margin-left:35px;
+}
+
+.accordion-heading{
+  background:#EEEEEE;
+  
+}
+
+.accordion-heading a:hover{
+ background:#C6C6C6;
+ color:black;
+}
+
+.accordion-heading .reduce-accordion{
+  font-size:18px;
+  position:absolute;
+  right:25px;
+  top:7px;
+}
+.accordion-heading .delete-accordion{
+  font-size:18px;
+  position:absolute;
+  right:5px;
+  top:7px;
 }
 

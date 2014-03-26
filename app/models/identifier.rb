@@ -1,5 +1,5 @@
 require 'datastreams/identifier_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 class Identifier < ActiveFedora::Base
     has_metadata 'descMetadata', type:IdentifierMetadata

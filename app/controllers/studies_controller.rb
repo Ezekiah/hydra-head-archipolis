@@ -1,20 +1,13 @@
-require 'datastreams/study_metadata'
-require 'datastreams/person_metadata'
-require 'datastreams/orgunit_metadata'
-require 'datastreams/affiliation_metadata'
-require 'datastreams/address_metadata'
-require 'datastreams/identifier_metadata'
-require 'datastreams/description_metadata'
-require 'datastreams/keyword_metadata'
-require 'datastreams/note_metadata'
-
-
-
-
+require 'concerns/metadatas.rb'
+require 'concerns/studies_mod.rb'
 
 class StudiesController < ApplicationController
-    
-  before_action :set_study, only: [:show, :edit, :update, :destroy]
+  
+  include Studies_mod
+  
+  before_action :set_study, only: [:show, :edit]
+  before_action :define_languages, only: [:show, :edit, :new]
+  
   before_filter :export_i18n_messages
   
 
@@ -32,22 +25,8 @@ class StudiesController < ApplicationController
   # GET /studies/1
   # GET /studies/1.json
   def show
-    
-    @study = Study.find(params[:id])
-    session[:current_study_id] =params[:id]
-    
-    @study_base_collection = @study.collections
-
-    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
-    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
-    
-    @LOCATIONS = { t('most_used') => @most_used_languages,
-                   t('others') => 
-                   @all_languages-@most_used_languages
-    }
-    render :layout => 'study_steps' 
-    
-    
+    render :layout=>"study_steps", :locals=>{:wizard_path=>study_steps_path+'/contributor'}
+     
   end
 
   # GET /studies/new
@@ -82,8 +61,7 @@ class StudiesController < ApplicationController
   
   # GET /studies/1/edit
   def edit
-    @studyMetaXML = Study.find(params[:id]).descMetadata.to_xml
-    @hash = Hash.from_xml(@studyMetaXML.gsub("\n", ""))
+    
   end
 
   # POST /studies
@@ -109,7 +87,8 @@ class StudiesController < ApplicationController
       if @study.save
         session[:study_id] = @study.id
         
-        format.html { redirect_to study_steps_path('etape1', :study_id => @study.id, :locale=>params['locale']), notice: 'Study was successfully created.' }
+        format.html { redirect_to study_steps_path}
+        
         format.json { render action: 'show', status: :created, location: @study }
       else
         format.html { render action: 'new' }
@@ -124,15 +103,24 @@ class StudiesController < ApplicationController
   # PATCH/PUT /studies/1
   # PATCH/PUT /studies/1.json debugger
   def update
-    respond_to do |format|
-      if @study.update(study_params)
-        format.html { redirect_to @study, notice: 'Study was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @study.errors, status: :unprocessable_entity }
-      end
+
+    sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
+
+    @study = Study.find(session[:current_study_id])
+
+    
+    if ! sub_obj_non_attributes.empty?
+      @study.update(sub_obj_non_attributes.to_h)
     end
+    
+    traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
+    
+    respond_to do |format|
+      format.html { redirect_to study_steps_path}
+      format.json { render action: 'show', status: :created, location: @study }
+
+    end
+
   end
 
   # DELETE /studies/1
@@ -149,8 +137,19 @@ class StudiesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_study
       @study = Study.find(params[:id])
+      session[:current_study_id] =params[:id]
     end
-
+    
+    def define_languages
+      @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+      @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
+      
+      @LOCATIONS = { t('most_used') => @most_used_languages,
+                     t('others') => 
+                     @all_languages-@most_used_languages
+      }
+    end 
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def study_params
       params[:study]
@@ -158,80 +157,7 @@ class StudiesController < ApplicationController
     
     private
 
-  def traverse_study_attr(params, object)
-
-    #recover all _attributes (nested forms)
-    obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
-
-    #foreach association
-    obj_attributes.each do |key,value|
-
-    #Store model name ***_attributes
-
-    #remove _attributes from key to get the association name
-      model_property = key.to_s.gsub(/_attributes/, '')
-
-      value.each do |k,v|
-
-      #Check if sub associations exists
-        sub_obj_attributes = v.select { |key| key.to_s.match(/_attributes$/) }
-        #recover simple properties
-        sub_obj_non_attributes = v.select { |key| !key.to_s.match(/_attributes$/) }
-
-        
-
-        if !sub_obj_non_attributes.empty?
-
-          if v.has_key?("rec_class")
-
-            rec_class = Object.const_get(v['rec_class'])
-
-            if v.has_key?("id") && v["id"]!=""
-
-              updateObject = Object.const_get(v['rec_class']).find(v['id'])
-
-              if  v.has_key?("rec_delete") && v["rec_delete"]=="true"
-                updateObject.delete()
-
-              else
-                
-                updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
-
-                
-
-                if !sub_obj_attributes.empty?
-
-                  traverse_study_attr(sub_obj_attributes, updateObject)
-
-                end
-
-              end
-
-            else
-
-              newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
-              object.send(model_property) << newObject
-
-               debugger
-
-              if !sub_obj_attributes.empty?
-
-                traverse_study_attr(sub_obj_attributes, newObject)
-
-              end
-            end
-
-          end
-
-        end
-
-      end
-
-    end
-
-  end
-    
-     
+ 
      def export_i18n_messages
         SimplesIdeias::I18n.export!
      end

@@ -1,5 +1,5 @@
 require 'datastreams/project_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 class Project < ActiveFedora::Base
   

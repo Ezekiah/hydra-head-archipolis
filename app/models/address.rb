@@ -1,5 +1,5 @@
 require 'datastreams/address_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 
 class Address < ActiveFedora::Base

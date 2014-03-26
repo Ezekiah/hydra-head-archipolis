@@ -1,5 +1,5 @@
 require 'datastreams/description_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 class Description < ActiveFedora::Base
     has_metadata 'descMetadata', type:DescriptionMetadata

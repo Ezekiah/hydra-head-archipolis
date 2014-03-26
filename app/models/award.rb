@@ -1,5 +1,5 @@
 require 'datastreams/award_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 class Award < ActiveFedora::Base
     has_metadata 'descMetadata', type:AwardMetadata

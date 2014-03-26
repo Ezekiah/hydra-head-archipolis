@@ -1,9 +1,9 @@
 <div class="accordion-group span4">
-	<div class="accordion-heading ">
+	<div class="accordion-heading" style="position:relative;">
 		<a class="accordion-toggle" data-toggle="collapse" data-parent="#<%=@uid_accordion%>" href="#<%=@uid%>" id="<%=@uid2%>">
 			<%=@title%>
-			<i style="margin-left:5px;margin-right:-10px;float:right" class="icon-remove delete-accordion" ></i> 
-			<i style="float:right" class="icon-minus reduce-accordion" ></i>
+			<i data-toggle="collapse" data-parent="#<%=@uid_accordion%>" href="#<%=@uid%>" class="fa fa-times-circle delete-accordion" ></i> 
+			<i class="fa fa-minus-circle reduce-accordion" ></i>
 		</a>
 	</div>
 	

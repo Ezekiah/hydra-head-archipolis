@@ -10,7 +10,7 @@
       .nav-collapse
         %ul.nav
           %li
-            = link_to "General",  :controller => "studies"
+            = link_to "General",  :controller => "studies", :action=>'show', :id=>session['current_study_id']
              
           %li.contributor
             =link_to t('contributor.label'), study_steps_path+'/contributor'

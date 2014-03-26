@@ -193,6 +193,7 @@ class Study < ActiveFedora::Base
 
   accepts_nested_attributes_for :contacts, allow_destroy: true
   accepts_nested_attributes_for :editors, allow_destroy: true
+  accepts_nested_attributes_for :notes, allow_destroy: true
   
   
   
@@ -350,11 +351,11 @@ class Study < ActiveFedora::Base
           
           
           
-            t.association(:type=>'association', :complex=>'true',:name=>'copyright_holders', :class_name=>'Agent', :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'copyright_holders', :class_name=>'Copyright_holder', :display=>'public', :popup=>'true')
             
             t.softwares(:type=>'text', :multiple=>true, :required=>false)
                         
-            t.association(:type=>'association', :complex=>'true',:name=>'editors',  :display=>'public', :class_name=>'Agent', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'editors',  :display=>'public', :class_name=>'Editor', :popup=>'true')
                       
           
         }

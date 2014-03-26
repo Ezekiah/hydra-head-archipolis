@@ -1,5 +1,5 @@
 require 'datastreams/ressource_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 
 class Ressource < ActiveFedora::Base

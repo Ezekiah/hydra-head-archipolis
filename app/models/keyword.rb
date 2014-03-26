@@ -1,5 +1,5 @@
-require 'datastreams/description_metadata'
-require 'datastreams/metadatas.rb'
+require 'datastreams/keyword_metadata'
+require 'concerns/metadatas.rb'
 
 class Keyword < ActiveFedora::Base
     has_metadata 'descMetadata', type:KeywordMetadata

@@ -1,5 +1,5 @@
 #encoding:utf-8
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 require 'datastreams/person_metadata'
 
 class Person < ActiveFedora::Base

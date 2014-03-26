@@ -1,10 +1,9 @@
-
 .accordion-group.span4
-  .accordion-heading
+  .accordion-heading{:style => "position:relative;"}
     %a.accordion-toggle{"data-parent" => "##{uid_accordion}", "data-toggle" => "collapse", :href => "##{uid}", :id => uid2}
       = title
-      %i.icon-remove.delete-accordion{:style => "margin-left:5px;margin-right:-10px;float:right"}
-      %i.icon-minus.reduce-accordion{:style => "float:right"}
+    %i{:class=>'fa fa-times-circle delete-accordion'}
+    %i{"data-parent" => "##{uid_accordion}", "data-toggle" => "collapse", :href => "##{uid}", :class=>"fa fa-minus-circle reduce-accordion"}
   .accordion-body.collapse.out{:id => uid}
     .accordion-inner
       != content

@@ -1,6 +1,6 @@
 #encoding:utf-8
 require 'datastreams/orgunit_metadata'
-require 'datastreams/metadatas.rb'
+require 'concerns/metadatas.rb'
 
 class Orgunit < ActiveFedora::Base
   

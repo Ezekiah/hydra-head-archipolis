@@ -19,8 +19,11 @@ check_hidden_assoc =  (zone, selector) ->
 initialize_accordions = undefined
 initialize_accordions = ->
   
+  console.log($('.accordion-group'))
   $('.accordion-group').each ->
-    #accordion_events(accordion, zone)
+    
+    
+    accordion_events($(this))
     
     ###
     
@@ -59,26 +62,51 @@ initialize_accordions = ->
       return
     ###
 
-accordion_events = (accordion, zone) ->
+accordion_events = (accordion, from="db") ->
+
+  #check_hidden_assoc(zone, ".accordion-group")
   
-  accordion.collapse('show')
-  check_hidden_assoc(zone, ".accordion-group")
-  
-  accordion.find(".delete-accordion, .reduce-accordion").click(->
+  accordion.find(".delete-accordion").click(->
+    
+    button = $(this)
+    
+    accordion.find('.cancel').remove()
+    
+    
     if $(this).hasClass("delete-accordion")
-      accordion.slideUp 300, ->
-        $(this).remove()
+      accordion.find('i[class="add-on"]').remove
+      
+      accordion.find("input[data-name='rec_delete']").val('true')
+        
+      if from != "js"
+      
+  
+        $(this).parent().find('a:first').after(
+          $('<i class="add-on cancel" style="position:absolute; top:8px;right:50px;text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</i>').click ->
+            accordion.find("input[data-name='rec_delete']").val('false')
+            accordion.find('span').css('text-decoration', 'none')
+            $(this).remove()
+            
+            button.disabled = false
+            
+        )
+      
+        accordion.find('span').css('text-decoration', 'line-through')
+        
+        button.disabled = true
+      else
+       accordion.remove()
         
         
-        check_hidden_assoc(zone, ".accordion-group")
-        return       
+        #check_hidden_assoc(zone, ".accordion-group")
+      return       
        
     ).hover (->
-      $(this).toggleClass "icon-white"
+      $(this).css('color', 'red')
       
       return
     ), ->
-      $(this).toggleClass "icon-white"
+      $(this).css('color', 'black')
       return
   
   $(document).on 'hidden.bs.collapse', accordion, ->
@@ -118,6 +146,7 @@ launch_modal = (insert_zone, object, rec_class) ->
   json = eval({title: rec_class, content:object})
 
   bs_modal = $(JST["templates/modal"](json))
+  $('body').append(bs_modal)
 
   bs_modal = bs_modal.modal({ keyboard: false, show: true })
   
@@ -203,7 +232,7 @@ launch_modal = (insert_zone, object, rec_class) ->
         
         #$("#" + uid2).wrap('<del/>')
         
-        check_hidden_assoc(insert_zone, ".edit-box")
+        #check_hidden_assoc(insert_zone, ".edit-box")
         
         
 
@@ -211,7 +240,7 @@ launch_modal = (insert_zone, object, rec_class) ->
       
       insert_zone.find('.container-edit-box').prepend box_tpl.show()
       
-      check_hidden_assoc(insert_zone, ".edit-box")
+      #check_hidden_assoc(insert_zone, ".edit-box")
       
 
       
@@ -286,12 +315,12 @@ $(document).ready ->
     
     return
 
-  $(document.body).on "click", "#add-persons, #add-orgunits,div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
+  $(document.body).on "click", "#add-persons, #add-orgunits, div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
    className = $(this).attr("id")
    $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
 
   $(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object, type) ->
-    console.log(person_type)  
+    alert($(this).attr('id'))  
     insert_zone = $(this)
     className = $(this).attr("id")
     agent_rec = parent_object.find('input[type="hidden"]')
@@ -325,7 +354,7 @@ $(document).ready ->
     task.fadeOut "slow"
     return
 
-  $(document.body).on "cocoon:after-insert", "div#persons, div#orgunits,div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name, div#notes", (e, parent_object) ->
+  $(document.body).on "cocoon:after-insert", "div#persons, div#orgunits, div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name, div#notes", (e, parent_object) ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
@@ -345,7 +374,7 @@ $(document).ready ->
     
     accordion.find('a:first').trigger "click"
     
-    #accordion_events(accordion, $(this))
+    accordion_events(accordion, from="js")
     
   
   return
