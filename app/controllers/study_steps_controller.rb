@@ -71,7 +71,7 @@ class StudyStepsController < ApplicationController
   
 
   def update
-
+    exit
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
 
     @study = Study.find(session[:current_study_id])

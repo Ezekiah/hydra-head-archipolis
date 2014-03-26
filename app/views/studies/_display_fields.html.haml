@@ -86,7 +86,9 @@
                 
                 .row{:class=>"accordion-container", :id => uid_accordion}
                   = f.fields_for node_name.to_sym, datas do |ff|
-                   
+
+                    %input{:class=>'updated-hidden', :type=>'hidden', :name=>ff.object_name+'[updated]', :value=>'false'}
+
                     - index = index+1
                     
                     -uid2 = SecureRandom.uuid
@@ -133,7 +135,12 @@
               
               - else
                 .row{:class=>"accordion-container", :id => uid_accordion}   
-                  
+              
+              
+             
+             
+
+                
             -#
               -if required
                 %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>'required', :name=>'validation-'+node_name, :class=>'hidden-association'}

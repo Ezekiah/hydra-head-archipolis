@@ -6,7 +6,10 @@ class Identifier < ActiveFedora::Base
     
     has_attributes :id_type, datastream: 'descMetadata', multiple: false
     has_attributes :value, datastream: 'descMetadata', multiple: true
+    
     include Common_metadata
+    
+    
     
 
     belongs_to :Person, :property => :is_part_of

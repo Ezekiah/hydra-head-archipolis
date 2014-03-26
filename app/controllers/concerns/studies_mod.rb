@@ -43,9 +43,9 @@ module Studies_mod
   
                 else
                   
-                  updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
-                  
-                  
+                  #updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
+                  debugger
+                  updateObject.update(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id'))
   
                   if !sub_obj_attributes.empty?
   
@@ -57,10 +57,13 @@ module Studies_mod
   
               else
                 
-                newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
+                #newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|rec_id$/) })
+                newObject = rec_class.new(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id'))
+
                 object.send(model_property) << newObject
   
-  
+                
+                
                 if !sub_obj_attributes.empty?
   
                   traverse_study_attr(sub_obj_attributes, newObject)

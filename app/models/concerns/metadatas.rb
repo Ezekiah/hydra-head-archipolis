@@ -1,7 +1,10 @@
 module Agent_metadata
   extend ActiveSupport::Concern
-
+  
+  
   included do
+      
+      
       has_metadata 'descMetadata', type:AgentMetadata
       
      
@@ -25,9 +28,8 @@ module Agent_metadata
           return "#{self.persons.first.name_family} #{self.persons.first.name_given}"
         end
         
-        
-        
       end
+      
 
   end
 
@@ -57,7 +59,7 @@ end
 
 module Common_metadata
   extend ActiveSupport::Concern
-
+  
   included do
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       

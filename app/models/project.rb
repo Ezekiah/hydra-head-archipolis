@@ -13,6 +13,7 @@ class Project < ActiveFedora::Base
     
     include Common_metadata
     
+    
     belongs_to :study, :property=>:is_part_of
     
     has_many :awards, :property=>:is_part_of
