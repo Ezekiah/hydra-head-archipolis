@@ -19,7 +19,7 @@ check_hidden_assoc =  (zone, selector) ->
 initialize_accordions = undefined
 initialize_accordions = ->
   
-  console.log($('.accordion-group'))
+
   $('.accordion-group').each ->
     
     
@@ -125,6 +125,8 @@ edit_modal = (bs_modal) ->
   bs_modal = bs_modal.modal({ keyboard: false, show: true })
   
   bs_modal.find('button.cancel').remove()
+  
+  
   
   bs_modal.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
   
@@ -261,7 +263,7 @@ $(document).ready ->
     id = $(this).attr('id')
     insert_zone = $('#'+$('#content-'+id).attr('data-insert-zone'))
     
-    console.log insert_zone.html()
+
     sing = $('#content-'+id).attr('data-singular-name')
     bs_modal = $('#content-'+id)
     
@@ -269,8 +271,7 @@ $(document).ready ->
     
     $(this).find('button.edit').click ->
       edit_modal(bs_modal)
-    
-
+      box.find('input[type="hidden"]').val('true')   
     $(this).find('button.delete').click ->
       bs_modal.find("input[data-name='rec_delete']").val('true')
       
@@ -367,7 +368,7 @@ $(document).ready ->
     )
     accordion = $(JST["templates/accordion"](json))
     
-    console.log($(this))
+
     $(this).find('.accordion-container').prepend accordion.fadeIn 300
     
     

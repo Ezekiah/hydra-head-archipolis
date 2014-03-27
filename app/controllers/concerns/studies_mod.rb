@@ -35,7 +35,7 @@ module Studies_mod
               rec_class = Object.const_get(v['rec_class'])
   
               if v.has_key?("id") && v["id"]!=""
-                debugger
+                
                 updateObject = Object.const_get(v['rec_class']).find(v['id'])
   
                 if  v.has_key?("rec_delete") && v["rec_delete"]=="true"
@@ -43,22 +43,24 @@ module Studies_mod
   
                 else
                   
-                  #updateObject.update(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|id|rec_id$/) })
-                  debugger
-                  updateObject.update(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id'))
+                 debugger
+                  if v.has_key?("updated") && v["updated"]=="true"
+                  
+                    updateObject.update(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
   
-                  if !sub_obj_attributes.empty?
-  
-                    traverse_study_attr(sub_obj_attributes, updateObject)
-  
+                    if !sub_obj_attributes.empty?
+    
+                      traverse_study_attr(sub_obj_attributes, updateObject)
+    
+                    end
                   end
-  
+    
                 end
   
               else
                 
                 #newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|rec_id$/) })
-                newObject = rec_class.new(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id'))
+                newObject = rec_class.new(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id','updated', 'rec_delete'))
 
                 object.send(model_property) << newObject
   
