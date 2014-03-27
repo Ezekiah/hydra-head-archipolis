@@ -22,6 +22,10 @@ initialize_accordions = ->
 
   $('.accordion-group').each ->
     
+    if $(this).find('.data-complex').val() == 'true'
+    
+      $(this).find('#orgunits .control-group:first').remove()
+      $(this).find('#persons .control-group:first').remove()
     
     accordion_events($(this))
     
@@ -66,11 +70,17 @@ accordion_events = (accordion, from="db") ->
 
   #check_hidden_assoc(zone, ".accordion-group")
   
+  accordion.click ->
+    accordion.find('input[class="updated-hidden"]').val('true')   
+  
+  
   accordion.find(".delete-accordion").click(->
     
     button = $(this)
     
     accordion.find('.cancel').remove()
+    
+    
     
     
     if $(this).hasClass("delete-accordion")
@@ -153,6 +163,8 @@ launch_modal = (insert_zone, object, rec_class) ->
   bs_modal = bs_modal.modal({ keyboard: false, show: true })
   
   bs_modal.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
+  
+  console.log(bs_modal.find("span[data-toggle=\"tooltip\"]"))
 
   uid1 = s4()
   uid2 = s4()
@@ -206,7 +218,7 @@ launch_modal = (insert_zone, object, rec_class) ->
       bs_modal.unwrap()
       bs_modal.modal "hide"
       
-      insert_zone.append $("<div/>").css("display", "none").attr("id", uid1).append(bs_modal.find('select, input, textarea').clone())
+      insert_zone.append $("<div/>").css("display", "none").attr("id", 'content-'+uid2).attr('class','content-new').append(bs_modal.find('select, input, textarea').clone())
       
       
       #insert_zone.append $("<div/>").css("display", "none").attr("id", uid1).append(bs_modal.html())
@@ -218,19 +230,36 @@ launch_modal = (insert_zone, object, rec_class) ->
       
       box_tpl = $(JST["templates/edit-box"](json))
 
-
+      
 
       $(document).on "click", "#" + uid2 + " button.edit", ->
         bs_modal.modal "show"
- 
+        
+
         bs_modal.find("button.save, button.cancel").unbind("click").click ->
           bs_modal.modal "hide"
 
 
       $(document).on "click", "#" + uid2 + " button.delete", ->
+       
+
         
-        $("#" + uid2).remove()
-        $("#" + uid1).remove()
+        $('#content-'+uid2).find("input[data-name='rec_delete']").val('true')
+        
+
+        box_tpl.append(
+          $('<i class="add-on" style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</i>').click ->
+            $('#content-'+uid2).find("input[data-name='rec_delete']").val('false')
+            box_tpl.find('span').css('text-decoration', 'none')
+            $(this).remove()
+        )
+        
+
+        box_tpl.find('span').css('text-decoration', 'line-through')
+        
+        
+        #$("#" + uid2).remove()
+        #$("#" + uid1).remove()
         
         #$("#" + uid2).wrap('<del/>')
         
@@ -271,8 +300,13 @@ $(document).ready ->
     
     $(this).find('button.edit').click ->
       edit_modal(bs_modal)
-      box.find('input[type="hidden"]').val('true')   
+      bs_modal.find('input[class="updated-hidden"]').val('true') 
+        
+          
     $(this).find('button.delete').click ->
+      
+     
+      $(this).parent().find('i[class="add-on"]').remove()
       bs_modal.find("input[data-name='rec_delete']").val('true')
       
       $(this).parent().append(
@@ -292,7 +326,7 @@ $(document).ready ->
   current_popup = ""
   $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'), container:'body'})
   $(".add_fields").hide()
-  $(document.body).on "click", " #add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-interviewers_unknowns, #add-editors, #add-contacts", ->
+  $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-interviewers_unknowns, #add-editors, #add-contacts", ->
 
     className = $(this).attr("id").replace("add-", "")
     zone = $('#'+className)
@@ -317,11 +351,13 @@ $(document).ready ->
     return
 
   $(document.body).on "click", "#add-persons, #add-orgunits, div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
-   className = $(this).attr("id")
-   $("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
+   className = $(this).attr("id").replace("add-", "")
 
-  $(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object, type) ->
-    alert($(this).attr('id'))  
+   $(this).parent().find("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
+   
+   
+  $(document.body).on("cocoon:after-insert", "div#projects", (e, parent_object, type) ->
+  #$(document.body).on("cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#projects, div#contacts", (e, parent_object, type) ->
     insert_zone = $(this)
     className = $(this).attr("id")
     agent_rec = parent_object.find('input[type="hidden"]')
@@ -354,13 +390,46 @@ $(document).ready ->
     $(this).data "remove-timeout", 1000
     task.fadeOut "slow"
     return
-
-  $(document.body).on "cocoon:after-insert", "div#persons, div#orgunits, div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#funding_agent_name, div#notes", (e, parent_object) ->
+  
+  
+  $(document.body).on "cocoon:after-insert", "div#persons, div#orgunits, div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#notes", (e, parent_object) ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
       title: 'New '+$(this).attr("data-singular-name")
       content: parent_object.html()
+      uid: s4()
+      redux_link: I18n.t("redux")
+      uid2: uid2
+      uid_accordion:$(this).find('.accordion-container').attr('id')
+    )
+    accordion = $(JST["templates/accordion"](json))
+    
+
+    $(this).find('.accordion-container').prepend accordion.fadeIn 300
+    
+    
+    
+    accordion.find('a:first').trigger "click"
+    
+    accordion_events(accordion, from="js")
+  
+  
+  $(document.body).on "cocoon:after-insert", "div#interviewers_unknowns, div#depositors, div#distributors, div#authors, div#copyright_holders, div#interviewers, div#editors, div#contacts", (e, parent_object) ->
+
+    className = $(this).attr("id")
+    agent_rec = parent_object.find('input[type="hidden"]')
+    changed_parent_object =  $(parent_object.find('a[data-association="'+person_type+'"]').attr('data-association-insertion-template')).append(agent_rec)
+    
+    html = changed_parent_object.html()
+
+    
+
+    uid2 = s4()
+    parent_object.remove()
+    json = eval(
+      title: 'New '+$(this).attr("data-singular-name")
+      content: html
       uid: s4()
       redux_link: I18n.t("redux")
       uid2: uid2

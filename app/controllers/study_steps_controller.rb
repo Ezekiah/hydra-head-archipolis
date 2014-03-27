@@ -14,11 +14,16 @@ class StudyStepsController < ApplicationController
   include Studies_mod
   
   
+  
+  
   layout 'study_steps'
 
   include Wicked::Wizard
   steps :contributor, :universe, :method, :corpus, :analyse, :edition, :note
   
+  
+  before_filter :set_cache_buster
+
   
   
   
@@ -97,6 +102,12 @@ class StudyStepsController < ApplicationController
 
   def study_params
     params[:study]
+  end
+  
+  def set_cache_buster
+    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
   end
 
 end

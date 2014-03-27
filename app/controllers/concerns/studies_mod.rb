@@ -43,9 +43,9 @@ module Studies_mod
   
                 else
                   
-                 debugger
+                 
                   if v.has_key?("updated") && v["updated"]=="true"
-                  
+                    debugger
                     updateObject.update(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
   
                     if !sub_obj_attributes.empty?
@@ -58,11 +58,12 @@ module Studies_mod
                 end
   
               else
+                if  v.has_key?("rec_delete") && v["rec_delete"]=="false"
                 
-                #newObject = rec_class.new(sub_obj_non_attributes.select { |key| !key.to_s.match(/_destroy|rec_id$/) })
-                newObject = rec_class.new(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id','updated', 'rec_delete'))
+                  newObject = rec_class.new(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id','updated', 'rec_delete'))
 
-                object.send(model_property) << newObject
+                  object.send(model_property) << newObject
+                end
   
                 
                 

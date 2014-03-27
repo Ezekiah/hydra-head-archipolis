@@ -25,7 +25,7 @@ class StudiesController < ApplicationController
   # GET /studies/1
   # GET /studies/1.json
   def show
-    render :layout=>"study_steps", :locals=>{:wizard_path=>study_steps_path+'/contributor'}
+    render :layout=>"study_steps", :locals=>{:in_association=>false, :wizard_path=>study_steps_path+'/contributor'}
      
   end
 

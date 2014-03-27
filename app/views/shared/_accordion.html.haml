@@ -3,7 +3,7 @@
     %a.accordion-toggle{"data-parent" => "##{uid_accordion}", "data-toggle" => "collapse", :href => "##{uid}", :id => uid2}
       = title
     %i{:class=>'fa fa-times-circle delete-accordion'}
-    %i{"data-parent" => "##{uid_accordion}", "data-toggle" => "collapse", :href => "##{uid}", :class=>"fa fa-minus-circle reduce-accordion"}
+    -#%i{"data-parent" => "##{uid_accordion}", "data-toggle" => "collapse", :href => "##{uid}", :class=>"fa fa-minus-circle reduce-accordion"}
   .accordion-body.collapse.out{:id => uid}
     .accordion-inner
       != content

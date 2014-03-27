@@ -28,7 +28,7 @@ module Agent_metadata
           return "#{self.persons.first.name_family} #{self.persons.first.name_given}"
         end
         
-      end
+      end 
       
 
   end

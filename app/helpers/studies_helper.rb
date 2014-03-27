@@ -1,6 +1,85 @@
-
-
 module StudiesHelper
+  
+  def generate_edit_boxes(f, node_name, class_name, is_complex_assoc, uid_accordion, parent)
+
+        
+      uid2 = SecureRandom.uuid
+      uid = SecureRandom.uuid
+       
+
+      render_tpl = render(:partial=>'/studies/display_fields', :locals=>{:f=>f,
+      :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
+      :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}).html_safe
+
+      
+      edit_box_tpl = render(:partial=>'/shared/edit_box', 
+      :locals=>{:uid2=>uid2, 
+      :label_link=>generate_title(f.object)}).html_safe
+      
+    
+      modal = Nokogiri::HTML.fragment(render_tpl)
+      
+      
+
+      updated_hidden = Nokogiri::HTML::Builder.new do |doc| 
+        doc.input(:class=>'updated-hidden', :type=>'hidden', :name=>f.object_name+'[updated]', :value=>'false', :id=>'updated-'+f.object.id)
+      end
+      
+      edit_box_tpl + call_jst('modal.jst.eco',  {id:'content-'+uid2, 
+        title:t('edit-box.'+class_name.downcase).capitalize, 
+        content:modal.to_html+updated_hidden.doc.to_html}).html_safe
+      
+    
+  end
+  
+  
+  
+  def generate_accordions(f, node_name, class_name, is_complex_assoc, uid_accordion, parent)
+        
+                  
+    uid2 = SecureRandom.uuid
+    uid = SecureRandom.uuid
+    
+    updated_hidden = Nokogiri::HTML::Builder.new do |doc| 
+      doc.input(:class=>'updated-hidden', :type=>'hidden', :name=>f.object_name+'[updated]', :value=>'false', :id=>'updated-'+f.object.id)
+    end
+    
+    render_tpl = render(:partial=>'/studies/display_fields', :locals=>{:f=>f,
+    :edit=>true,:xml=>Object.const_get(class_name.capitalize).xml_form.to_xml,  
+    :xpath=>'/'+class_name.to_s.singularize.downcase+'/*',
+    :in_association=>true}).html_safe + updated_hidden.doc.to_html.html_safe
+  
+  
+    if !! parent.object.descMetadata.to_s.match('AgentMetadata') == true
+      test = Nokogiri::HTML::Builder.new do |doc| 
+        doc.input(:class=>'data-complex', :type=>'hidden', :value=>true)
+      end
+      
+      accordion = render_tpl + test.doc.to_html.html_safe
+      
+    
+    else
+      
+      
+      
+      accordion = render(:partial=>'/shared/accordion', :locals=>{:uid=>uid, 
+        :uid_accordion=>uid_accordion,
+        :uid2=>SecureRandom.uuid, 
+        :title=>generate_title(f.object),
+        :content=>render_tpl,
+        :in_association=>true}).html_safe
+        
+    end
+    
+    
+    
+    accordion
+
+    
+  end
+  
+  
+  
 	def display_study_tree(col)
 		html='<ul>'
 
