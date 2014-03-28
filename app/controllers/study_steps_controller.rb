@@ -30,7 +30,7 @@ class StudyStepsController < ApplicationController
   def show
     
     if !!session[:current_study_id] == false
-      redirect_to(:back)
+      redirect_to(:back, :notice=>t("You have to complete the first step before.") )
       
     else
       @study = Study.find(session[:study_id])
@@ -77,20 +77,30 @@ class StudyStepsController < ApplicationController
 
   def update
     
-    sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
-
-    @study = Study.find(session[:current_study_id])
+    if study_params.blank?
+      redirect_to :back, notice: "Please fill all fields"
+    else
     
-    
-    
-    
-    if ! sub_obj_non_attributes.empty?
-      @study.update(sub_obj_non_attributes.to_h)
+      study_params.select { |key| key.to_s.match(/_attributes$/)}
+      sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
+      
+      @study = Study.find(session[:current_study_id])
+      
+      if ! sub_obj_non_attributes.empty?
+        @study.update(sub_obj_non_attributes.to_h)
+      end
+      
+      sub_obj_attributes = study_params.select { |key| key.to_s.match(/_attributes$/)}
+      
+      if ! sub_obj_attributes.empty?
+      
+        traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
+      
+      end
+      
+      render_wizard @study
+      
     end
-    
-    traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
-
-    render_wizard @study
 
   end
 

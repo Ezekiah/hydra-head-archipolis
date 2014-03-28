@@ -9,7 +9,7 @@
           %li= msg
   = yield f
   %fieldset
-    = render :partial=>'/studies/display_fields', :locals => {:in_association=>false,, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/corpus/*", :fedora_object=>Study.find(session[:current_study_id])}
+    = render :partial=>'/studies/display_fields', :locals => {:in_association=>false, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/corpus/*", :fedora_object=>Study.find(session[:current_study_id])}
   #dialog-confirm{:style => ""}
     %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
     %p

@@ -73,9 +73,9 @@ accordion_events = (accordion, from="db") ->
   accordion.click ->
     accordion.find('input[class="updated-hidden"]').val('true')   
   
+  accordion.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
   
   accordion.find(".delete-accordion").click(->
-    
     button = $(this)
     
     accordion.find('.cancel').remove()
@@ -84,29 +84,28 @@ accordion_events = (accordion, from="db") ->
     
     
     if $(this).hasClass("delete-accordion")
-      accordion.find('i[class="add-on"]').remove
+      accordion.find('button[class="add-on btn btn-inverse btn-small"]').remove
       
       accordion.find("input[data-name='rec_delete']").val('true')
-        
-      if from != "js"
-      
+
   
-        $(this).parent().find('a:first').after(
-          $('<i class="add-on cancel" style="position:absolute; top:8px;right:50px;text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</i>').click ->
-            accordion.find("input[data-name='rec_delete']").val('false')
-            accordion.find('span').css('text-decoration', 'none')
-            $(this).remove()
-            
-            button.disabled = false
-            
-        )
+      $(this).parent().find('a:first').after(
+        $('<button class="add-on cancel btn btn-inverse btn-small" style="position:absolute; top:4px;right:50px;text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</button>').click ->
+          accordion.find("input[data-name='rec_delete']").val('false')
+          accordion.find('a, label').css('text-decoration', 'none')
+          accordion.find('.accordion-heading').css('background', '#EEEEEE').css('opacity', '10')
+          $(this).remove()
+          
+          button.disabled = false
+          
+      )
       
-        accordion.find('span').css('text-decoration', 'line-through')
-        
-        button.disabled = true
-      else
-       accordion.remove()
-        
+      accordion.find('.accordion-heading').css('background', '#FCBDBD')
+      
+      accordion.find('a, label').css('text-decoration', 'line-through')
+      
+      button.disabled = true
+     
         
         #check_hidden_assoc(zone, ".accordion-group")
       return       
@@ -152,23 +151,27 @@ edit_modal = (bs_modal) ->
 
 launch_modal = (insert_zone, object, rec_class) ->
   
-  
+  uid1 = s4()
+  uid2 = s4()
+  uid3 = s4()
   sing_name = insert_zone.attr('data-singular-name')
   
   json = eval({title: rec_class, content:object})
 
+  #bs_modal = $("<div/>").css("display", "none").attr("id", 'content-'+uid2).attr('class','content-new').append(JST["templates/modal"](json))
+  
   bs_modal = $(JST["templates/modal"](json))
-  $('body').append(bs_modal)
-
+  $('form.simple_form').append(bs_modal)
+  
+  console.log($('form .simple_form'))
+  
+  
   bs_modal = bs_modal.modal({ keyboard: false, show: true })
   
   bs_modal.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
   
-  console.log(bs_modal.find("span[data-toggle=\"tooltip\"]"))
-
-  uid1 = s4()
-  uid2 = s4()
-  uid3 = s4()
+  
+  
   bs_modal.find("button.save").unbind("click").click ->
    
     
@@ -214,14 +217,10 @@ launch_modal = (insert_zone, object, rec_class) ->
     ###
     if isValid = true
       
-
       bs_modal.unwrap()
       bs_modal.modal "hide"
-      
-      insert_zone.append $("<div/>").css("display", "none").attr("id", 'content-'+uid2).attr('class','content-new').append(bs_modal.find('select, input, textarea').clone())
-      
-      
-      #insert_zone.append $("<div/>").css("display", "none").attr("id", uid1).append(bs_modal.html())
+      bs_modal.hide()
+   
       
       json = eval({
         title:I18n.t("js.popup.new").capitalize() + " " + sing_name, 
@@ -234,6 +233,7 @@ launch_modal = (insert_zone, object, rec_class) ->
 
       $(document).on "click", "#" + uid2 + " button.edit", ->
         bs_modal.modal "show"
+        bs_modal.show()
         
 
         bs_modal.find("button.save, button.cancel").unbind("click").click ->
@@ -241,22 +241,21 @@ launch_modal = (insert_zone, object, rec_class) ->
 
 
       $(document).on "click", "#" + uid2 + " button.delete", ->
-       
 
-        
         $('#content-'+uid2).find("input[data-name='rec_delete']").val('true')
         
-
-        box_tpl.append(
-          $('<i class="add-on" style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</i>').click ->
+        $(this).parent().find('.btn-inverse').remove()
+        
+        $(this).parent().append(
+          $('<button class="add btn btn-inverse " style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</button>').click ->
             $('#content-'+uid2).find("input[data-name='rec_delete']").val('false')
-            box_tpl.find('span').css('text-decoration', 'none')
+            box_tpl.find('span').css('text-decoration', 'none').css('background', '#EEEEEE')
+
             $(this).remove()
         )
         
 
-        box_tpl.find('span').css('text-decoration', 'line-through')
-        
+        box_tpl.find('span').css('text-decoration', 'line-through').css('background', '#FCBDBD')
         
         #$("#" + uid2).remove()
         #$("#" + uid1).remove()
@@ -269,7 +268,7 @@ launch_modal = (insert_zone, object, rec_class) ->
 
       insert_zone.find('label.error').remove()
       
-      insert_zone.find('.container-edit-box').prepend box_tpl.show()
+      insert_zone.find('.container-edit-box:first').prepend box_tpl.show()
       
       #check_hidden_assoc(insert_zone, ".edit-box")
       
@@ -306,11 +305,12 @@ $(document).ready ->
     $(this).find('button.delete').click ->
       
      
-      $(this).parent().find('i[class="add-on"]').remove()
+      $(this).parent().find('.btn-inverse').remove()
       bs_modal.find("input[data-name='rec_delete']").val('true')
+    
       
       $(this).parent().append(
-        $('<i class="add-on" style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</i>').click ->
+        $('<button class="add btn btn-inverse" style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</button>').click ->
           bs_modal.find("input[data-name='rec_delete']").val('false')
           box.find('span').css('text-decoration', 'none')
           $(this).remove()
@@ -396,7 +396,7 @@ $(document).ready ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
-      title: 'New '+$(this).attr("data-singular-name")
+      title: I18n.t("js.popup.new").capitalize()+' '+$(this).attr("data-singular-name")
       content: parent_object.html()
       uid: s4()
       redux_link: I18n.t("redux")
@@ -408,8 +408,7 @@ $(document).ready ->
 
     $(this).find('.accordion-container').prepend accordion.fadeIn 300
     
-    
-    
+
     accordion.find('a:first').trigger "click"
     
     accordion_events(accordion, from="js")
@@ -422,7 +421,7 @@ $(document).ready ->
     changed_parent_object =  $(parent_object.find('a[data-association="'+person_type+'"]').attr('data-association-insertion-template')).append(agent_rec)
     
     html = changed_parent_object.html()
-
+  
     
 
     uid2 = s4()

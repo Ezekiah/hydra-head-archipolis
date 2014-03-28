@@ -45,7 +45,6 @@ module Studies_mod
                   
                  
                   if v.has_key?("updated") && v["updated"]=="true"
-                    debugger
                     updateObject.update(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
   
                     if !sub_obj_attributes.empty?
@@ -59,7 +58,7 @@ module Studies_mod
   
               else
                 if  v.has_key?("rec_delete") && v["rec_delete"]=="false"
-                
+                  
                   newObject = rec_class.new(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id','updated', 'rec_delete'))
 
                   object.send(model_property) << newObject

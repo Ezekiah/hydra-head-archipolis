@@ -38,6 +38,7 @@
       
           
       - if node.attribute('display').to_s != 'private'
+        
         %div{:class=>'archipolis-field '+row+''}
           - if node_type == 'association'
           
@@ -123,7 +124,7 @@
             = f.input node.name, :wrapper => :prepend_append, :label => label, :required=>required do
               - datas.each_with_index do |data, index|
                 
-                %div{:class=>'input-append input-prepend', :style=>'display:block;'}
+                %div{:style=>'display:block;'}
                   = f.input_field node.name, 'multiple'=>multiple, 'value'=>data, 'placeHolder'=>t("type_something"), :required=>required
                   - if index == 0
                     - if is_multiple

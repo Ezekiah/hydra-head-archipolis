@@ -155,7 +155,7 @@ control-group label:first{
 }
 
 div.control-group {
-  margin-bottom:15px;
+  margin-bottom:5px;
   
 }
 
@@ -195,7 +195,7 @@ div.container-edit-box{
 
 div.container-edit-box .edit-box{
   margin-top:10px;
-  margin-left:35px;
+  margin-left:5px;
 }
 
 .accordion-heading{
@@ -255,4 +255,9 @@ div.archipolis-field{
 
 .popover{
     z-index:100000000;
+}
+
+body .accordion-group{
+  opacity:100
+  
 }

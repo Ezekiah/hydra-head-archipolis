@@ -217,12 +217,14 @@ en:
     contacts:
       label: "Contact(s)"
       help: "Contact(s)"
-   
+
+
+
   
    
   universe:
     
-    label: 'Univers'
+    label: 'Universe'
     location_of_units_of_observations:
       label: "Location of Units of Observation"
       help: 
@@ -329,7 +331,7 @@ en:
 
   
   analyse:
-    label: 'Analyse'
+    label: 'Analysis'
     analysis_has_transcription:
       label: "Has transcription ?"
       help: 
@@ -597,19 +599,6 @@ en:
   
   calendar: "Calendar"
   type_something: "Type something..."
-  
-  help:
-    rec_id: "Identifier"
-    title: "Study title"
-    descriptions: "Abstracts"
-    disciplines: "Discipline"
-    classifications: "Classifications"
-    keywords: "Keywords"
-    coverage_temporal_begin: "Time Period Covered start"
-    coverage_temporal_end: "Time Period Covered end"
-    acronym: "Project acronym"
-   
-  
   
     
 

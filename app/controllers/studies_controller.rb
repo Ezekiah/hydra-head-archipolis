@@ -5,7 +5,7 @@ class StudiesController < ApplicationController
   
   include Studies_mod
   
-  before_action :set_study, only: [:show, :edit]
+  before_action :set_study, only: [:show, :edit, :destroy]
   before_action :define_languages, only: [:show, :edit, :new]
   
   before_filter :export_i18n_messages

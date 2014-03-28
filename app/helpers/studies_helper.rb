@@ -12,14 +12,10 @@ module StudiesHelper
       :xpath=>'/'+class_name.to_s.singularize.downcase+'/*'}).html_safe
 
       
-      edit_box_tpl = render(:partial=>'/shared/edit_box', 
-      :locals=>{:uid2=>uid2, 
-      :label_link=>generate_title(f.object)}).html_safe
-      
-    
+      edit_box_tpl = call_jst('edit-box.jst.eco',  {uid2:uid2, 
+        label_link:generate_title(f.object)}).html_safe
+
       modal = Nokogiri::HTML.fragment(render_tpl)
-      
-      
 
       updated_hidden = Nokogiri::HTML::Builder.new do |doc| 
         doc.input(:class=>'updated-hidden', :type=>'hidden', :name=>f.object_name+'[updated]', :value=>'false', :id=>'updated-'+f.object.id)
@@ -29,6 +25,8 @@ module StudiesHelper
         title:t('edit-box.'+class_name.downcase).capitalize, 
         content:modal.to_html+updated_hidden.doc.to_html}).html_safe
       
+    
+    
     
   end
   
@@ -61,14 +59,14 @@ module StudiesHelper
     else
       
       
+      accordion = call_jst('accordion.jst.eco',  {uid:uid, 
+        uid_accordion:uid_accordion,
+        uid2:SecureRandom.uuid, 
+        title:generate_title(f.object),
+        content:render_tpl,
+        in_association:true}).html_safe
       
-      accordion = render(:partial=>'/shared/accordion', :locals=>{:uid=>uid, 
-        :uid_accordion=>uid_accordion,
-        :uid2=>SecureRandom.uuid, 
-        :title=>generate_title(f.object),
-        :content=>render_tpl,
-        :in_association=>true}).html_safe
-        
+ 
     end
     
     
@@ -123,12 +121,12 @@ module StudiesHelper
     
     class_name = object.class.to_s
     
-    first_arg = ''
-    second_arg = ''
+    first_arg = ' '
+    second_arg = ' '
     
     if class_name == 'Identifier'
       first_arg = object.id_type.to_s
-      second_arg = truncate(object.value.to_s, :length => 17, :separator => '...')
+      second_arg = object.value[0]
     
     
     elsif class_name == 'Description' or class_name == 'Note' or class_name == 'Keyword' or class_name == 'Award'
@@ -160,6 +158,8 @@ module StudiesHelper
       
     
     end
+    
+    
     
     
     title = "#{first_arg} #{second_arg}"
