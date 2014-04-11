@@ -68,8 +68,6 @@ gem "blacklight"
 gem 'wicked'
 
 
-gem 'jquery-rails'
-
 
 gem 'dynatree-rails'
 
@@ -146,3 +144,5 @@ gem "fs", "~> 0.2.1"
 gem "font-awesome-rails"
 
 gem 'to_bool'
+
+gem 'bootswatch-rails'

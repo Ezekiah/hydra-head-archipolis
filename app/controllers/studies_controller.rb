@@ -10,6 +10,9 @@ class StudiesController < ApplicationController
   
   before_filter :export_i18n_messages
   
+  before_filter :authenticate_user!,
+    :only => [:show, :new, :edit, :destroy]
+  
 
   #layout:resolve_layout
   
@@ -25,7 +28,17 @@ class StudiesController < ApplicationController
   # GET /studies/1
   # GET /studies/1.json
   def show
-    render :layout=>"study_steps", :locals=>{:in_association=>false, :wizard_path=>study_steps_path+'/contributor'}
+    
+    
+    if !current_user.email.in?@study.discover_users
+      redirect_to :back, notice: "You are not a discover user on this study"
+    
+    else
+      render :layout=>"study_steps", :locals=>{:in_association=>false, :wizard_path=>study_steps_path+'/contributor'}
+
+    end
+    
+    
      
   end
 
@@ -61,6 +74,9 @@ class StudiesController < ApplicationController
   
   # GET /studies/1/edit
   def edit
+    if !current_user.email.in?@study.edit_users
+      redirect_to :back, notice: "You are not authorized to edit this study"
+    end
     
   end
 
@@ -70,13 +86,23 @@ class StudiesController < ApplicationController
   
   
   def create
-
     
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
     
     @study = Study.create(sub_obj_non_attributes)
     
+    
+    # Add edit role to the user for the study
+    @study.set_edit_users([current_user.email], [])
+    @study.set_read_users([current_user.email], [])
+    @study.set_discover_users([current_user.email], [])
+    
+    
+    @study.permissions_attributes = [{:name=>current_user.email, :access=>"edit", :type=>'person'}, 
+    {:name=>current_user.email, :access=>"read", :type=>'person'}, 
+    {:name=>current_user.email, :access=>"discover", :type=>'person'}]
+      
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
     
     
@@ -126,11 +152,22 @@ class StudiesController < ApplicationController
   # DELETE /studies/1
   # DELETE /studies/1.json
   def destroy
-    @study.destroy
-    respond_to do |format|
-      format.html { redirect_to studies_url }
-      format.json { head :no_content }
+    
+    
+    if !current_user.email.in?@study.edit_users
+      redirect_to :back, notice: "You are not authorized to destroy this study"
+    
+    else
+      @study.destroy
+      respond_to do |format|
+        format.html { redirect_to studies_url }
+        format.json { head :no_content }
+      end
+    
     end
+    
+    
+   
   end
 
   private

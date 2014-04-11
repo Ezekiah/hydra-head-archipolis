@@ -14,7 +14,8 @@ class StudyStepsController < ApplicationController
   include Studies_mod
   
   
-  
+  before_filter :authenticate_user!,
+    :only => [:show, :new, :edit, :destroy]
   
   layout 'study_steps'
 

@@ -21,10 +21,10 @@ HydraHead::Application.routes.draw do
   
   #root :to => "catalog#index"
   
-  Blacklight.add_routes(self)
+  
   
   HydraHead.add_routes(self)
-  devise_for :users
+  
   
   
   
@@ -49,9 +49,9 @@ HydraHead::Application.routes.draw do
   
 
   scope "/:locale", locale: /en|fr/ do
-    resources :studies do
-     
-    end
+    resources :studies
+    
+    devise_for :users
     
     resources :study_steps do
         post :contributor
@@ -63,6 +63,8 @@ HydraHead::Application.routes.draw do
         post :notes
         post :general
     end
+    
+    Blacklight.add_routes(self)
     
     
     
