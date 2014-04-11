@@ -38,7 +38,7 @@ initialize_accordions = ->
     accordion_events($(this), $(this).parent())
     
     console.log($(this).parents().find('')
-  
+    ###
   
   $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards, #notes, #funding_agent_names").each ->
     
@@ -64,7 +64,7 @@ initialize_accordions = ->
       accordion_events(accordion, zone)
       $(this).remove()
       return
-    ###
+    
 
 accordion_events = (accordion, from="db") ->
 
@@ -180,7 +180,7 @@ launch_modal = (insert_zone, object, rec_class) ->
     
     
     
-    ###
+    
     $("#temp_form_id").validate
   
       ignore:'.ignore'
@@ -214,8 +214,8 @@ launch_modal = (insert_zone, object, rec_class) ->
           return
     
     isValid = jQuery("#temp_form_id").valid()
-    ###
-    if isValid = true
+    
+    if isValid
       
       bs_modal.unwrap()
       bs_modal.modal "hide"
@@ -484,7 +484,7 @@ jQuery ($) ->
   
   
   
-  ###
+  
   $("form.simple_form").validate
   
     ignore:'.ignore'
@@ -531,5 +531,5 @@ jQuery ($) ->
         #$element.tooltip("destroy").data("title", error.message).addClass("error").tooltip()
         return
 
- ### 
+ 
 

@@ -4,6 +4,7 @@ module Agent_metadata
   
   included do
       
+      include Hydra::AccessControls::Permissions
       
       has_metadata 'descMetadata', type:AgentMetadata
       
@@ -61,6 +62,8 @@ module Common_metadata
   extend ActiveSupport::Concern
   
   included do
+      include Hydra::AccessControls::Permissions
+    
       has_attributes :rec_class, datastream: 'descMetadata', multiple: false
       
       has_attributes :rec_delete, datastream: 'descMetadata', multiple: false

@@ -18,7 +18,7 @@ class Study < ActiveFedora::Base
   @@collection_un = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Unknown'=>I18n.t('unknown')}
   
   
-  
+  include Hydra::AccessControls::Permissions
   
   #attr_reader :title
   

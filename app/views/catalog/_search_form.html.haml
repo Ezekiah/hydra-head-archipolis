@@ -11,4 +11,4 @@
     %button#search.btn.btn-primary.search-btn{:type => "submit"}
       %span.submit-search-text= t('blacklight.search.form.submit')
       %i.icon-search.icon-white
-= link_to 'More options', params.merge(:controller=>"advanced", :action=>"index") , :class=>"advanced_search"
+= link_to 'More options', params.merge(:controller=>"/advanced", :action=>"index") , :class=>"advanced_search"
