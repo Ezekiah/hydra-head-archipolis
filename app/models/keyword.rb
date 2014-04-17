@@ -25,8 +25,7 @@ class Keyword < ActiveFedora::Base
             t.value(:type=>'text_area', :required=>true, :label=>'Keyword')
             t.rec_class(:type=>'hidden', :value=>'Keyword')
             t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
-            t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
-            
+            t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
         }
           
           

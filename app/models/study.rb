@@ -8,16 +8,7 @@ require 'datastreams/tree_metadata'
 
 class Study < ActiveFedora::Base
   
-  
-  @@collection_lang = {'fr_FR'=>'fr_FR', 'en_EN'=>'en_EN', }
-      
-  @@collection_partial = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'partially'=>I18n.t('partially')}
-             
-  @@collection_dn = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Don\'t know'=>I18n.t('dont_know')}
-    
-  @@collection_un = {'yes'=>I18n.t('yes'), 'no'=>I18n.t('no'), 'Unknown'=>I18n.t('unknown')}
-  
-  
+
   include Hydra::AccessControls::Permissions
   
   #attr_reader :title
@@ -29,7 +20,8 @@ class Study < ActiveFedora::Base
   
   #validates :title,  :presence => true
   
-
+  has_attributes :contacts_description, datastream: 'descMetadata', multiple: false
+  
   has_attributes :softwares, datastream: 'descMetadata', multiple: true
   
   has_attributes :edition_first_date, datastream: 'descMetadata', multiple: false
@@ -108,7 +100,7 @@ class Study < ActiveFedora::Base
   has_attributes :archive_completeness, datastream: 'descMetadata', multiple: false
   has_attributes :archive_arrangement_level, datastream: 'descMetadata', multiple: false
   has_attributes :archive_consentement, datastream: 'descMetadata', multiple: false
-  has_attributes :archive_agreememt, datastream: 'descMetadata', multiple: false
+  has_attributes :archive_agreement, datastream: 'descMetadata', multiple: false
   has_attributes :archive_accessed, datastream: 'descMetadata', multiple: false 
   has_attributes :archive_arrangement_level_description, datastream: 'descMetadata', multiple: false 
   has_attributes :archive_preservation_level, datastream: 'descMetadata', multiple: false 
@@ -160,9 +152,12 @@ class Study < ActiveFedora::Base
   has_many :projects, :class_name => 'Project', :property => :is_part_of
   has_many :notes, :class_name => 'Note', :property => :is_part_of
   
+  has_many :speakers, :class_name => 'Speaker', :property => :is_part_of
   
   
-  
+  def get_title
+  return "#{self.title}"
+end
 
   def self.data_collection_modes
     {'interview'=>'interview', 'observation'=>'observation', 'content analysis'=>'content analysis', 'questionnaire'=>'questionnaire', 'other'=>'other'}
@@ -195,8 +190,13 @@ class Study < ActiveFedora::Base
   accepts_nested_attributes_for :editors, allow_destroy: true
   accepts_nested_attributes_for :notes, allow_destroy: true
   
+  accepts_nested_attributes_for :speakers, allow_destroy: true
   
   
+  
+  
+  
+ 
   
   def self.xml_form
     
@@ -210,7 +210,7 @@ class Study < ActiveFedora::Base
         t.general{
           
        
-            t.rec_id(:type=>'text', :required=>true,  :display=>'public')
+            t.rec_id(:type=>'text', :required=>true,  :display=>'private')
            
             t.title(:type=>'text', :multiple=>false, :required=>true, :label=>'Study title', :display=>'public')
            
@@ -220,33 +220,35 @@ class Study < ActiveFedora::Base
           
             t.disciplines(:type=>'text', :multiple=>true, :required=>false,  :display=>'public')
           
-            t.classifications(:type=>'text', :multiple=>true, :required=>false,  :display=>'public' )
+            t.classifications(:type=>'text', :multiple=>true, :required=>false,  :display=>'private' )
           
             t.association(:type=>'association',:name=>'keywords', :class_name=>'Keyword', :required=>true, :display=>'public', :popup=>'false')
             
-            t.coverage_temporal_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public')
-            t.coverage_temporal_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public')
+            t.coverage_temporal_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'private')
+            t.coverage_temporal_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'private')
 
         }
     
       
          t.contributor{
           
-            t.association(:type=>'association', :complex=>'true',:name=>'authors', :class_name=>'Author', :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'authors', :class_name=>'Author', :required=>true, :display=>'public')
              
             
             
-            t.association(:type=>'association', :name=>'projects', :class_name=>'Project', :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :name=>'projects', :class_name=>'Project', :required=>true, :display=>'public')
               
             
             
-            t.association(:type=>'association', :complex=>'true',:name=>'depositors', :class_name=>'Depositor', :required=>true, :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'depositors', :class_name=>'Depositor', :required=>true, :display=>'private')
                
             
-             t.association(:type=>'association', :complex=>'true',:name=>'distributors', :class_name=>'Distributor', :required=>true, :display=>'public', :popup=>'true', )
+             t.association(:type=>'association', :complex=>'true',:name=>'distributors', :class_name=>'Distributor', :required=>true, :display=>'private')
       
             
-            t.association(:type=>'association', :complex=>'true',:name=>'contacts', :class_name=>'Contact', :display=>'public', :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'contacts', :class_name=>'Contact', :display=>'public')
+            
+            t.contacts_description(:type=>'text_area', :multiple=>false, :required=>true, :display=>'public')
 
         
       }
@@ -256,26 +258,22 @@ class Study < ActiveFedora::Base
 
         t.universe {
         
-            t.location_of_units_of_observations('type'=>'checkbox', :collection=>[
-                    ['international','international'], 
-                    ['national','national'],
-                    ['infra-national','infra-national'],
-                    ['Spire identifier', 'hdl'],
-                ], :multiple=>false, :required=>true)
+            t.location_of_units_of_observations('type'=>'checkbox', :collection=>'location_of_units_of_observations',
+              :multiple=>false, :required=>true, :display=>'private')
             
             t.coverage_spatial_countries('type'=>'country', 'multiple'=>true, :required=>true)
               
               
-            t.coverage_spatial_geographics(:type=>'text', :multiple=>true, :required=>true)
+            t.coverage_spatial_geographics(:type=>'text', :multiple=>true, :required=>true, :display=>'private')
             
-            t.coverage_spatial_units(:type=>'text', :multiple=>true,:required=>true)
+            t.coverage_spatial_units(:type=>'text', :multiple=>true,:required=>true, :display=>'private')
             
-            t.observation_units(:type=>'text', :multiple=>true, :required=>true)
+            t.observation_units(:type=>'text', :multiple=>true, :required=>true, :display=>'private')
             
-            t.target_groups(:type=>'text', :multiple=>true, :required=>true)
+            t.target_groups(:type=>'text', :multiple=>true, :required=>true, :display=>'private')
             
-            t.documents_date_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public', :required=>false)
-            t.documents_date_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'public', :required=>false)
+            t.documents_date_begin(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'private', :required=>false)
+            t.documents_date_end(:type=>'date', :format=>'yyyy', :viewMode=> "years", :minViewMode=> "years", :display=>'private', :required=>false)
 
         }
       
@@ -285,58 +283,29 @@ class Study < ActiveFedora::Base
             t.data_collection_date_begin(:type=>'date', :required=>false)
             t.data_collection_date_end(:type=>'date', :required=>false)
           
-            t.data_collection_time_dimensions(:type=>'checkbox', :required=>true, :collection=>{
-                'one time'=>'one time', 
-                'one time interview'=>'one time interview',
-                'repeated interview'=>'repeated interview', 
-                'observation ponctuelle'=>'observation ponctuelle', 
-                'observation systématique'=>'observation systématique', 
-                'other'=>'other' 
-            })
+            t.data_collection_time_dimensions(:type=>'checkbox', :required=>true, :collection=>'data_collection_time_dimensions', :display=>'private')
               
-            t.data_collection_modes(:type=>'checkbox', :required=>true, :collection=>{'interview'=>'interview', 
-                'observation'=>'observation', 'content analysis'=>'content analysis', 
-                'questionnaire'=>'questionnaire', 'other'=>'other'}
-            )
+            t.data_collection_modes(:type=>'checkbox', :required=>true, :collection=>'data_collection_modes')
                             
             t.data_collection_samplings(:type=>'text', :multiple=>true, :required=>false)
                 
                
-            t.data_collection_methods(:type=>'checkbox', :required=>true, :collection => {
-                'questionnaire'=>'questionnaire', 
-                'directive interview'=>'directive interview', 
-                'semi-directive interview'=>'semi-directive interview',
-                'none directive interview'=>'none directive interview', 
-                'participant observation'=>'participant observation', 
-                'experimentation'=>'experimentation', 
-                'content analysis'=>'content analysis', 
-                'other'=>'other' 
-             })
+            t.data_collection_methods(:type=>'checkbox', :required=>true, :collection => 'data_collection_methods', :display=>'private')
              
              t.data_collection_extent(:type=>'text', :multiple=>false)
-             t.data_collection_context(:type=>'text_area', :multiple=>false, :required=>true)
+             t.data_collection_context(:type=>'text_area', :multiple=>false, :required=>true, :display=>'private')
                
-             t.data_collection_documents_types(:type=>'checkbox',:collection => {
-                "collection"=>"collection", 
-                "dataset"=>"dataset", 
-                "still image"=>"still image", 
-                "interactive resource"=>"interactive resource", 
-                "moving image"=>"moving image", 
-                "physical object"=>"physical object", 
-                "software"=>"software", 
-                "sound"=>"sound", 
-                "text"=>"text"
-             })
+             t.data_collection_documents_types(:type=>'checkbox',:collection => 'data_collection_documents')
               
             
-            t.data_collection_has_media(:type=>'select', :collection=>@@collection_dn, :required=>true,)
+            t.data_collection_has_media(:type=>'select', :collection=>'data_collection_has_media', :required=>true,)
             
             
 
             t.association(:type=>'association', :complex=>'true',:name=>'interviewers', :class_name=>'Interviewer', :required=>true,:popup=>'true')
                
               
-            t.association(:type=>'association', :complex=>'true',:name=>'interviewers_unknowns', :class_name=>'Interviewerun', :collection=>@@collection_un, :required=>true, :popup=>'true')
+            t.association(:type=>'association', :complex=>'true',:name=>'interviewers_unknowns', :class_name=>'Interviewerun', :required=>true, :popup=>'true')
            
         
         }
@@ -363,21 +332,15 @@ class Study < ActiveFedora::Base
       
         t.corpus{
                   
-            t.archive_accessed(:type=>"select", :required=>true, :collection=>@@collection_partial, :required=>true)
+            t.archive_accessed(:type=>"select", :required=>true, :collection=>'archive_accessed', :required=>true)
                       
             t.archive_completeness(:type=>'text_area', :required=>true, :rows=>'3')
                       
-            t.archive_arrangement_level(:type=>"select", :required=>true, :collection=>{
-                'classed'=>'classed', 
-                'Partially classed'=>'Partially classed',
-                'heterogeneous'=>'heterogeneous',
-                'bulk'=>'bulk'
-            })
+            t.archive_arrangement_level(:type=>"select", :required=>true, :collection=>'archive_arrangement_level')
                     
             t.archive_arrangement_level_description(:type=>'text_area', :multiple=>false, :required=>false)
             
-            t.archive_preservation_level(:type=>'select', :required=>true, :collection=>{'good'=>'good', 
-                'average'=>'average', 'bad'=>'bad'})
+            t.archive_preservation_level(:type=>'select', :required=>true, :collection=>'archive_preservation_level')
                         
             t.archive_preservation_level_description(:type=>'text_area', :rows=>'3', :required=>false)
             
@@ -385,9 +348,9 @@ class Study < ActiveFedora::Base
             
             t.archive_extent(:type=>'text_area', :multiple=>false, :required=>false)
                     
-            t.archive_consentement(:type=>"select", :required=>true, :collection=>@@collection_partial.merge(Hash.new('reserves its response'=>'reserves its response')))
+            t.archive_consentement(:type=>"select", :required=>true, :collection=>'archive_consentement')
                     
-            t.archive_agreememt(:type=>"select", :required=>true, :collection=>@@collection_dn)
+            t.archive_agreement(:type=>"select", :required=>true, :collection=>'archive_agreement')
                     
  
 
@@ -400,24 +363,17 @@ class Study < ActiveFedora::Base
           
         t.analyse{
             
-            t.analysis_has_transcription(:type=>'checkbox', :collection=>@@collection_dn, :required=>true)
+            t.analysis_has_transcription(:type=>'checkbox', :collection=>'analysis_has_transcription', :required=>true)
             
-            t.analysis_transcription(:type=>"text")
-            t.analysis_anonymization(:type=>'select', :collection=>@@collection_dn)
+            t.analysis_transcription(:type=>"text", :display=>'private')
+            t.analysis_anonymization(:type=>'select', :collection=>'analysis_anonymization', :display=>'private')
             
-            t.analysis_types(:type=>'checkbox', :collection => {
-                'interpretative'=>'interpretative', 
-                'typilogical '=>'typilogical',
-                'lexicometric'=>'lexicometric', 
-                'coding'=>'coding', 
-                'qca'=>'qca', 
-                'other'=>'other' }, :multiple=>false
-            )
+            t.analysis_types(:type=>'checkbox', :collection => 'analysis_types', :multiple=>false, :display=>'private')
             
             
             t.data_languages(:type=>'language_list', :multiple=>true,  :required=>true, :display=>'public') 
 
-            t.documentation_languages(:type=>'language_list', :multiple=>false,  :required=>true, :display=>'public', :multiple=>true) 
+            t.documentation_languages(:type=>'language_list', :multiple=>false,  :required=>true, :display=>'private', :multiple=>true) 
             
             t.publication_citation(:type=>'text_area', :multiple=>true, :rows=>3)
             
@@ -430,9 +386,14 @@ class Study < ActiveFedora::Base
        
        
        
-       t.notes{
+       t.other{
         
           t.association(:type=>'association',:name=>'notes',  :display=>'public', :popup=>'false', :class_name=>'Note', :required=>true)
+       }
+       
+       t.speaker{
+        
+          t.association(:type=>'association',:name=>'speakers',  :display=>'public', :popup=>'false', :class_name=>'Speaker', :required=>true)
        }
       
       
@@ -446,6 +407,30 @@ class Study < ActiveFedora::Base
     return builder.doc
     
   end
+  
+  def get_mets
+  	
+  	builder = Nokogiri::XML::Builder.new do |t|
+    
+	    t.study{
+	    	
+	    	#GET XML METADATAS OF THE STUDY
+	    	t.__send__ :insert, Nokogiri::XML::DocumentFragment.parse( self.descMetadata.to_xml )
+	    	
+	    	
+	    	
+	    	
+	    }
+    
+   end
+   
+   builder.to_xml
+  	
+  end
+  
+  
+
+  
   
 end
 

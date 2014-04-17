@@ -1,15 +1,32 @@
 GIT
   remote: git://github.com/Nerian/bootstrap-datepicker-rails.git
-  revision: 7e394137813970fa7c8044f1d0b69322b77af5f6
+  revision: fb0700d197540f1a84b54f5d1e0606ddace2732a
   specs:
-    bootstrap-datepicker-rails (1.3.0.1)
+    bootstrap-datepicker-rails (1.3.0.2)
       railties (>= 3.0)
 
 GIT
-  remote: git@github.com:benjamincanac/bootstrap-multiselect-rails.git
-  revision: 49d72a322d72adbcf26cfbfe434b23d6604f4aea
+  remote: git://github.com/justinfrench/formtastic.git
+  revision: c79e46560d1516c6c3c0ef85fb29bed8e36068ac
   specs:
-    bootstrap-multiselect-rails (0.0.3)
+    formtastic (2.3.0.rc3)
+      actionpack (>= 3.2.13)
+
+GIT
+  remote: git://github.com/seyhunak/twitter-bootstrap-rails.git
+  revision: 663760e67b80ee25adc293bf5f03debae28b5af9
+  specs:
+    twitter-bootstrap-rails (2.2.8)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
+
+GIT
+  remote: git@github.com:benjamincanac/bootstrap-multiselect-rails.git
+  revision: a002c6a39a3de034357d8a5e2e228aea1a98e1b6
+  specs:
+    bootstrap-multiselect-rails (0.0.4)
       railties (>= 3.2.0, < 5.0)
 
 GIT
@@ -22,9 +39,9 @@ GIT
 
 GIT
   remote: git@github.com:mlitwiniuk/localized_country_select.git
-  revision: bd9fd4f9d816c8735aee9c648e07b7714c6653cc
+  revision: d2df547a2f39069d52b8a1d8dfa76bc69ee23e4a
   specs:
-    localized_country_select (0.9.7)
+    localized_country_select (0.9.8)
       actionpack (>= 3.0)
 
 GIT
@@ -32,6 +49,25 @@ GIT
   revision: 0dfeadb975351eccefd6d11df6c7a7489b20420c
   specs:
     language_list (1.0.0)
+
+GIT
+  remote: git@github.com:sferik/rails_admin.git
+  revision: bef6f02ee6d9fe164f23b437f0c0226d79e8c335
+  specs:
+    rails_admin (0.6.2)
+      builder (~> 3.1)
+      coffee-rails (~> 4.0)
+      font-awesome-rails (>= 3.0)
+      haml (~> 4.0)
+      jquery-rails (~> 3.0)
+      jquery-ui-rails (~> 4.0)
+      kaminari (~> 0.14)
+      nested_form (~> 0.3)
+      rack-pjax (~> 0.7)
+      rails (~> 4.0)
+      remotipart (~> 1.0)
+      safe_yaml (~> 1.0)
+      sass-rails (~> 4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -71,10 +107,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
-    atomic (1.1.15)
     bcrypt (3.1.7)
-    bcrypt-ruby (3.1.5)
-      bcrypt (>= 3.1.3)
     blacklight (4.7.0)
       bootstrap-sass (>= 2.2.0, < 2.4)
       deprecation (~> 0.1)
@@ -84,13 +117,13 @@ GEM
       rails (>= 3.2.6, < 5)
       rsolr (~> 1.0.6)
       sass-rails
-    blacklight_advanced_search (2.1.1)
+    blacklight_advanced_search (2.2.0)
       blacklight (~> 4.0)
       parslet
     blankslate (2.1.2.4)
     block_helpers (0.3.3)
       activesupport (>= 2.0)
-    bootstrap-modal-rails (2.2.0)
+    bootstrap-modal-rails (2.2.4)
       railties (>= 3.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
@@ -103,9 +136,9 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    childprocess (0.5.1)
+    childprocess (0.5.2)
       ffi (~> 1.0, >= 1.0.11)
-    cocoon (1.2.5)
+    cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -115,6 +148,7 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     columnize (0.3.6)
+    commonjs (0.2.7)
     countries (0.9.3)
       currencies (~> 0.4.2)
     country-select-engine (0.2.1)
@@ -123,16 +157,16 @@ GEM
       countries (= 0.9.3)
     currencies (0.4.2)
     daemons (1.1.9)
-    debugger (1.6.5)
+    debugger (1.6.6)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.1)
+      debugger-ruby_core_source (~> 1.3.2)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.3.2)
     deprecation (0.1.0)
       activesupport
-    devise (3.2.3)
-      bcrypt-ruby (~> 3.0)
+    devise (3.2.4)
+      bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
       thread_safe (~> 0.1)
@@ -147,7 +181,7 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     ensure_valid_encoding (0.5.3)
-    equivalent-xml (0.4.0)
+    equivalent-xml (0.4.2)
       nokogiri (>= 1.4.3)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -155,20 +189,19 @@ GEM
     ffi (1.9.3)
     font-awesome-rails (4.0.3.1)
       railties (>= 3.2, < 5.0)
-    formtastic (2.2.1)
-      actionpack (>= 3.0)
     fs (0.2.1)
     haml (4.0.5)
       tilt
     hike (1.2.3)
-    hooks (0.3.3)
+    hooks (0.3.6)
+      uber (~> 0.0.4)
     hpricot (0.8.6)
     html2haml (1.0.1)
       erubis (~> 2.7.0)
       haml (>= 4.0.0.rc.1)
       hpricot (~> 0.8.6)
       ruby_parser (~> 3.1.1)
-    hydra (6.2.0.rc1)
+    hydra (6.2.0)
       active-fedora (~> 6.7.7)
       blacklight (~> 4.7.0)
       hydra-head (~> 6.5.0)
@@ -229,6 +262,11 @@ GEM
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    less (2.5.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.5.0)
+      actionpack (>= 3.1)
+      less (~> 2.5.0)
     libv8 (3.16.14.3)
     logger (1.2.8)
     mail (2.5.4)
@@ -240,16 +278,17 @@ GEM
     mediashelf-loggable (0.4.9)
     method_source (0.8.2)
     mime-types (1.25.1)
-    mini_portile (0.5.2)
+    mini_portile (0.5.3)
     minitest (4.7.5)
-    multi_json (1.8.4)
+    multi_json (1.9.2)
+    nested_form (0.3.2)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     nom-xml (0.5.1)
       activesupport
       i18n
       nokogiri
-    oj (2.5.5)
+    oj (2.7.3)
     om (3.0.4)
       activemodel
       activesupport
@@ -270,6 +309,9 @@ GEM
     rabl (0.9.3)
       activesupport (>= 2.3.14)
     rack (1.5.2)
+    rack-pjax (0.7.0)
+      nokogiri (~> 1.5)
+      rack (~> 1.3)
     rack-test (0.6.2)
       rack (>= 1.0)
     rack-webconsole-pry (0.1.9)
@@ -290,7 +332,7 @@ GEM
       activesupport (= 4.0.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.1.1)
+    rake (10.3.0)
     rdf (1.1.1.1)
     rdf-rdfxml (1.0.1)
       rdf (>= 1.0)
@@ -300,15 +342,16 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
+    remotipart (1.2.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rsolr (1.0.9)
+    rsolr (1.0.10)
       builder (>= 2.1.2)
-    rspec-core (2.14.7)
+    rspec-core (2.14.8)
     rspec-expectations (2.14.5)
       diff-lcs (>= 1.1.3, < 2.0)
     rspec-mocks (2.14.6)
-    rspec-rails (2.14.1)
+    rspec-rails (2.14.2)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
@@ -328,19 +371,21 @@ GEM
       mime-types
       nokogiri
       rest-client
-    sass (3.2.14)
-    sass-rails (4.0.1)
+    safe_yaml (1.0.2)
+    sass (3.2.19)
+    sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
-      sass (>= 3.1.10)
-      sprockets-rails (~> 2.0.0)
+      sass (~> 3.2.0)
+      sprockets (~> 2.8, <= 2.11.0)
+      sprockets-rails (~> 2.0)
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
-    sexp_processor (4.4.1)
-    simple_form (3.0.1)
-      actionpack (>= 4.0.0, < 4.1)
-      activemodel (>= 4.0.0, < 4.1)
-    slop (3.4.7)
+    sexp_processor (4.4.3)
+    simple_form (3.0.2)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
+    slop (3.5.0)
     solrizer (3.1.1)
       activesupport
       daemons
@@ -363,21 +408,21 @@ GEM
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.18.1)
-    thread_safe (0.2.0)
-      atomic (>= 1.1.7, < 2)
+    thor (0.19.1)
+    thread_safe (0.3.3)
     tilt (1.4.1)
     to_bool (1.0.1)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.1)
+    turbolinks (2.2.2)
       coffee-rails
-    tzinfo (0.3.38)
-    uglifier (2.4.0)
+    tzinfo (0.3.39)
+    uber (0.0.4)
+    uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unf (0.1.3)
+    unf (0.1.4)
       unf_ext
     unf_ext (0.0.6)
     warden (1.2.3)
@@ -413,7 +458,7 @@ DEPENDENCIES
   eco-source
   execjs
   font-awesome-rails
-  formtastic
+  formtastic!
   fs (~> 0.2.1)
   haml (~> 4.0.5)
   html2haml
@@ -427,6 +472,7 @@ DEPENDENCIES
   jquery-ui-sass-rails
   jquery-validation-rails
   language_list!
+  less-rails
   localized_country_select!
   localized_language_select!
   oj
@@ -434,6 +480,7 @@ DEPENDENCIES
   rabl
   rack-webconsole-pry
   rails (= 4.0.1)
+  rails_admin!
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
@@ -443,6 +490,7 @@ DEPENDENCIES
   therubyracer
   to_bool
   turbolinks
+  twitter-bootstrap-rails!
   uglifier (>= 1.3.0)
   wicked
   xml-simple

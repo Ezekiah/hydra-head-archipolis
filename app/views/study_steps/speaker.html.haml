@@ -10,7 +10,7 @@
   = yield f
   
   %fieldset
-    = render :partial=>'/studies/display_fields', :locals => {:in_association=>false, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/notes/*"}
+    = render :partial=>'/studies/display_fields', :locals => {:in_association=>false, :f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/speaker/*"}
   #dialog-confirm{:style => ""}
     %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
     %p

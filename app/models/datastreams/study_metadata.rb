@@ -11,85 +11,86 @@ class StudyMetadata < ActiveFedora::OmDatastream
               
         t.depositors
         
-        t.copyright_holders
-        t.softwares
-        t.editors
-        t.edition_first_date
-        t.edition_last_date
-        t.distributors
-        t.projects
-        t.authors
+        t.copyright_holders(index_as: :stored_searchable)
+        t.softwares(index_as: :stored_searchable)
+        t.editors(index_as: :stored_searchable)
+        t.edition_first_date(index_as: :stored_searchable)
+        t.edition_last_date(index_as: :stored_searchable)
+        t.distributors(index_as: :stored_searchable)
+        t.projects(index_as: :stored_searchable)
+        t.authors(index_as: :stored_searchable)
         
-        t.rec_id
-        t.title
-        t.name
-        t.documents_count
-        t.archive_extent
-        t.archive_location
-        t.access_conditions
+        t.rec_id(index_as: :stored_searchable)
+        t.title(index_as: :stored_searchable)
+        t.name(index_as: :stored_searchable)
+        t.documents_count(index_as: :stored_searchable)
+        t.archive_extent(index_as: :stored_searchable)
+        t.archive_location(index_as: :stored_searchable)
+        t.access_conditions(index_as: :stored_searchable)
         
-        t.contacts
-        t.data_collection_modes
-        t.data_collection_context
-        t.data_collection_methods
-        t.data_collection_samplings
-        t.data_collection_time_dimensions
+        t.contacts(index_as: :stored_searchable)
+        t.data_collection_modes(index_as: :stored_searchable)
+        t.data_collection_context(index_as: :stored_searchable)
+        t.data_collection_methods(index_as: :stored_searchable)
+        t.data_collection_samplings(index_as: :stored_searchable)
+        t.data_collection_time_dimensions(index_as: :stored_searchable)
         
-        t.publications
-        t.descriptions
-        t.disciplines
+        t.publications(index_as: :stored_searchable)
+        t.descriptions(index_as: :stored_searchable)
+        t.disciplines(index_as: :stored_searchable)
           
-        t.analysis_types
-        t.analysis_anonymization
-        t.analysis_transcription
+        t.analysis_types(index_as: :stored_searchable)
+        t.analysis_anonymization(index_as: :stored_searchable)
+        t.analysis_transcription(index_as: :stored_searchable)
           
-        t.keywords
+        t.keywords(index_as: :stored_searchable)
           
-        t.classifications
-        t.observation_units
-        t.data_collection_date_begin
-        t.data_collection_date_end
+        t.classifications(index_as: :stored_searchable)
+        t.observation_units(index_as: :stored_searchable)
+        t.data_collection_date_begin(index_as: :stored_searchable)
+        t.data_collection_date_end(index_as: :stored_searchable)
         
-        t.coverage_spatial_geographics
-        t.coverage_spatial_units
-        t.coverage_spatial_countries
-        t.coverage_temporal_begin
-        t.coverage_temporal_end
-        t.target_groups
-        t.location_of_units_of_observations
-        t.data_languages
-        t.documentation_languages
+        t.coverage_spatial_geographics(index_as: :stored_searchable)
+        t.coverage_spatial_units(index_as: :stored_searchable)
+        t.coverage_spatial_countries(index_as: :stored_searchable)
+        t.coverage_temporal_begin(index_as: :stored_searchable)
+        t.coverage_temporal_end(index_as: :stored_searchable)
+        t.target_groups(index_as: :stored_searchable)
+        t.location_of_units_of_observations(index_as: :stored_searchable)
+        t.data_languages(index_as: :stored_searchable)
+        t.documentation_languages(index_as: :stored_searchable)
         
-        t.documents_date_begin
-        t.documents_date_end
-        t.media_files
-        t.documents_transc_count
-        t.interviewers
-        t.archive_completeness
+        t.documents_date_begin(index_as: :stored_searchable)
+        t.documents_date_end(index_as: :stored_searchable)
+        t.media_files(index_as: :stored_searchable)
+        t.documents_transc_count(index_as: :stored_searchable)
+        t.interviewers(index_as: :stored_searchable)
+        t.archive_completeness(index_as: :stored_searchable)
           
-        t.archive_arrangement_level
-        t.archive_arrangement_level_description
-        t.archive_preservation_level_description
-        t.archive_preservation_level
+        t.archive_arrangement_level(index_as: :stored_searchable)
+        t.archive_arrangement_level_description(index_as: :stored_searchable)
+        t.archive_preservation_level_description(index_as: :stored_searchable)
+        t.archive_preservation_level(index_as: :stored_searchable)
           
-        t.archive_consentement
-        t.archive_agreememt
-        t.notes
+        t.archive_consentement(index_as: :stored_searchable)
+        t.archive_agreement(index_as: :stored_searchable)
+        t.notes(index_as: :stored_searchable)
           
-        t.data_collection_documents_types
-        t.data_collection_extent
+        t.data_collection_documents_types(index_as: :stored_searchable)
+        t.data_collection_extent(index_as: :stored_searchable)
         
-        t.data_collection_has_media
+        t.data_collection_has_media(index_as: :stored_searchable)
         
-        t.analysis_has_transcription
-        t.archive_accessed
+        t.analysis_has_transcription(index_as: :stored_searchable)
+        t.archive_accessed(index_as: :stored_searchable)
         
-        t.publication_citation
-        t.documents_types
+        t.publication_citation(index_as: :stored_searchable)
+        t.documents_types(index_as: :stored_searchable)
         t.rec_delete
         
+        t.contacts_description(index_as: :stored_searchable)
         
-      
+
     end
   
     def self.xml_template
@@ -97,12 +98,25 @@ class StudyMetadata < ActiveFedora::OmDatastream
         Nokogiri::XML.parse("<metadatas/>")
         
     end
+    
+    
   
+  
+end
 
 
-  
-  
-  
-  
-  
+class StudyInfos < ActiveFedora::OmDatastream
+	set_terminology do |t|
+        
+        t.root(path: "study_infos")
+        
+        t.creator(index_as: :stored_searchable)
+        t.editors
+        t.edited(index_as: :stored_searchable)
+        t.rejected(index_as: :stored_searchable)
+        t.published(index_as: :stored_searchable)
+        t.closed(index_as: :stored_searchable)
+        t.served(index_as: :stored_searchable)
+        
+   end 
 end

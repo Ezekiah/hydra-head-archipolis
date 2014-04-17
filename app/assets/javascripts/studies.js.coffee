@@ -1,3 +1,57 @@
+validate_form = (form) ->
+    
+    form.validate
+    
+      ignore:'.ignore'
+      
+      
+      #submitHandler: (form) ->
+        #return false
+        
+      
+      showErrors: (errorMap, errorList) ->
+        $.each @validElements(), (index, element) ->
+          $element = undefined
+          $element = $(element)
+          $element.data("title", "").removeClass("error").tooltip "destroy"
+  
+          
+          
+          
+          $element.parent().find('label.error').remove()
+          return
+    
+        $.each errorList, (index, error) ->
+          $element = undefined
+          $element = $(error.element)
+          
+          
+          $element.parent().find('label.error').remove()
+          
+      
+          error = $("<label class=\"error\"><span class=\"add-on\" data-toggle=\"tooltip\" data-placement=\"right\" title=\""+error.message+"\"><i style=\"color:red\" data-toggle=\"tooltip\" class=\"fa fa-exclamation-triangle\" title=\"tooltip\" ></i></label>")
+          error.find('span').tooltip({placement:'top', container:"body"})
+          
+          if $element.hasClass("hidden-association")
+            $element.parent().find('.input-append').append(error)
+          else if $element.attr("type") == 'checkbox'
+          
+            $element.closest('.control-group').find('.control-label').append(error)
+            console.log($element.parents())
+            
+          else 
+            $element.parent().append(error)
+          
+            
+   
+          
+          return
+          
+          
+          #$element.tooltip("destroy").data("title", error.message).addClass("error").tooltip()
+          return
+
+
 
 String::capitalize = ->
   @charAt(0).toUpperCase() + @slice(1)
@@ -16,40 +70,47 @@ check_hidden_assoc =  (zone, selector) ->
   
 
 
+gen_title = (object) ->
+  title = ''
+  txt = object.find('input[type="text"]:first')
+  txtarea = object.find('textarea:first')
+  select = object.find('option:selected')
+  
+  if select.size() > 0 && select.val() != ''
+    
+    title += ' '+select.val();
+  
+  if txt.size() > 0 && txt.val() != ''
+    title += txt.val().substring(0,20);
+
+  if txtarea.size() > 0 && txtarea.val() != ''
+    title += ' '+txtarea.val().substring(0,20);
+    
+  return title
+
+
 initialize_accordions = undefined
 initialize_accordions = ->
   
-
-  $('.accordion-group').each ->
+  $("div#interviewers_unknowns, div#orgunits, div#persons, div#depositors, div#distributors,  div#copyright_holders, div#interviewers, div#editors, div#contacts,#authors, #identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards, #notes, #funding_agent_names").each ->
+    
     
     if $(this).find('.data-complex').val() == 'true'
     
       $(this).find('#orgunits .control-group:first').remove()
       $(this).find('#persons .control-group:first').remove()
     
-    accordion_events($(this))
     
-    ###
-    
-    $(document).on "click", $(this), ->
-      $(this).toggleClass "icon-plus icon-minus"
-      return
-    
-    accordion_events($(this), $(this).parent())
-    
-    console.log($(this).parents().find('')
-    ###
-  
-  $("#identifiers, #affiliations, #addresses, #descriptions, #keywords, #awards, #notes, #funding_agent_names").each ->
     
     zone = $(this)
     sing = $(this).attr("data-singular-name")
-  
-    $(this).find("fieldset:first").each ->
-      
+    
+
+    
+    $(this).find("fieldset").each ->
       uid2 = s4()
       json = eval(
-        title: sing + " " + parseInt($(this).find(".accordion-group").size() + 1)
+        title: gen_title($(this))  #sing + " " + parseInt($(this).find(".accordion-group").size() + 1)
         content: $(this).html()
         uid: s4()
         uid2: uid2
@@ -71,9 +132,19 @@ accordion_events = (accordion, from="db") ->
   #check_hidden_assoc(zone, ".accordion-group")
   
   accordion.click ->
-    accordion.find('input[class="updated-hidden"]').val('true')   
+    accordion.parent().find('input[class="updated-hidden"]').val('true')   
   
   accordion.find("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'),container:'body'})
+  
+  
+  
+  accordion.find('.acc_ok').click ->
+
+    
+    title = gen_title(accordion)
+    
+    if title != ''
+      accordion.find('.accordion-heading a').text(title)
   
   accordion.find(".delete-accordion").click(->
     button = $(this)
@@ -326,6 +397,8 @@ $(document).ready ->
   current_popup = ""
   $("span[data-toggle=\"tooltip\"]").popover({trigger:"hover", title:I18n.t('help'), container:'body'})
   $(".add_fields").hide()
+  
+  
   $(document.body).on "click", "#add-depositors, #add-distributors, #add-authors, #add-copyright_holders, #add-interviewers, #add-interviewers_unknowns, #add-editors, #add-contacts", ->
 
     className = $(this).attr("id").replace("add-", "")
@@ -350,7 +423,7 @@ $(document).ready ->
     
     return
 
-  $(document.body).on "click", "#add-persons, #add-orgunits, div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
+  $(document.body).on "click", "#add-speakers, #add-persons, #add-orgunits, div#add-funding_agent_names, #add-identifiers, #add-affiliations, #add-addresses, #add-descriptions, #add-keywords, #add-awards, #add-projects, #add-funding_agent_names, #add-notes", ->
    className = $(this).attr("id").replace("add-", "")
 
    $(this).parent().find("a[data-associations='" + className.replace("add-", "") + "']").trigger "click"
@@ -392,7 +465,7 @@ $(document).ready ->
     return
   
   
-  $(document.body).on "cocoon:after-insert", "div#persons, div#orgunits, div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#notes", (e, parent_object) ->
+  $(document.body).on "cocoon:after-insert", "div#speakers,div#persons, div#orgunits, div#funding_agent_names, div#affiliations, div#keywords, div#awards, div#descriptions, div#addresses, div#identifiers, div#notes", (e, parent_object) ->
     uid2 = s4()
     parent_object.remove()
     json = eval(
@@ -464,7 +537,7 @@ jQuery ($) ->
  
     switch jqEl.attr("data-action")
       when "add-single"
-        clone = tag.clone().css("display", "block")
+        clone = tag.clone().css({"display": "block", 'margin-bottom:5px'})
         
         clone.find("button, span.add-on").remove()
         clone.find("input[type='text']").val ""
@@ -484,52 +557,11 @@ jQuery ($) ->
   
   
   
+  validate_form($("form.simple_form"))
   
-  $("form.simple_form").validate
   
-    ignore:'.ignore'
-
-    showErrors: (errorMap, errorList) ->
-      $.each @validElements(), (index, element) ->
-        $element = undefined
-        $element = $(element)
-        $element.data("title", "").removeClass("error").tooltip "destroy"
-
-        
-        
-        
-        $element.parent().find('label.error').remove()
-        return
   
-      $.each errorList, (index, error) ->
-        $element = undefined
-        $element = $(error.element)
-        
-        
-        $element.parent().find('label.error').remove()
-        
-    
-        error = $("<label class=\"error\"><span class=\"add-on\" data-toggle=\"tooltip\" data-placement=\"right\" title=\""+error.message+"\"><i style=\"color:red\" data-toggle=\"tooltip\" class=\"fa fa-exclamation-triangle\" title=\"tooltip\" ></i></label>")
-        error.find('span').tooltip({placement:'top', container:"body"})
-        
-        if $element.hasClass("hidden-association")
-          $element.parent().find('.input-append').append(error)
-        else if $element.attr("type") == 'checkbox'
-        
-          $element.closest('.control-group').find('.control-label').append(error)
-          console.log($element.parents())
-          
-        else 
-          $element.parent().append(error)
-        
-          
- 
-        
-        return
-        
-        
-        #$element.tooltip("destroy").data("title", error.message).addClass("error").tooltip()
-        return
+  
 
  
 

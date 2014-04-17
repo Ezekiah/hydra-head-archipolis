@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(version: 20140318094617) do
     t.datetime "updated_at"
   end
 
+  create_table "assignements", force: true do |t|
+    t.string  "member_type"
+    t.integer "member_id"
+    t.integer "group_id"
+    t.string  "group_name"
+  end
+
+  create_table "assignments", force: true do |t|
+    t.string  "member_type"
+    t.integer "member_id"
+    t.integer "group_id"
+    t.string  "group_name"
+  end
+
   create_table "authors", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -42,6 +56,21 @@ ActiveRecord::Schema.define(version: 20140318094617) do
     t.string   "author"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "group_memberships", force: true do |t|
+    t.string  "member_type"
+    t.integer "member_id"
+    t.integer "group_id"
+    t.string  "group_name"
+  end
+
+  add_index "group_memberships", ["group_id"], name: "index_group_memberships_on_group_id"
+  add_index "group_memberships", ["group_name"], name: "index_group_memberships_on_group_name"
+  add_index "group_memberships", ["member_id", "member_type"], name: "index_group_memberships_on_member_id_and_member_type"
+
+  create_table "groups", force: true do |t|
+    t.string "type"
   end
 
   create_table "searches", force: true do |t|

@@ -97,8 +97,8 @@ class Person < ActiveFedora::Base
               'protagonist'=>'protagonist', 'depositor'=>'depositor'}, :label=>'Study role', :display=>'private')
               
             t.study_role_description(:type=>'text', :multiple=>false, :label=>'Study role description', :display=>'private')
-            t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
-            
+            t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
+  
         }
         
        

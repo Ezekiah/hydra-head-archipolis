@@ -1,4 +1,4 @@
-require 'datastreams/note_metadata'
+require 'datastreams/description_metadata'
 require 'concerns/metadatas.rb'
 
 class Note < ActiveFedora::Base
@@ -27,7 +27,8 @@ class Note < ActiveFedora::Base
                t.value(:type=>'text_area', :label=>'Value', :required=>true, :display=>'public')
                t.rec_class(:type=>'hidden', :value=>'Note', :display=>'public')
                t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
-               t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
+                t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
+               
               
           }
             

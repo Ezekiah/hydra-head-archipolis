@@ -3,6 +3,7 @@ class TypeMetadata < ActiveFedora::OmDatastream
    set_terminology do |t|
          t.root(path: "metadatas")
          t.title(index_as: :stored_searchable)
+         t.rec_delete
 
 
   end

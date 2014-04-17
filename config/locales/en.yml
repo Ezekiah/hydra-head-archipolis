@@ -53,11 +53,18 @@ en:
     editor: 'editor'
     interviewer: 'interviewer'
     interviewers_unknowns: 'interviewer unknown'
-    person: "Individual"
-    orgunit: "Legal person"
+    person: "individual"
+    orgunit: "legal person"
     
-    identifier: 'Identifier'
-    funding_agent_name: 'Agence de financement'
+    identifier: 'identifier'
+    funding_agent_name: 'agence de financement'
+    
+    note: 'note'
+    speaker: 'speaker'
+    
+    interviewer: 'interviewer'
+    interviewers_unknown: 'other interviewer'
+    copyright_holder: 'copyright holder'
     
   
   
@@ -67,76 +74,76 @@ en:
   depositor:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   author:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
       
   contact:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   copyright_holder:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   
   distributor:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   
   editor:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   interviewer:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   interviewer_unknown:
     orgunits:
       label: 'Legal person'
-      help: ''
+      help: ""
       
     persons:
       label: 'Individual'
-      help: ''
+      help: ""
   
   
   redux: "reduce"
@@ -217,6 +224,10 @@ en:
     contacts:
       label: "Contact(s)"
       help: "Contact(s)"
+    
+    contacts_description:
+      label: "Date et commentaire sur le contact"
+      help: ""
 
 
 
@@ -227,28 +238,28 @@ en:
     label: 'Universe'
     location_of_units_of_observations:
       label: "Location of Units of Observation"
-      help: 
+      help: ""
     coverage_spatial_countries:
       label: "Covered countries"
-      help: 
+      help: ""
     coverage_spatial_geographics:
       label: "Geographic coverage"
       help: 
     coverage_spatial_units:
       label: "Spatial Units"
-      help: 
+      help: ""
     observation_units:
       label: "Observation Units"
-      help: 
+      help: ""
     target_groups:
       label: "Target Groups"
-      help: 
+      help: ""
     documents_date_begin:
       label: "Study documents date begin"
-      help: 
+      help: ""
     documents_date_end:
       label: "Study documents date end"
-      help: 
+      help: ""
         
         
       
@@ -256,40 +267,40 @@ en:
     label: 'Method'
     data_collection_date_begin:
       label: "Data collection dates"
-      help: 
+      help: ""
     data_collection_date_end:
       label: "Data collection dates"
-      help: 
+      help: ""
     data_collection_time_dimensions:
       label: "Time Dimension"
-      help: 
+      help: ""
     data_collection_modes:
       label: "Mode of Data Collection"
-      help: 
+      help: ""
     data_collection_samplings:
       label: "Sampling Procedure"
-      help: 
+      help: ""
     data_collection_methods:
       label: "Research Instrument"
-      help: 
+      help: ""
     data_collection_context:
       label: "Data collection context"
-      help: 
+      help: ""
     data_collection_extent:
       label: "Data collection extent"
-      help: 
+      help: ""
     data_collection_documents_types:
       label: "Data kind"
-      help: 
+      help: ""
     data_collection_has_media:
       label: "Media records?"
-      help: 
+      help: ""
     interviewers_unknowns:
       label: "Other interviewers"
-      help: 
+      help: ""
     interviewers:
       label: "Interviewers"
-      help: 
+      help: ""
   
 
 
@@ -298,34 +309,34 @@ en:
     label: 'Corpus'
     archive_accessed:
       label: "Archives completeness"
-      help: 
+      help: ""
     archive_completeness:
       label: "Archives completeness"
-      help: 
+      help: ""
     archive_arrangement_level:
       label: "Archive arrangement level"
-      help: 
+      help: ""
     archive_arrangement_level_description:
       label: "Archive arrangement level description"
-      help: 
+      help: ""
     archive_preservation_level:
       label: "Archive preservation level"
-      help: 
+      help: ""
     archive_preservation_level_description:
       label: "Archive preservation level description"
-      help: 
+      help: ""
     archive_location:
       label: "Archive localisation"
-      help: 
+      help: ""
     archive_extent:
       label: "Archive extent"
-      help: 
+      help: ""
     archive_consentement:
-      label: "Reseracher's consentement ?"
-      help: 
+      label: "Researcher's consentement ?"
+      help: ""
     archive_agreememt:
       label: "Intervewees agreement?"
-      help: 
+      help: ""
   
   
 
@@ -334,78 +345,77 @@ en:
     label: 'Analysis'
     analysis_has_transcription:
       label: "Has transcription ?"
-      help: 
+      help: ""
     analysis_transcription:
       label: "Transcription"
-      help: 
+      help: ""
     analysis_anonymization:
       label: "Anonymization"
-      help: 
+      help: ""
     analysis_types:
       label: "Analysis"
-      help: 
+      help: ""
     data_languages:
       label: "Data languages"
-      help: 
+      help: ""
     documentation_languages:
       label: "Documentation languages"
-      help: 
-    publications_citations:
+      help: ""
+    publication_citation:
       label: "Related publications"
-      help: 
+      help: ""
     publications:
       label: "Publications"
-      help: 
+      help: ""
   
-  
-  
-
-
-
-
-
   
   edition:
     label: 'Edition'
     access_conditions:
       label: "Access Conditions"
-      help: ''
+      help: ""
     edition_first_date:
       label: "Date First Edition"
-      help: ''
+      help: ""
     edition_last_date:
       label: "Date Latest Edition"
-      help: ''
+      help: ""
     copyright_holders:
       label: "Copyright"
-      help: ''
+      help: ""
     softwares:
       label: "Software"
-      help: ''
+      help: ""
     editors:
       label: "Editor"
-      help: ''
+      help: ""
+  
+  
+  note:
+    language:
+      label: "Language"
+      help: ""
       
-  notes:
-    label: "Notes"
+    value:
+      label: "Value"
+      help: ""
+    
+      
+  other:
+    label: "Other"
     notes:
       label: "Notes"
-      help: ''
+      help: ""
 
-    
-    
-    
-        
- 
 
 
   agent:
     persons:
       label: "Individuals"
-      help: ''
+      help: ""
     orgunits:
       label: "Legal persons"
-      help: ''
+      help: ""
     
     
     
@@ -591,7 +601,36 @@ en:
       label: 'id_type'
       help: 'id_type'
   
-
+  speaker:
+    label: 'Speakers'
+    orgunits:
+      label: 'Legal person'
+      help: ""
+    
+    persons:
+      label: 'Individual'
+      help: ""
+    
+    speakers:
+      label: 'Speakers'
+      help: ""
+      
+      
+    
+    name_original: 
+      label: 'Researcher original pseudonym'
+      help: ""
+    name_nick: 
+      label: 'Pseudonym'
+      help: ""
+    role:
+      label: 'Role'
+      help: ""
+    role_description:
+      label: 'Role description'
+      help: ""
+    
+    
 
   #DESCRIPTION
   label-language: "Language"

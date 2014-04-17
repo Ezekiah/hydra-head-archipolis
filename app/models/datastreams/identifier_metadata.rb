@@ -14,12 +14,15 @@ class IdentifierMetadata < ActiveFedora::OmDatastream
   
 
   def self.xml_template
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new do |t|
     
-      xml.metadatas {
-         xml.id_type
-         
-         xml.value
+      t.metadatas {
+         t.id_type
+	     t.value
+	     t.rec_class
+	     t.rec_id
+	     t.rec_delete
+	     t.id
       }
   
   

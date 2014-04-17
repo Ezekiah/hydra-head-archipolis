@@ -40,9 +40,10 @@ class Address < ActiveFedora::Base
                 t.locality_city_town(:type=>'text', :value=>'', :label=>'City town', :display=>'public')
                 t.post_code(:type=>'text', :value=>'', :label=>'Post code', :display=>'public')
                 t.rec_class(:type=>'hidden', :value=>'Address', :label=>'', :display=>'public')
+                t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
                 t.street(:type=>'text_area', :value=>'', :label=>'Street', :display=>'public')
                 
-                t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
+                
                 
             }
         

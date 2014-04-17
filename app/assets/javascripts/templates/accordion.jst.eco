@@ -13,7 +13,7 @@
     <div class="accordion-inner">
       <%- @content %>
       
-      <button class="accordion-toggle btn btn-info" data-toggle="collapse" data-parent="#<%=@uid_accordion%>" href="#<%=@uid%>" id="<%=@uid2%>">
+      <button class="acc_ok accordion-toggle btn btn-info" data-toggle="collapse" data-parent="#<%=@uid_accordion%>" href="#<%=@uid%>" id="<%=@uid2%>">
 		<span class="fa fa-check"</span>
 	  </button>
       

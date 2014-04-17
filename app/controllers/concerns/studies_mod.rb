@@ -6,6 +6,7 @@ module Studies_mod
     private
   
     def traverse_study_attr(params, object)
+      
       #recover all _attributes (nested forms)
       obj_attributes = params.select { |key| key.to_s.match(/_attributes$/) }
   
@@ -46,7 +47,9 @@ module Studies_mod
                  
                   if v.has_key?("updated") && v["updated"]=="true"
                     updateObject.update(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
-  
+  						
+  						
+  					
                     if !sub_obj_attributes.empty?
     
                       traverse_study_attr(sub_obj_attributes, updateObject)

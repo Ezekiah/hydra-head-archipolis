@@ -136,6 +136,12 @@ fr:
     orgunit: "Personne morale"
     identifier: 'Identifiant'
     funding_agent_name: 'Agence de financement'
+    note: 'Note'
+    speaker: 'Intervenant'
+    
+    interviewer: 'interviewer'
+    interviewers_unknown: 'other interviewer'
+    copyright_holder: 'Copyright'
   
   
   date_click: "Cliquer pour choisir une date"
@@ -166,10 +172,10 @@ fr:
       help: "Classification disciplinaire de l'enquête. Plusieurs valeurs possibles."
     classifications:
       label: "Classifications"
-      help: "A définir"
+      help: "?"
     keywords:
       label: "Mots-clés"
-      help: 
+      help: "Mots-clés qui définissent le sujet sur lequel porte l'enquête (différent de la discipline). Plusieurs valeurs possibles."
     coverage_temporal_begin:
       label: "Période couverte début"
       help: "Années de début et de fin de la période sur laquelle portent les phénomènes étudiés"
@@ -217,11 +223,10 @@ fr:
       help: "Organisme responsable de la diffusion des données sur le site de mise à disposition (a priori ce sera toujours le CDSP)"
     contacts:
       label: "Contact(s)"
-      help: "Contact pour tout renseignement complémentaire. Peut être celui du chercheur, de l'organisme qui conserve les documents , de l'organisme qui diffuse les données etc."
-    contact_description:
-      label:"Date et commentaire sur le contact"
-      help:"Plus de détail sur la collecte et l'entretien avec le chercheur pourront être rédigés dans le rapport de collecte. "
-  
+      help: "Contact pour tout renseignement complémentaire. Peut être celui du chercheur, de l'organisme qui conserve les documents , de l'organisme qui diffuse les données etc."  
+    contacts_description:
+      label: "Date et commentaire sur le contact"
+      help: "Plus de détail sur la collecte et l'entretien avec le chercheur pourront être rédigés dans le rapport de collecte. "
 
 
   universe:
@@ -529,7 +534,7 @@ fr:
     documentation_languages:
       label: "Langues de la documentation"
       help: "Langue dans la quelle les documents constituant la documentation de l'enquête ont été réalisés. Peut être différent de la langue de réalisation des entretiens."
-    publications_citations:
+    publication_citation:
       label: "Publications associées"
       help: "Réferences biliographiques des publications associées à l'enquête"
     publications:
@@ -558,19 +563,44 @@ fr:
       label: "Éditeur"
       help: "Nom de la ou les personne(s) qui ont fait le travail d'édition pour la mise à disposition"
       
-  notes:
-    label: 'Notes'
+  other:
+    label: 'Autre'
     notes:
       label: "Notes"
       help: "Texte libre"
+  note:
+    language:
+      label: "Langage"
+      help: ''
+      
+    value:
+      label: "Valeur"
+      help: ''
   
+  speaker:
+    label: 'Intervenants'
+    
+    speakers:
+      label: 'Intervenants'
+      help: ''
+    
+    name_original:
+      label: "Pseudo donné par le chercheur à l'origine"
+      help: ''
+    name_nick: 
+      label: 'Pseudo'
+      help: ''
+    role:
+      label: 'Rôle'
+      help: ''
+    role_description:
+      label: 'Description du rôle'
+      help: ''
+
     
   #DESCRIPTION
   calendar: "Calendrier"
   
-
-
-
   
   
 

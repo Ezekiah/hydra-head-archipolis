@@ -48,6 +48,12 @@ gem "hydra", "~> 6.2.0.rc1"
 
 gem "hydra-head"
 
+
+gem "blacklight"
+gem "blacklight_advanced_search"
+
+
+
 #gem 'hydra-head'
 
 gem "bootstrap-sass"
@@ -63,25 +69,25 @@ group :development, :test do
 end
 
 
-gem "blacklight"
 
+
+#gem to handle multistep forms
 gem 'wicked'
 
 
-
+#GEM TO CREATE FOLDER TREES WITH JS
 gem 'dynatree-rails'
 
 gem 'jquery-cookie-rails'
 
 gem 'jquery-ui-sass-rails'
 
-gem 'formtastic'
-
 gem 'activesupport'
 
 
-gem "blacklight_advanced_search"
 
+
+#for uploads
 gem 'carrierwave'
 
 
@@ -130,6 +136,12 @@ gem 'localized_language_select', :git=>'git@github.com:davec/localized_language_
 
 gem 'localized_country_select', :git => 'git@github.com:mlitwiniuk/localized_country_select.git'
 
+gem 'rails_admin', :git => 'git@github.com:sferik/rails_admin.git'
+
+
+
+
+
 gem "haml", "~> 4.0.5"
 gem 'html2haml'
 
@@ -146,3 +158,10 @@ gem "font-awesome-rails"
 gem 'to_bool'
 
 gem 'bootswatch-rails'
+
+
+gem 'formtastic',  github: 'justinfrench/formtastic'
+
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem "less-rails"
+

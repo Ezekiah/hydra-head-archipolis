@@ -1,1 +1,4 @@
-<button id="add-<%=@name%>" data-action="add-<%=@type%>" type="button" class="btn add"> <i class="fa fa-plus"></i></button>
+
+<button id="add-<%=@name%>" data-action="add-<%=@type%>" type="button" class="btn add"> 
+
+<i class="fa fa-plus"></i></button>

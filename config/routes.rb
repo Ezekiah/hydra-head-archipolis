@@ -1,6 +1,7 @@
 
 HydraHead::Application.routes.draw do
   
+  
   resources :descriptions
 
   resources :contributors
@@ -49,6 +50,9 @@ HydraHead::Application.routes.draw do
   
 
   scope "/:locale", locale: /en|fr/ do
+    
+    get "home/index"
+    
     resources :studies
     
     devise_for :users
@@ -71,7 +75,7 @@ HydraHead::Application.routes.draw do
 
   
     
-    root to: redirect("/%{locale}/studies", status: 302)
+    root to: redirect("/%{locale}/home", status: 302)
   end
 
   root to: redirect("/#{I18n.default_locale}", status: 302), as: :redirected_root

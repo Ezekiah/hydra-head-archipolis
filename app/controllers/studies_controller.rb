@@ -54,6 +54,9 @@ class StudiesController < ApplicationController
     @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
     @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
     
+    @types = Type.all
+    
+    
     @LOCATIONS = { t('most_used') => @most_used_languages,
                    t('others') => 
                    @all_languages-@most_used_languages
@@ -136,7 +139,7 @@ class StudiesController < ApplicationController
 
     
     if ! sub_obj_non_attributes.empty?
-      @study.update(sub_obj_non_attributes.to_h)
+      @study.update(sub_obj_non_attributes.to_h.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
     end
     
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)

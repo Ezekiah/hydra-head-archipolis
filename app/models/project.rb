@@ -64,13 +64,13 @@ class Project < ActiveFedora::Base
               
                
               
+              t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
     
               t.rec_class(:type=>'hidden', :value=>'Project')
               
               #t.date_begin(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
               #t.date_end(:type=>'date', :format=>'dd/mm/yyyy', :viewMode=> "days", :minViewMode=> "days", :required=>true, :display=>'public')
               #t.rec_id(:type=>'hidden', :value=>'', :display=>'public')
-              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
               
 
            }

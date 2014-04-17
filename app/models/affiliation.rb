@@ -37,8 +37,9 @@ class Affiliation < ActiveFedora::Base
               t.role(:type=>'text', :label=>'Role', :display=>'public')
              
               t.rec_class(:type=>'hidden', :value=>'Affiliation', :display=>'public')
-             
-              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
+              t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
+
+              
           
           }
        

@@ -14,12 +14,14 @@ class KeywordMetadata < ActiveFedora::OmDatastream
   
 
   def self.xml_template
-      builder = Nokogiri::XML::Builder.new do |xml|
+      builder = Nokogiri::XML::Builder.new do |t|
     
-      xml.metadatas {
-        xml.language
-        xml.value
-        xml.rec_class
+      t.metadatas {
+        t.language
+        t.value
+        t.rec_class
+        t.rec_id
+        t.id
       }
   
   

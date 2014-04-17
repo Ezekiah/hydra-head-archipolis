@@ -35,12 +35,13 @@ class Identifier < ActiveFedora::Base
                 
                 
           t.identifier{
-              t.id_type(:type=>'select', :collection=>collection, :multiple=>'false', :display=>'public', :prompt=>'identifier_type')
+              t.id_type(:type=>'select', :collection=>'identifiers', :multiple=>'false', :display=>'public', :prompt=>'identifier_type')
               t.value(:type=>'text', :multiple=>'true', :display=>'public')
               
               t.rec_class(:type=>'hidden', :value=>'Identifier', :display=>'public')
+              t.rec_delete(:type=>'hidden', :value=>false, :label=>'', :display=>'public', 'data-name'=>'rec_delete')
+
               
-              t.rec_delete(:type=>'hidden', :value=>false, :display=>'public')
           }  
 
             

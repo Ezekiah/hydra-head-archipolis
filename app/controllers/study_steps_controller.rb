@@ -20,7 +20,7 @@ class StudyStepsController < ApplicationController
   layout 'study_steps'
 
   include Wicked::Wizard
-  steps :contributor, :universe, :method, :corpus, :analyse, :edition, :note
+  steps :contributor, :universe, :method, :corpus, :analyse, :edition, :other, :speaker
   
   
   before_filter :set_cache_buster
@@ -88,7 +88,7 @@ class StudyStepsController < ApplicationController
       @study = Study.find(session[:current_study_id])
       
       if ! sub_obj_non_attributes.empty?
-        @study.update(sub_obj_non_attributes.to_h)
+        @study.update(sub_obj_non_attributes.to_h.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
       end
       
       sub_obj_attributes = study_params.select { |key| key.to_s.match(/_attributes$/)}

@@ -20,12 +20,16 @@ class AddressMetadata < ActiveFedora::OmDatastream
       builder = Nokogiri::XML::Builder.new do |t|
     
       t.metadatas {
-          t.p_country
-          t.geo_latitude
-          t.geo_longitude
-          t.locality_city_town
-          t.post_code
-          t.street
+        t.p_country
+        t.geo_latitude
+        t.geo_longitude
+        t.locality_city_town
+        t.post_code
+        t.street
+        t.rec_class
+        t.rec_id
+        t.rec_delete
+        t.id
       }
   
   
