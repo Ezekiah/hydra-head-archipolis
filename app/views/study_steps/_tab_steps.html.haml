@@ -1,4 +1,4 @@
-.navbar.navbar-fixed-top
+.navbar.navbar.steps.span
   .navbar-inner
     .container
       %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
@@ -6,7 +6,7 @@
         %span.icon-bar
         %span.icon-bar
       %a.brand{href: "#"}
-        =t('titles.new_study')
+        =t('steps')
       .nav-collapse
         %ul.nav
           %li
@@ -38,11 +38,8 @@
             =link_to t('speaker.label'), study_steps_path+'/speaker'
 
      
-
-         
-        
-      = lang_switcher
-
+      
+    
     / /.container
    
   / /.navbar-inner

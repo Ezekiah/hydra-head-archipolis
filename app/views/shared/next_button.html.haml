@@ -1,0 +1,8 @@
+- if params[:action] == 'show'
+
+  %a.add.btn.btn-primary{:type => "submit", :href=>next_wizard_path}
+  
+- else
+  
+  %button.add.btn.btn-primary{:type => "submit"}Next
+    %i.icon-white.icon-arrow-right

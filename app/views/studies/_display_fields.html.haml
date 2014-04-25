@@ -19,9 +19,12 @@
       - help = t(root_node_name+'.'+node_name+'.help')
       - required = !!node.attribute('required')
       - label = ( t(root_node_name+'.'+node_name+'.label')).html_safe
-      - label_and_help =  "#{label} #{gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )}".html_safe
       
       
+      
+      - label_and_help = (('* ' if required) + "#{label} #{gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )}").html_safe
+
+      - disabled = params[:action].include? 'show'
       
       - is_multiple = (node.attribute('multiple').to_s == '' || node.attribute('multiple').to_s == 'false') ? false : true
       
@@ -36,7 +39,7 @@
       
       - f.object.class.to_s == "Study" ? row = 'row' : row = ''
       
-      
+     
           
       - if node.attribute('display').to_s != 'private'
         
@@ -44,7 +47,7 @@
           
           
           - if node_type == 'association'
-            %input{:type=>'hidden', :id=>"", :value=>"false", :required=>'required', :name=>"#{f.object_name}[rec_delete]", "data-name"=>"rec_delete", :class=>'hidden-rec_delete'}   
+            %input{:type=>'hidden', :id=>"", :value=>"false", :name=>"#{f.object_name}[rec_delete]", "data-name"=>"rec_delete", :class=>'hidden-rec_delete'}   
   
             - add_button_list = call_jst('button_list.jst.eco',{ name:node_name, orgunit: t("orgunit.label"), person: t("person.label"), title:t('help'), title_help:t(root_node_name+'.'+node_name+'.help'), type:'association' })
             - is_complex_assoc = !! node.attribute('complex')
@@ -111,7 +114,7 @@
              
               -#
                 -if required
-                  %input{:type=>'hidden', :id=>'hidden-'+node_name, :required=>'required', :name=>'validation-'+node_name, :class=>'hidden-association'}
+                  %input{:type=>'hidden', :id=>'hidden-'+node_name, :name=>'validation-'+node_name, :class=>'hidden-association'}
                 -else
                   %input{:type=>'hidden', :id=>'hidden-'+node_name, :name=>'validation-'+node_name, :class=>'hidden-association'}
                  
@@ -127,13 +130,13 @@
               
               - datas = [datas]
             
-  
             
-            = f.input node.name, :wrapper => :prepend_append, :label => label_and_help, :required=>required do
+            
+            = f.input node.name, :wrapper => :prepend_append, :label => label_and_help do
               - datas.each_with_index do |data, index|
                 
                 %div{:style=>'display:block;'}
-                  = f.input_field node.name, 'multiple'=>multiple, 'value'=>data, 'placeHolder'=>t("type_something"), :required=>required
+                  = f.input_field node.name, 'multiple'=>multiple, :disabled=>disabled, 'value'=>data, 'placeHolder'=>t("type_something"), :required=>required
                   - if index == 0
                     - if is_multiple
                       != call_jst('button_add.jst.eco', {type:'single', name:node_name})
@@ -155,25 +158,25 @@
             - collection = Type.find(:title=>node.attribute('collection').to_s).first.get_entries.map { |v|  [I18n.locale == :en ? v.label_en : v.label_fr , v.rec_id] }           
            
       
-            != f.input node.name,  :wrapper=>"prepend_append",:label=>label_and_help, :collection => collection, :required=>required, input_html: { :required => required }, :as => :check_boxes
+            != f.input node.name, :disabled=>disabled, :wrapper=>"prepend_append",:label=>label_and_help, :collection => collection, :required=>required, input_html: { :required => required }, :as => :check_boxes
               
               
               
           
           - if node.attribute('type').to_s == 'radio_buttons'
-            = f.input node.name, :required=>required, :label=>label_and_help, :required=>required, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons
+            = f.input node.name, :disabled=>disabled, :required=>required, :label=>label_and_help, :required=>required, :collection => eval(node.attribute('collection').to_s), :as => :radio_buttons
           
           - if node.attribute('type').to_s == 'country'
             
-            = f.input node_name, :label=>label_and_help.html_safe,:required=>required, :input_html=>{'multiple'=>multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
+            = f.input node_name, :disabled=>disabled, :label=>label_and_help.html_safe,:required=>required, :input_html=>{'multiple'=>multiple}, :as => :country, :priority_countries => ['France', 'Germany'], :include_blank => t('Please choose country...')
        
           - if node.attribute('type').to_s == 'date'
             
             - data = f.object.send(node_name)
   
-            = f.input node_name, :wrapper => :prepend_append, :required=>required, :label=>label_and_help do
+            = f.input node_name, :disabled=>disabled, :wrapper => :prepend_append, :required=>required, :label=>label_and_help do
               
-              = f.text_field(node_name, options = {'value'=>data, 'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'class'=>'span3', 'placeHolder'=>t("date_click")} )
+              = f.text_field(node_name, options = {:disabled=>disabled, 'value'=>data, 'data-date-view-mode'=>node.attribute('viewMode'),'data-date-min-view-mode'=>node.attribute('minViewMode'),  'data-provide'=>'datepicker', 'data-date-format'=>node.attribute('format'), 'required'=>node.attribute('required'), 'class'=>'span3', 'placeHolder'=>t("date_click")} )
   
               - if is_multiple
                 != call_jst('button_add.jst.eco', {type:'association', name:node_name}).html_safe
@@ -187,8 +190,8 @@
             - if values.kind_of?(String)
               - values = [values]
             
-            = f.input node.name, :wrapper=>'append', :required=>required, :label=>label_and_help do
-              = f.select node.name, grouped_options_for_select(@LOCATIONS, values), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+            = f.input node.name, :disabled=>disabled, :wrapper=>'append', :required=>required, :label=>label_and_help do
+              = f.select node.name, grouped_options_for_select(@LOCATIONS, values), {:include_blank =>true}, { :required => required, :multiple=>is_multiple, :disabled => disabled }
               !=#gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )
             
             
@@ -207,7 +210,7 @@
 
 
             = f.input node_name, :wrapper => :prepend_append, :label => label_and_help do
-              = f.select node_name, options_for_select(collection, values), {:include_blank =>true}, { :required => required, :multiple=>is_multiple }
+              = f.select node_name,  options_for_select(collection, values), {:include_blank =>true}, { :required => required, :multiple=>is_multiple, :disabled=>disabled }
               !=#gen_help_button({title_help:t(root_node_name+'.'+node_name+'.help')} )  
             
            
@@ -221,11 +224,11 @@
             - if ! datas.respond_to?('each')
               - datas = [datas]
             
-            = f.input node.name, :label=>label_and_help do
+            = f.input node.name, :disabled=>disabled, :label=>label_and_help do
               - datas.each_with_index do |data, index|
                 
                 %div{:class=>'input-append input-prepend', :style=>'display:block;'}
-                  = f.text_area node_name, :multiple=>multiple, :required=>node.attribute('required'), :class=>'span3',:placeHolder=>t("type_something"), :value=>data
+                  = f.text_area node_name, :disabled=>disabled, :multiple=>multiple, :required=>node.attribute('required'), :class=>'span3',:placeHolder=>t("type_something"), :value=>data
                   - if index == 0
                     - if is_multiple
                       != call_jst('button_add.jst.eco', {type:'single', name:node_name})

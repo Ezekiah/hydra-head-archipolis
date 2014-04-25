@@ -93,18 +93,18 @@ class StudiesController < ApplicationController
     sub_obj_non_attributes = study_params.select { |key| !key.to_s.match(/_attributes$/) }
     
     
-    @study = Study.create(sub_obj_non_attributes)
+    @study = Study.create(sub_obj_non_attributes.except('_destroy', 'id', 'rec_id', 'updated', 'rec_delete'))
     
     
     # Add edit role to the user for the study
     @study.set_edit_users([current_user.email], [])
-    @study.set_read_users([current_user.email], [])
-    @study.set_discover_users([current_user.email], [])
+    #@study.set_read_users([current_user.email], [])
+    #@study.set_discover_users([current_user.email], [])
     
     
-    @study.permissions_attributes = [{:name=>current_user.email, :access=>"edit", :type=>'person'}, 
-    {:name=>current_user.email, :access=>"read", :type=>'person'}, 
-    {:name=>current_user.email, :access=>"discover", :type=>'person'}]
+    #@study.permissions_attributes = [{:name=>current_user.email, :access=>"edit", :type=>'person'}, 
+    #{:name=>current_user.email, :access=>"read", :type=>'person'}, 
+    #{:name=>current_user.email, :access=>"discover", :type=>'person'}]
       
     traverse_study_attr(study_params.select { |key| key.to_s.match(/_attributes$/)}, @study)
     
@@ -116,9 +116,9 @@ class StudiesController < ApplicationController
       if @study.save
         session[:study_id] = @study.id
         
-        format.html { redirect_to study_steps_path}
+        format.html { redirect_to study_steps_path+'/contributor/edit'}
         
-        format.json { render action: 'show', status: :created, location: @study }
+        format.json { render action: 'edit', status: :created, location: @study }
       else
         format.html { render action: 'new' }
         format.json { render json: @study.errors, status: :unprocessable_entity }

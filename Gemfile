@@ -52,7 +52,7 @@ gem "hydra-head"
 gem "blacklight"
 gem "blacklight_advanced_search"
 
-
+gem "rake", "~> 10.3.1"
 
 #gem 'hydra-head'
 
@@ -116,13 +116,16 @@ gem 'xml-simple'
 
 gem 'country-select-engine'
 
+#JRI
+#gem 'language_list', :git => 'git@github.com:scsmith/language_list.git'
+gem 'language_list', :git => 'https://github.com/scsmith/language_list.git'
+#JRI
+#gem 'bootstrap-multiselect-rails', :git => 'git@github.com:benjamincanac/bootstrap-multiselect-rails.git'
+gem 'bootstrap-multiselect-rails', :git => 'https://github.com/benjamincanac/bootstrap-multiselect-rails.git'
 
-gem 'language_list', :git => 'git@github.com:scsmith/language_list.git'
-
-gem 'bootstrap-multiselect-rails', :git => 'git@github.com:benjamincanac/bootstrap-multiselect-rails.git'
-
-
-gem 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
+#JRI
+#gem 'bootstrap-datepicker-rails', :git => 'git://github.com/Nerian/bootstrap-datepicker-rails.git'
+gem 'bootstrap-datepicker-rails', :git => 'https://github.com/Nerian/bootstrap-datepicker-rails.git'
 
 gem 'jquery-validation-rails'
 
@@ -130,13 +133,15 @@ gem "i18n-js"
 
 gem 'eco'
 
+#JRI
+#gem 'localized_language_select', :git=>'git@github.com:davec/localized_language_select.git'
+gem 'localized_language_select', :git=>'https://github.com/davec/localized_language_select.git'
 
-gem 'localized_language_select', :git=>'git@github.com:davec/localized_language_select.git'
+#JRI
+#gem 'localized_country_select', :git => 'git@github.com:mlitwiniuk/localized_country_select.git'
+gem 'localized_country_select', :git => 'https://github.com/mlitwiniuk/localized_country_select.git'
 
-
-gem 'localized_country_select', :git => 'git@github.com:mlitwiniuk/localized_country_select.git'
-
-gem 'rails_admin', :git => 'git@github.com:sferik/rails_admin.git'
+gem 'rails_admin', :git => 'https://github.com/sferik/rails_admin.git'
 
 
 
@@ -157,11 +162,15 @@ gem "font-awesome-rails"
 
 gem 'to_bool'
 
-gem 'bootswatch-rails'
+
+gem 'twitter-bootswatch-rails', '2.3.2.8'
+gem 'twitter-bootswatch-rails-helpers'
 
 
-gem 'formtastic',  github: 'justinfrench/formtastic'
+gem 'formtastic'
 
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+#JRI
+#gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+#gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem "less-rails"
 

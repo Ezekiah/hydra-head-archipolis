@@ -2,7 +2,7 @@
 require 'blacklight/catalog'
 
 class CatalogController < ApplicationController
-
+  layout "main"
   include Blacklight::Catalog
   include Hydra::Controller::ControllerBehavior
   # These before_filters apply the hydra access controls

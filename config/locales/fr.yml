@@ -36,6 +36,11 @@ fr:
   'partial': "partiellement"
   
   
+  "steps": "Etapes"
+  "news": "Actualités"
+  "search_catalog": "Le catalogue d'enquêtes"
+  "create_study": "Créez votre enquête"
+  "new_study": "Nouvelle enquête"
   
   depositor:
     orgunits:

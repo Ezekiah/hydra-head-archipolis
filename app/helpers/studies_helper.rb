@@ -182,9 +182,16 @@ module StudiesHelper
         Eco.render(File.read(file), params)
     end
     
-    def call_jst(jst, params=false)
+    def call_jst(jst, jst_params=false)
+    	
+    	if jst == 'button_add.jst.eco' or jst == 'button_list.jst.eco' or jst == 'button_remove.jst.eco'
+    		if params[:action] == 'show'
+    			return ''
+    		end
+    	end
+    	
         file = File.join(Rails.root, 'app', 'assets', 'javascripts', 'templates', jst )
-        Eco.render(File.read(file), params)
+        Eco.render(File.read(file), jst_params)
     end
     
     def gen_help_button( params=false)

@@ -53,24 +53,28 @@ class StudyStepsController < ApplicationController
   
   
   def edit
+    @study = Study.find(session[:current_study_id])
+    
+    if !current_user.email.in?@study.edit_users
+      return redirect_to :back, notice: "You are not authorized to edit this study"
+    end
     
     if !!session[:current_study_id] == false
-      redirect_to(:back)
-      
-    else
-      @study = Study.find(session[:study_id])
-
-      @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
-      @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
-      
-      @LOCATIONS = { t('most_used') => @most_used_languages,
-                     t('others') =>
-                     @all_languages-@most_used_languages
-      }
-      
-      render_wizard
+      return redirect_to(:back)
       
     end
+
+    @most_used_languages = LanguageList::COMMON_LANGUAGES.map { |value| value.iso_639_1 == 'en' || value.iso_639_1 == 'fr' || value.iso_639_1 == 'de'? [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]:""}.reject!(&:empty?)
+    @all_languages =  LanguageList::COMMON_LANGUAGES.map { |value| [ t('languages.'+value.iso_639_1.upcase), value.iso_639_1]}
+  
+    @LOCATIONS = { t('most_used') => @most_used_languages,
+                 t('others') =>
+                 @all_languages-@most_used_languages
+    }
+  
+    render_wizard
+      
+    
     
     
   end
@@ -99,7 +103,8 @@ class StudyStepsController < ApplicationController
       
       end
       
-      render_wizard @study
+      redirect_to next_wizard_path+'/edit'
+      #render_wizard @study
       
     end
 

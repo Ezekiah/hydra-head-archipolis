@@ -5,11 +5,11 @@
 		</span>
 		
 		<button type="button" class="add btn btn-medium edit">
-			<i class="icon-edit"></i>
+			<i class="fa fa-edit"></i>
 		</button>
 		
 		<button type="button" class="add btn btn-medium delete">
-			<i class="icon-remove"></i>
+			<i class="fa fa-times"></i>
 		</button>
 	</div>
 </div>

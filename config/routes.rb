@@ -2,13 +2,13 @@
 HydraHead::Application.routes.draw do
   
   
-  resources :descriptions
+  #resources :descriptions
 
-  resources :contributors
+  #resources :contributors
 
-  resources :orgunits
+  #esources :orgunits
 
-  resources :people
+  #resources :people
 
   #mount HydraEditor::Engine => '/hydra-editor/'
   
@@ -20,7 +20,7 @@ HydraHead::Application.routes.draw do
   #get "create_study/show"  
   
   
-  #root :to => "catalog#index"
+  root :to => "site#index"
   
   
   
@@ -51,36 +51,37 @@ HydraHead::Application.routes.draw do
 
   scope "/:locale", locale: /en|fr/ do
     
-    get "home/index"
+    get "site/index"
     
     resources :studies
     
     devise_for :users
     
     resources :study_steps do
-        post :contributor
-        post :method
+    	
+        get :contributor
+        get :method
         post :corpus
-        post :universe
-        post :analyse
-        post :edition
-        post :notes
-        post :general
+        get :universe
+        get :analyse
+        get :edition
+        get :notes
+        get :general
     end
     
     Blacklight.add_routes(self)
     
-    
+    get 'advanced' => 'advanced#index'
     
 
-  
+  #root :to => "controller#action"
     
-    root to: redirect("/%{locale}/home", status: 302)
+    #root to: redirect("%{locale}/home", status: 302)
   end
 
-  root to: redirect("/#{I18n.default_locale}", status: 302), as: :redirected_root
+  #root to: redirect("#{I18n.default_locale}", status: 302), as: :redirected_root
 
-  get "/*path", to: redirect("/#{I18n.default_locale}/%{path}", status: 302), constraints: {path: /(?!(#{I18n.available_locales.join("|")})\/).*/}, format: false
+  get "/*path", to: redirect("#{I18n.default_locale}/%{path}", status: 302), constraints: {path: /(?!(#{I18n.available_locales.join("|")})\/).*/}, format: false
 
   
   

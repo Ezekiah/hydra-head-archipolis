@@ -11,6 +11,13 @@
   %fieldset
     = render :partial=>'/studies/display_fields', :locals => {:in_association=>false,:f=>f, :xml => Study.xml_form.to_xml, :xpath=>"/study/general/*"}
     
-  %button.add.btn.btn-primary{:type => "submit"}
-    Next
-    %i.icon-white.icon-arrow-right
+  - if params[:action] == 'show'
+
+    %a.add.btn.btn-primary{:type => "submit", :href=>next_wizard_path}
+      = t('next')
+    
+  - else
+    
+    %button.add.btn.btn-primary{:type => "submit"}
+      = t('next')
+      %i.icon-white.icon-arrow-right

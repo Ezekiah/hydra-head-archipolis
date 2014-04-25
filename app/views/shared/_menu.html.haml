@@ -1,0 +1,45 @@
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.brand{:href=>root_path}
+        =t('Archipolis')
+      .nav-collapse
+        %ul.nav
+        
+          %li
+            =link_to t('news'), '#'
+          %li
+            =link_to t('create_study'), studies_path+'/new'
+            
+          %li
+            =link_to t('search_catalog'), :controller => "/studies", :action=>'index'
+          %li.divider
+            
+          - if has_user_authentication_provider?
+        
+            - if current_user
+              %li.blue
+                = link_to t('blacklight.header_links.logout'), destroy_user_session_path
+              - unless current_user.to_s.blank?
+                %li.blue
+                  = link_to current_user, edit_user_registration_path
+            - else
+              %li.blue
+                = link_to t('blacklight.header_links.login'), new_user_session_path
+             
+
+      = render :partial => 'shared/lang_switcher'   
+      = render :partial => 'shared/profil'
+         
+        
+      
+
+    / /.container
+   
+  / /.navbar-inner
+/ /.navbar
+

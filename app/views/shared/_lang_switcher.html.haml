@@ -1,0 +1,15 @@
+
+.btn-group
+  %a.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :href=>'#'}
+    = t('Language')
+    %span.caret
+  %ul.dropdown-menu
+    - I18n.available_locales.each do |loc|
+      - locale_param = request.path == root_path ? root_path(locale: loc) : params.merge(locale: loc)
+      %li
+        = link_to loc, locale_param
+        
+      
+
+        
+       

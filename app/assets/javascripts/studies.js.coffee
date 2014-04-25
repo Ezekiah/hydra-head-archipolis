@@ -117,7 +117,7 @@ initialize_accordions = ->
       )
       accordion = $(JST["templates/accordion"](json))
       $(document).on "click", "a[href='#" + uid2 + "']", ->
-        $(this).toggleClass "icon-plus icon-minus"
+        $(this).toggleClass "fa fa-plus fa fa-minus"
         return
 
       $(this).parent().append accordion
@@ -128,7 +128,7 @@ initialize_accordions = ->
     
 
 accordion_events = (accordion, from="db") ->
-
+  accordion.css('opacity', 100)
   #check_hidden_assoc(zone, ".accordion-group")
   
   accordion.click ->
@@ -158,11 +158,13 @@ accordion_events = (accordion, from="db") ->
       accordion.find('button[class="add-on btn btn-inverse btn-small"]').remove
       
       accordion.find("input[data-name='rec_delete']").val('true')
-
+      
+      accordion.find("input,select,textarea").addClass('ignore')
   
       $(this).parent().find('a:first').after(
         $('<button class="add-on cancel btn btn-inverse btn-small" style="position:absolute; top:4px;right:50px;text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</button>').click ->
           accordion.find("input[data-name='rec_delete']").val('false')
+          accordion.find("input,select,textarea").removeClass('ignore')
           accordion.find('a, label').css('text-decoration', 'none')
           accordion.find('.accordion-heading').css('background', '#EEEEEE').css('opacity', '10')
           $(this).remove()
@@ -315,11 +317,14 @@ launch_modal = (insert_zone, object, rec_class) ->
 
         $('#content-'+uid2).find("input[data-name='rec_delete']").val('true')
         
+        $('#content-'+uid2).find("input,textarea,select").addClass('ignore')
+        
         $(this).parent().find('.btn-inverse').remove()
         
         $(this).parent().append(
           $('<button class="add btn btn-inverse " style="text-decoration:none;cursor:pointer">'+I18n.t('js.cancel_suppression')+'</button>').click ->
             $('#content-'+uid2).find("input[data-name='rec_delete']").val('false')
+            $('#content-'+uid2).find("input,textarea,select").removeClass('ignore')
             box_tpl.find('span').css('text-decoration', 'none').css('background', '#EEEEEE')
 
             $(this).remove()
@@ -481,7 +486,7 @@ $(document).ready ->
 
     $(this).find('.accordion-container').prepend accordion.fadeIn 300
     
-
+    accordion.css('opacity', 100)
     accordion.find('a:first').trigger "click"
     
     accordion_events(accordion, from="js")
@@ -543,7 +548,7 @@ jQuery ($) ->
         clone.find("input[type='text']").val ""
         clone.find("textarea").text ""
         #clone.find("label").remove()
-        clone.append "<button data-action=\"delete\" class=\"delete btn btn-medium\" ><i class=\"icon-minus\"></i></button>"
+        clone.append "<button data-action=\"delete\" class=\"delete btn btn-medium\" ><i class=\"fa fa-minus\"></i></button>"
           
           
         tag.parent().append clone.fadeIn 300

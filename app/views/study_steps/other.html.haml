@@ -14,7 +14,13 @@
   #dialog-confirm{:style => ""}
     %span.ui-icon.ui-icon-alert{:style => "float:left; margin:0 7px 20px 0;"}
     %p
-  / Button to trigger modal
-  %button.add.btn.btn-primary{:type => "submit"}
-    Next
-    %i.icon-white.icon-arrow-right
+  - if params[:action] == 'show'
+
+    %a.add.btn.btn-primary{:type => "submit", :href=>next_wizard_path}
+      = t('next')
+    
+  - else
+    
+    %button.add.btn.btn-primary{:type => "submit"}
+      = t('next')
+      %i.icon-white.icon-arrow-right

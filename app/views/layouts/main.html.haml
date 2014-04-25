@@ -12,8 +12,6 @@
     %title= h(@page_title || application_name)
     %link{:href => opensearch_catalog_path(:format => 'xml', :only_path => false), :rel => "search", :title => application_name, :type => "application/opensearchdescription+xml"}/
     = favicon_link_tag asset_path('favicon.ico')
-    
-    
     = stylesheet_link_tag "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -34,109 +32,17 @@
     #ajax-modal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "modal menu", :role => "dialog", :tabindex => "-1"}
       .modal-dialog
         .modal-content
-    
-    
-    .navbar.navbar-custom.navbar-fixed-top
-      .navbar-header
-        %a.navbar-brand{href: "#"} Brand
-        %a.navbar-toggle{"data-target" => ".navbar-collapse", "data-toggle" => "collapse"}
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-      .navbar-collapse.collapse
-        %ul.nav.navbar-nav
-          %li.active
-            %a{href: "#"} Home
-          %li
-            %a{href: "#"} Link
-          %li
-            %a{href: "#"} Link
-          %li  
-        %form.navbar-form
-          .form-group{style: "display:inline;"}
-            .input-group
-              .input-group-btn
-                %button.btn.btn-default.dropdown-toggle{"data-toggle" => "dropdown", type: "button"}
-                  %span.glyphicon.glyphicon-chevron-down
-                %ul.dropdown-menu
-                  %li
-                    %a{href: "#"} Category 1
-                  %li
-                    %a{href: "#"} Category 2
-                  %li
-                    %a{href: "#"} Category 3
-                  %li
-                    %a{href: "#"} Category 4
-                  %li
-                    %a{href: "#"} Category 5
-              %input.form-control{placeholder: "What are searching for?", type: "text"}/
-              %span.input-group-addon
-                %span.glyphicon.glyphicon-search
-    
-    #main.container-fluid
+
+    = render :partial => 'shared/menu'
+    #main-container.container
+      
+      
       .row
         .col-md-12
           #main-flashes
-            = render :partial=>'/flash_msg'
-    
-
+            = render :partial=>'/flash_msg'    
+      
+            
+      
       = yield
-    
-    
     = render :partial => 'shared/footer'
-
-
-:css
-  html,body{
-      height:100%;
-  }
-  
-  body{
-      padding-top:50px; /*padding for navbar*/
-  }
-  
-  .navbar-custom .icon-bar {
-    background-color:#fff;
-  }
-  
-  .navbar-custom {
-    background-color: #168ccc;
-      color:#fff;
-  }
-  
-  .navbar-custom li>a:hover,.navbar-custom li>a:focus {
-    background-color:#49bfff;
-  }
-  
-  .navbar-custom a{
-      color:#fefefe;
-  }
-  
-  .navbar-custom .form-control:focus {
-    border-color: #49bfff;
-    outline: 0;
-    -webkit-box-shadow: inset 0 0 0;
-    box-shadow: inset 0 0 0;
-  }
-  
-  #main, #main>.row {
-    height:100%;
-  }
-  
-  #main>.row {
-      overflow-y:scroll;
-  }
-  
-  #left {
-    height:100%;
-  }
-  
-  #map-canvas {
-    width:33.3333%;
-      height:calc(100% - 0);
-      position:absolute;
-      right:16px;
-      top:50px;
-      bottom:0;
-      overflow:hidden;
-  }

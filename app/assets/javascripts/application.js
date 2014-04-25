@@ -11,17 +11,12 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery_ujs
 
 
-//= require bootstrap
 //= require jquery.cookie
 
-//= require jquery.ui.dialog
-//= require jquery.ui.tooltip
-//= require jquery.ui.button
 
-
-//= require jquery_ujs
 
 
 // Required by Blacklight
@@ -31,12 +26,11 @@
 //= require dynatree/jquery.dynatree
 
 //= require archipolis
-//= require_tree .
+
 
 
 //= require cocoon.js
-
-
+//= require bootstrap-collapse
 //= require bootstrap-multiselect
 //= require bootstrap-dropdown
 //= require bootstrap-modal
@@ -54,6 +48,8 @@
 //= require i18n/translations
 
 //= require_tree ./templates
+
+//= require studies
 
 
 
